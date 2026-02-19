@@ -1,7 +1,9 @@
+import { Outlet } from 'react-router';
+
 function App() {
   return (
     <>
-      <h1>Hello to asap-messenger</h1>
+      <Outlet />
     </>
   );
 }
