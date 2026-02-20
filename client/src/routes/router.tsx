@@ -1,14 +1,13 @@
 import { createBrowserRouter } from 'react-router';
 import App from '../App';
-// import { Component } from 'react';
+import Home from '../pages/Home';
 
 const router = createBrowserRouter([
   {
     path: '/',
     Component: App,
     children: [
-      // TODO: add home page Component
-      { index: true, element: <h1>Home</h1> },
+      { index: true, Component: Home },
       {
         path: 'auth',
         element: <h1>Auth Layout</h1>,
