@@ -20,8 +20,7 @@ function App() {
 
   return (
     <>
-      <button onClick={() => toggleGlobalTheme()}>ss</button>
-      <Outlet context={toggleGlobalTheme} />
+      <Outlet context={{ toggleGlobalTheme }} />
     </>
   );
 }

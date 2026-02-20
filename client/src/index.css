@@ -5,6 +5,12 @@
   font-family: 'Space Grotesk', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
+#root,
+html,
+body {
+  height: 100%;
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *,
 *::before,
@@ -27,6 +33,7 @@ body {
   /* 5. Improve text rendering */
   -webkit-font-smoothing: antialiased;
 }
+
 /* 6. Improve media defaults */
 img,
 picture,
@@ -71,4 +78,28 @@ h6 {
 #root,
 #__next {
   isolation: isolate;
+}
+
+@theme {
+  --animate-rotate-right: rotate-right 0.1s ease-in-out;
+  --animate-rotate-left: rotate-left 0.1s ease-in-out;
+}
+
+@keyframes rotate-right {
+  from {
+    transform: rotate(-45deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes rotate-left {
+  from {
+    translate: rotate(0);
+  }
+
+  to {
+    transform: rotate(-45deg);
+  }
 }
