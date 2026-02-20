@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      <Outlet context={{ toggleGlobalTheme }} />
+      <Outlet context={{ toggleGlobalTheme, globalTheme }} />
     </>
   );
 }
