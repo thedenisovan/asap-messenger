@@ -4,6 +4,11 @@ import { createRoot } from 'react-dom/client';
 import router from './routes/router.tsx';
 import './index.css';
 
+document.documentElement.classList.toggle(
+  'dark',
+  localStorage.theme === 'dark',
+);
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />,

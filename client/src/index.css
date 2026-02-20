@@ -1,7 +1,8 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Space Grotesk', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 /* 1. Use a more-intuitive box-sizing model */
@@ -11,9 +12,9 @@
   box-sizing: border-box;
 }
 /* 2. Remove default margin */
-*:not(dialog) {
+/* *:not(dialog) {
   margin: 0;
-}
+} */
 /* 3. Enable keyword animations */
 @media (prefers-reduced-motion: no-preference) {
   html {
