@@ -2,9 +2,9 @@ import NavButton from '../../../components/common/NavButton';
 
 export default function Hero() {
   return (
-    <section className='flex flex-col gap-5 justify-center items-center py-10'>
+    <section className='overflow-hidden flex mx-auto flex-col gap-5 justify-center items-center py-10'>
       <HeroHeader />
-      <h2 className='animate-slide-up-2 text-[clamp(1.25rem,2vw+2rem,4.5rem)] leading-12 md:leading-13 lg:leading-14 xl:leading-17 2xl:leading-19  transition-transform font-bold text-center dark:text-white'>
+      <h2 className='animate-slide-up-2 text-[clamp(1.25rem,2vw+2rem,4.5rem)] leading-12 md:leading-13 lg:leading-14 xl:leading-17 2xl:lead`ing-19 ` transition-transform font-bold text-center dark:text-white'>
         Messaging, <span className='block'>stripped back.</span>
       </h2>
       <p className='animate-slide-up-3 dark:text-gray-300 md:text-lg lg:text-xl lg:max-w-2xl text-center px-6 max-w-xl'>
