@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router';
 
 export default function InfoCards() {
   return (
-    <section className='bg-gray-50/70 dark:bg-gray-200/10 px-2 md:px-4 py-10'>
+    <section className='bg-gray-50/70 dark:bg-gray-600/10 px-2 md:px-4 py-10 md:py-20 border-y dark:border-gray-800 border-gray-100'>
       <div className='max-w-500 mx-auto flex justify-center flex-col md:flex-row'>
         <Card
           heading='Lightning Fast'
@@ -36,8 +36,8 @@ function Card({
   const { globalTheme } = useOutletContext<{ globalTheme: string }>();
 
   return (
-    <div className='flex flex-col py-10 px-4 m-4 transition-colors bg-white dark:bg-black rounded-2xl gap-2.5'>
-      <div className='bg-gray-100 dark:bg-gray-100/20 p-2 rounded-full max-w-fit'>
+    <div className='animate-slide-in group transition-colors flex flex-col py-10 px-4 m-4 bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-gray-800 gap-2.5'>
+      <div className=' group-hover:scale-110 duration-300 bg-gray-100 dark:bg-gray-100/20 p-2 rounded-full max-w-fit'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           height='30px'
@@ -48,8 +48,12 @@ function Card({
           <path d={path} />
         </svg>
       </div>
-      <h3 className='dark:text-white font-bold text-xl'>{heading}</h3>
-      <p className='dark:text-gray-200 text-gray-600'>{paragraph}</p>
+      <h3 className=' group-hover:scale-101 duration-300 transition-transform dark:text-white font-bold text-xl'>
+        {heading}
+      </h3>
+      <p className=' group-hover:scale-101 duration-300 transition-transform dark:text-gray-200 text-gray-600'>
+        {paragraph}
+      </p>
     </div>
   );
 }
