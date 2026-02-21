@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useOutletContext } from 'react-router';
 
 export default function NavButton({
   toPath,
@@ -11,6 +11,8 @@ export default function NavButton({
   className?: string;
   isArrowVisible?: boolean;
 }) {
+  const { globalTheme } = useOutletContext<{ globalTheme: string }>();
+
   return (
     <Link
       className={`${className} px-4 py-0.75 text-sm rounded-full font-medium`}
@@ -19,24 +21,16 @@ export default function NavButton({
       {content}
       {isArrowVisible && (
         <div className='group-hover:translate-x-2 duration-200'>
-          <div className='hidden dark:inline'>
+          <div
+            // Use appropriate color svg button based on global theme color
+            className={`${globalTheme === 'dark' ? 'hidden dark:inline' : 'inline dark:hidden'}`}
+          >
             <svg
               xmlns='http://www.w3.org/2000/svg'
               height='24px'
               viewBox='0 -960 960 960'
               width='24px'
-              fill='#000'
-            >
-              <path d='m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z' />
-            </svg>
-          </div>
-          <div className='inline dark:hidden'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              height='24px'
-              viewBox='0 -960 960 960'
-              width='24px'
-              fill='#fff'
+              fill={globalTheme === 'dark' ? '#000' : '#fff'}
             >
               <path d='m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z' />
             </svg>
