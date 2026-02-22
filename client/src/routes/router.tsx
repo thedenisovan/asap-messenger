@@ -1,6 +1,9 @@
 import { createBrowserRouter } from 'react-router';
 import App from '../App';
 import Home from '../pages/home/Home';
+import Auth from '../pages/auth/Auth';
+import SignIn from '../pages/auth/SingIn';
+import SingUp from '../pages/auth/SignUp';
 
 const router = createBrowserRouter([
   {
@@ -10,11 +13,11 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       {
         path: 'auth',
-        element: <h1>Auth Layout</h1>,
+        Component: Auth,
         children: [
           // TODO: add signin and signup page Components
-          { path: 'signin', element: <h1>Signin</h1> },
-          { path: 'signup', element: <h1>Signup</h1> },
+          { path: 'signin', Component: SignIn },
+          { path: 'signup', Component: SingUp },
         ],
       },
     ],
