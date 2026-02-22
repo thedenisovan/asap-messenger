@@ -11,8 +11,14 @@ export default function AuthFooter({
 }) {
   return (
     <footer>
-      <p className='text-center mt-3'>
-        {paragraph} <Link to={toPath}>{toText}</Link>
+      <p className='text-center mt-4'>
+        {paragraph}{' '}
+        <Link
+          className='text-blue-600 dark:text-blue-400 font-medium hover:underline'
+          to={toPath}
+        >
+          {toText}
+        </Link>
       </p>
     </footer>
   );
