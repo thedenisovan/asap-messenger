@@ -5,6 +5,7 @@ import AuthHeader from './sections/AuthHeader';
 export default function Signin() {
   return (
     <>
+      <title>asap. | Log in</title>
       <AuthHeader
         header='Welcome Back'
         paragraph='Sign in to continue to Messenger'

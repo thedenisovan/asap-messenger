@@ -5,6 +5,7 @@ import AuthFooter from './sections/AuthFooter';
 export default function SingUp() {
   return (
     <>
+      <title>asap. | Register</title>
       <AuthHeader
         header='Create Account'
         paragraph='Get started with your free account'
