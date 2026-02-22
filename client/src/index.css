@@ -50,6 +50,27 @@ textarea,
 select {
   font: inherit;
 }
+
+label {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+input,
+textarea {
+  border-radius: 9px;
+  padding: 7px;
+}
+
+input {
+  border: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.dark input {
+  border: 1px solid rgba(175, 168, 168, 0.5);
+  background-color: rgba(35, 35, 35, 0.337);
+}
+
 /* 8. Avoid text overflows */
 p,
 h1,

@@ -1,17 +1,20 @@
+import AuthFooter from './sections/AuthFooter';
 import AuthFrom from './sections/AuthForm';
-import { Link } from 'react-router';
+import AuthHeader from './sections/AuthHeader';
 
 export default function Signin() {
   return (
     <>
-      <div className='text-center'>
-        <h1>Welcome Back</h1>
-        <p>Sign in continue to Messenger</p>
-      </div>
+      <AuthHeader
+        header='Welcome Back'
+        paragraph='Sign in to continue to Messenger'
+      />
       <AuthFrom />
-      <p>
-        No account? No problem! Just <Link to='../signup'>sign up</Link>
-      </p>
+      <AuthFooter
+        paragraph='No account? No problem! Just '
+        toPath='../signup'
+        toText='sign up'
+      />
     </>
   );
 }

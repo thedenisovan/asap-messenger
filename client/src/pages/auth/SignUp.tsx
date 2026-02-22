@@ -1,17 +1,20 @@
 import AuthFrom from './sections/AuthForm';
-import { Link } from 'react-router';
+import AuthHeader from './sections/AuthHeader';
+import AuthFooter from './sections/AuthFooter';
 
 export default function SingUp() {
   return (
     <>
-      <div className='text-center'>
-        <h1>Create Account</h1>
-        <p>Get started with your free account</p>
-      </div>
+      <AuthHeader
+        header='Create Account'
+        paragraph='Get started with your free account'
+      />
       <AuthFrom isSignUpForm={true} />
-      <p>
-        Already have an account? <Link to='../signin'>Sign in</Link>
-      </p>
+      <AuthFooter
+        paragraph='Already have an account? '
+        toPath='../signin'
+        toText='Sign in'
+      />
     </>
   );
 }
