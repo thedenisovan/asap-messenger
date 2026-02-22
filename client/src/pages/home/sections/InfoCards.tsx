@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router';
 
 export default function InfoCards() {
   return (
-    <section className='bg-gray-50/70 dark:bg-gray-600/10 px-2 md:px-4 py-10 md:py-20 border-y dark:border-gray-800 border-gray-100'>
+    <section className='bg-gray-50/70 dark:bg-black/90 px-2 md:px-4 py-10 md:py-20 border-y dark:border-gray-800 border-gray-100'>
       <div className='max-w-500 mx-auto flex justify-center flex-col md:flex-row'>
         <Card
           heading='Lightning Fast'
@@ -36,7 +36,7 @@ function Card({
   const { globalTheme } = useOutletContext<{ globalTheme: string }>();
 
   return (
-    <div className='animate-slide-in group transition-colors flex flex-col py-10 px-4 m-4 bg-white dark:bg-black rounded-2xl border border-gray-100 dark:border-gray-800 gap-2.5'>
+    <div className='animate-slide-in group transition-colors flex flex-col py-10 px-4 m-4 bg-white dark:bg-black/95 rounded-2xl border border-gray-100 dark:border-gray-800 gap-2.5'>
       <div className=' group-hover:scale-110 duration-300 bg-gray-100 dark:bg-gray-100/20 p-2 rounded-full max-w-fit'>
         <svg
           xmlns='http://www.w3.org/2000/svg'

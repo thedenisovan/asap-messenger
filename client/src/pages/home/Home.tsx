@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className='flex flex-col min-h-screen'>
       <Header />
-      <main className='dark:bg-black transition-colors flex flex-col flex-1'>
+      <main className='dark:bg-black/95 transition-colors flex flex-col flex-1'>
         <Hero />
         <InfoCards />
         <CallToAction />

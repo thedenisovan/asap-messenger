@@ -3,7 +3,7 @@ import NavButton from '../common/NavButton';
 
 export default function Header() {
   return (
-    <header className='sticky top-0 bg-white dark:bg-black z-2 transition-colors dark:text-white md:px-10 border-b px-2 border-gray-200 dark:border-gray-800'>
+    <header className='sticky top-0 bg-white dark:bg-black/95 z-2 transition-colors dark:text-white md:px-10 border-b px-2 border-gray-200 dark:border-gray-800'>
       <div className='max-w-420 py-4 m-auto flex items-center justify-between'>
         <h1 className='text-3xl font-bold cursor-alias'>asap.</h1>
         <div className='flex gap-3'>
