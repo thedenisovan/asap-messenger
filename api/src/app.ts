@@ -1,5 +1,5 @@
 import express from 'express';
-import signupRoute from './routes/signupRoute';
+import signupRoute from './routes/signup.routes.js';
 
 const app = express();
 app.use(express.json());
