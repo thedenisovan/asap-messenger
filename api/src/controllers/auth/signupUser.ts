@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../db/prisma.js';
+import bcrypt from 'bcryptjs';
 
 export default async function signupUser(req: Request, res: Response) {
   const { username, email, password } = req.body;
@@ -9,7 +10,7 @@ export default async function signupUser(req: Request, res: Response) {
       data: {
         username,
         email,
-        password,
+        password: bcrypt.hashSync(password, 10),
         lastOnline: new Date(),
         avatarUrl: '',
       },
