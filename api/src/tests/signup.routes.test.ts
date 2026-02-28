@@ -1,7 +1,8 @@
-import { describe, test, expect } from '@jest/globals';
+import { afterAll, describe, test } from '@jest/globals';
 import signupRoute from '../routes/signup.routes.js';
 import request from 'supertest';
 import express from 'express';
+import { prisma } from '../db/prisma.js';
 
 const app = express();
 
@@ -10,28 +11,114 @@ app.use(express.json());
 
 app.use('/signup', signupRoute);
 
+afterAll(async () => {
+  await prisma.$disconnect();
+});
+
 describe('POST /signup', () => {
   test('signup route works', (done) => {
     request(app)
       .post('/signup')
-      .send({ username: 'admin1' })
+      .send({
+        username: 'johnDoe',
+        email: 'johnDoe@odin.net',
+        password: 'Admin123@',
+        passwordConfirmation: 'Admin123@',
+      })
       .expect('Content-Type', /json/)
       .expect({ message: 'This is signup route' })
       .expect(200, done);
   });
 
-  test('username is too short', (done) => {
+  test('too short username should fail registration', (done) => {
     request(app)
       .post('/signup')
-      .send({ username: 'adm' })
+      .send({
+        username: 'john',
+        email: 'johnDoe@odin.net',
+        password: 'Admin123@',
+        passwordConfirmation: 'Admin123@',
+      })
       .expect('Content-Type', /json/)
       .expect({
         errors: [
           {
             type: 'field',
-            value: 'adm',
+            value: 'john',
             msg: 'Username must be 6-16 characters long.',
             path: 'username',
+            location: 'body',
+          },
+        ],
+      })
+      .expect(200, done);
+  });
+
+  test('wrong format password should fail registration', (done) => {
+    request(app)
+      .post('/signup')
+      .send({
+        username: 'johnDoe',
+        email: 'johnDoe@odin.net',
+        password: 'wrongPass',
+        passwordConfirmation: 'wrongPass',
+      })
+      .expect('Content-Type', /json/)
+      .expect({
+        errors: [
+          {
+            type: 'field',
+            value: 'wrongPass',
+            msg: 'Password must be 6+ chars, with at least one uppercase, lowercase, number and symbol.',
+            path: 'password',
+            location: 'body',
+          },
+        ],
+      })
+      .expect(200, done);
+  });
+
+  test('wrong pass confirmation should fail registration', (done) => {
+    request(app)
+      .post('/signup')
+      .send({
+        username: 'johnDoe',
+        email: 'johnDoe@odin.net',
+        password: 'Admin123@',
+        passwordConfirmation: 'Admin123',
+      })
+      .expect('Content-Type', /json/)
+      .expect({
+        errors: [
+          {
+            type: 'field',
+            value: 'Admin123',
+            msg: 'Passwords did not match.',
+            path: 'passwordConfirmation',
+            location: 'body',
+          },
+        ],
+      })
+      .expect(200, done);
+  });
+
+  test('user cant register if user with given email exists', (done) => {
+    request(app)
+      .post('/signup')
+      .send({
+        username: 'johnDoe',
+        email: 'johnDoe@odin.com',
+        password: 'Admin123@',
+        passwordConfirmation: 'Admin123@',
+      })
+      .expect('Content-Type', /json/)
+      .expect({
+        errors: [
+          {
+            type: 'field',
+            value: 'johnDoe@odin.com',
+            msg: 'E-mail already in use',
+            path: 'email',
             location: 'body',
           },
         ],
