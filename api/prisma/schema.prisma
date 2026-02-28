@@ -12,3 +12,65 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Profile {
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  username  String
+  password  String
+  avatarUrl String
+
+  isOnline   Boolean  @default(false)
+  lastOnline DateTime
+
+  user User? @relation("UserProfile")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  profile   Profile? @relation("UserProfile", fields: [profileId], references: [id], onDelete: Cascade)
+  profileId Int      @unique
+
+  contacts  User[] @relation("UserContacts")
+  contactBy User[] @relation("UserContacts")
+
+  blocked   User[] @relation("BlockedUsers")
+  blockedBy User[] @relation("BlockedUsers")
+
+  chats    Chat[]
+  messages Message[]
+
+  groupChat  GroupChat[] @relation("GroupChatter")
+  groupAdmin GroupChat[] @relation("GroupAdmin")
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+
+  users    User[]
+  messages Message[]
+}
+
+model GroupChat {
+  id       Int       @id @default(autoincrement())
+  admin    User[]    @relation("GroupAdmin")
+  chatters User[]    @relation("GroupChatter")
+  messages Message[] @relation("GroupMessages")
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+
+  message String
+
+  messageBy   User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+  dateCreated DateTime @default(now())
+
+  chat   Chat? @relation(fields: [chatId], references: [id])
+  chatId Int
+
+  groupChat   GroupChat? @relation("GroupMessages", fields: [groupChatId], references: [id])
+  groupChatId Int?
+}

@@ -13,8 +13,32 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser'
+import * as Prisma from './internal/prismaNamespaceBrowser.js'
 export { Prisma }
-export * as $Enums from './enums'
-export * from './enums';
-
+export * as $Enums from './enums.js'
+export * from './enums.js';
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Chat
+ * 
+ */
+export type Chat = Prisma.ChatModel
+/**
+ * Model GroupChat
+ * 
+ */
+export type GroupChat = Prisma.GroupChatModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
