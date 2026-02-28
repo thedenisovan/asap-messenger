@@ -8,7 +8,7 @@ function signupValidatorResult(
 ) {
   const result = validationResult(req);
 
-  if (result.isEmpty()) next();
+  if (result.isEmpty()) return next();
 
   return res.status(200).send({ errors: result.array() });
 }
