@@ -17,8 +17,8 @@ export default function verifyToken(
     jwt.verify(bearer, process.env.SECRET_KEY!, (err, payload) => {
       if (err || typeof payload === 'string') return res.sendStatus(403);
 
-      const decoded = payload as MyJwtPayload;
-      req.payload = decoded;
+      // Assign decoded payload to payload req object
+      req.payload = payload as MyJwtPayload;
 
       next();
     });
