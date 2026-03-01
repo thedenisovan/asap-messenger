@@ -8,8 +8,9 @@ signinRoute.post(
   '/',
   signinValidator,
   validatorResult,
-  (req: Request, res: Response) =>
-    res.json({ message: 'this is signin route' }),
+  (req: Request, res: Response) => {
+    res.json({ message: 'this is signin route' });
+  },
 );
 
 export default signinRoute;
