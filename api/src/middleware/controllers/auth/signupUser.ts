@@ -3,7 +3,7 @@ import { prisma } from '../../../db/prisma.js';
 import bcrypt from 'bcryptjs';
 
 export default async function signupUser(req: Request, res: Response) {
-  const { username, email, password } = req.body;
+  const { email, username, password } = req.body;
 
   try {
     const profile = await prisma.profile.create({

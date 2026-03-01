@@ -1,4 +1,3 @@
-import { prisma } from '../../../db/prisma.js';
 import { Request, Response } from 'express';
 import 'dotenv/config.js';
 import jwt from 'jsonwebtoken';
