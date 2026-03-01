@@ -6,13 +6,19 @@ export default async function signupUser(req: Request, res: Response) {
   const { username, email, password } = req.body;
 
   try {
-    await prisma.profile.create({
+    const profile = await prisma.profile.create({
       data: {
         username,
         email,
         password: bcrypt.hashSync(password, 10),
         lastOnline: new Date(),
         avatarUrl: '',
+      },
+    });
+
+    await prisma.user.create({
+      data: {
+        profileId: profile.id,
       },
     });
 
