@@ -1,8 +1,8 @@
-import { afterAll, afterEach, describe, test } from '@jest/globals';
-import signinRoute from '../routes/signin.routes.js';
+import { afterAll, describe, test } from '@jest/globals';
+import signinRoute from '../../routes/signin.routes.js';
 import request from 'supertest';
 import express from 'express';
-import { prisma } from '../db/prisma.js';
+import { prisma } from '../../db/prisma.js';
 import 'dotenv/config.js';
 
 const app = express();
@@ -16,19 +16,7 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-describe('POST /signin', () => {
-  test('signin route works', (done) => {
-    request(app)
-      .post('/signin')
-      .send({
-        email: 'johnDoe@odin.com',
-        password: process.env.TEST_PASS,
-      })
-      .expect('Content-Type', /json/)
-      .expect({ message: 'this is signin route' })
-      .expect(200, done);
-  });
-
+describe('POST /signin validator test', () => {
   test('wrong email should fail signin', (done) => {
     request(app)
       .post('/signin')

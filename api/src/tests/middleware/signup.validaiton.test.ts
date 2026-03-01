@@ -1,8 +1,8 @@
 import { afterAll, afterEach, describe, test } from '@jest/globals';
-import signupRoute from '../routes/signup.routes.js';
+import signupRoute from '../../routes/signup.routes.js';
 import request from 'supertest';
 import express from 'express';
-import { prisma } from '../db/prisma.js';
+import { prisma } from '../../db/prisma.js';
 
 const app = express();
 
@@ -19,21 +19,7 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-describe('POST /signup', () => {
-  test('signup route works', (done) => {
-    request(app)
-      .post('/signup')
-      .send({
-        username: 'johnDoe',
-        email: 'johnDoe@odin.net',
-        password: 'Admin123@',
-        passwordConfirmation: 'Admin123@',
-      })
-      .expect('Content-Type', /json/)
-      .expect({ message: 'profile created' })
-      .expect(200, done);
-  });
-
+describe('POST /signup validator tests', () => {
   test('too short username should fail registration', (done) => {
     request(app)
       .post('/signup')
