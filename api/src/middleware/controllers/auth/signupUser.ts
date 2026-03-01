@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma } from '../../db/prisma.js';
+import { prisma } from '../../../db/prisma.js';
 import bcrypt from 'bcryptjs';
 
 export default async function signupUser(req: Request, res: Response) {

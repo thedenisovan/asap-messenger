@@ -9,6 +9,13 @@ declare global {
         isOnline: boolean;
         lastOnline: Date;
       };
+      token?: string;
+      payload: {
+        profileId: string;
+      };
     }
+  }
+  interface MyJwtPayload {
+    profileId: string;
   }
 }
