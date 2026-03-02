@@ -107,7 +107,7 @@ describe('POST /signup validator tests', () => {
           {
             type: 'field',
             value: 'johnDoe@odin.com',
-            msg: 'E-mail already in use',
+            msg: 'E-mail already in use.',
             path: 'email',
             location: 'body',
           },
