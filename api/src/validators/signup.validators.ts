@@ -5,21 +5,25 @@ const signupValidator = [
   body('username')
     .trim()
     .notEmpty()
+    .withMessage('Username is required.')
+    .bail()
     .isLength({ min: 6, max: 16 })
     .withMessage('Username must be 6-16 characters long.'),
   body('email')
     .trim()
     .notEmpty()
+    .withMessage('Email is required.')
+    .bail()
     .isEmail()
+    .withMessage('Email must be of email type.')
+    .bail()
     .custom(async (value) => {
       const profile = await prisma.profile.findUnique({
         where: { email: value },
       });
-
-      if (profile != null) {
-        throw new Error('E-mail already in use');
-      }
+      if (profile) throw new Error('E-mail already in use.');
     }),
+
   body('password')
     .notEmpty()
     .isLength({ min: 6 })
