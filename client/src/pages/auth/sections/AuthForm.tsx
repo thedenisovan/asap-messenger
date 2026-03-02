@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import clientPassValidator from '../../../utils/clientPassValidator';
-import signupUser from '../../../services/api/signup.api';
+import userAuth from '../../../services/api/userAuth';
 
 export default function AuthFrom({
   isSignUpForm = false,
@@ -11,10 +11,10 @@ export default function AuthFrom({
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
-  const [errMessage, setErrMessage] = useState<string>('');
+  const [errMessage, setErrMessage] = useState<string[]>([]);
 
   const validatePassword = () => {
-    setErrMessage('');
+    setErrMessage([]);
 
     // If user is in sign in page compare pass to pass to
     // prevent error of wrong pass confirmation value
@@ -23,17 +23,21 @@ export default function AuthFrom({
       : clientPassValidator(password, password);
 
     if (validityResult !== '') {
-      setErrMessage(validityResult);
+      setErrMessage([validityResult]);
     }
   };
 
   return (
     <form className='flex flex-col gap-5'>
-      <p
-        className={`bg-gray-100 border dark:bg-gray-100/10 dark:border-gray-600 border-gray-300 text-red-500 dark:text-red-400 rounded-lg p-3 text-sm ${errMessage.length ? '' : 'hidden'}`}
+      <ul
+        className={`list-dis bg-gray-100 border dark:bg-gray-100/10 dark:border-gray-600 border-gray-300 text-red-500 dark:text-red-400 rounded-lg p-3 text-sm ${errMessage.length ? '' : 'hidden'}`}
       >
-        {errMessage}
-      </p>
+        {errMessage.map((err, idx) => (
+          <li key={idx} className='list-disc ml-3 mt-1'>
+            {err}
+          </li>
+        ))}
+      </ul>
       {isSignUpForm && (
         <div className='flex flex-col gap-2'>
           <label htmlFor='userName'>Username</label>
@@ -95,7 +99,18 @@ export default function AuthFrom({
           e.preventDefault();
 
           validatePassword();
-          signupUser(username, email, password, passwordConfirm);
+
+          userAuth(
+            username,
+            email,
+            password,
+            passwordConfirm,
+            // If user is in signup page use signup api url else signin
+            isSignUpForm
+              ? 'http://localhost:8080/signup'
+              : 'http://localhost:8080/signin',
+            setErrMessage,
+          );
         }}
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'
         type='submit'
