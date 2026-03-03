@@ -30,7 +30,7 @@ export default function AuthFrom({
   };
 
   return (
-    <form className='flex flex-col gap-5'>
+    <form role='form' className='flex flex-col gap-5'>
       <ul
         className={`list-dis bg-gray-100 border dark:bg-gray-100/10 dark:border-gray-600 border-gray-300 text-red-500 dark:text-red-400 rounded-lg p-3 text-sm ${errMessage.length ? '' : 'hidden'}`}
       >
