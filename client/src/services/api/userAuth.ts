@@ -38,7 +38,11 @@ async function userAuth(
           setResultArray((prev) => [...prev, err.msg]);
         }
       });
+
+      return false;
     }
+
+    return true;
   } catch (err) {
     console.error(err);
   }

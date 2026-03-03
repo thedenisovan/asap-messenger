@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import clientPassValidator from '../../../utils/clientPassValidator';
 import userAuth from '../../../services/api/userAuth';
+import { useNavigate } from 'react-router';
 
 export default function AuthFrom({
   isSignUpForm = false,
@@ -12,6 +13,7 @@ export default function AuthFrom({
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const validatePassword = () => {
     setErrMessage([]);
@@ -95,12 +97,14 @@ export default function AuthFrom({
       )}
 
       <button
-        onClick={(e) => {
+        onClick={async (e) => {
           e.preventDefault();
 
           validatePassword();
 
-          userAuth(
+          // Save return boolean value in result variable, truthy
+          // for successful sign(in/up) falsy for unsuccessful
+          const result = await userAuth(
             username,
             email,
             password,
@@ -111,6 +115,15 @@ export default function AuthFrom({
               : 'http://localhost:8080/signin',
             setErrMessage,
           );
+
+          // If result is true and user is in signup page
+          // redirect him to sing in page
+          if (result && isSignUpForm) {
+            navigate('/auth/signin');
+            // TODO: redirect user to home page after successful signin
+          } else if (result && !isSignUpForm) {
+            navigate('/');
+          }
         }}
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'
         type='submit'
