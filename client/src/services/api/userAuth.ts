@@ -42,6 +42,7 @@ async function userAuth(
       return false;
     }
 
+    localStorage.setItem('token', result.token);
     return true;
   } catch (err) {
     console.error(err);
