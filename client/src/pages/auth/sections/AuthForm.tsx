@@ -32,10 +32,11 @@ export default function AuthFrom({
   return (
     <form role='form' className='flex flex-col gap-5'>
       <ul
+        role='error-container'
         className={`list-dis bg-gray-100 border dark:bg-gray-100/10 dark:border-gray-600 border-gray-300 text-red-500 dark:text-red-400 rounded-lg p-3 text-sm ${errMessage.length ? '' : 'hidden'}`}
       >
         {errMessage.map((err, idx) => (
-          <li key={idx} className='list-disc ml-3 mt-1'>
+          <li role='error-element' key={idx} className='list-disc ml-3 mt-1'>
             {err}
           </li>
         ))}
@@ -65,6 +66,7 @@ export default function AuthFrom({
           type='email'
           name='email'
           id='userEmail'
+          role='userEmail'
           required
         />
       </div>
@@ -76,6 +78,7 @@ export default function AuthFrom({
           type='password'
           name='password'
           id='userPassword'
+          role='userPassword'
           pattern='^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-]).{6,}$'
           value={password}
           required
@@ -97,6 +100,7 @@ export default function AuthFrom({
       )}
 
       <button
+        role='auth-button'
         onClick={async (e) => {
           e.preventDefault();
 
