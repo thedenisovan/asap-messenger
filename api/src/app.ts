@@ -1,6 +1,7 @@
 import express from 'express';
 import signupRoute from './routes/signup.routes.js';
 import signinRoute from './routes/signin.routes.js';
+import chatPage from './routes/chatPage.routes.js';
 import cors from 'cors';
 
 const app = express();
@@ -11,5 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/signup', signupRoute);
 app.use('/signin', signinRoute);
+app.use('/chatPage', chatPage);
 
 export default app;
