@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'chatPage',
+        path: 'chatPage/:uid',
         Component: ChatPage,
       },
     ],

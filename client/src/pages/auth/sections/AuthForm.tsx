@@ -62,6 +62,7 @@ export default function AuthFrom({
         <input
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          autoComplete='email'
           placeholder='johDoe@odin.com'
           type='email'
           name='email'
@@ -74,6 +75,7 @@ export default function AuthFrom({
         <label htmlFor='userPassword'>Password</label>
         <input
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete='current-password'
           placeholder='******'
           type='password'
           name='password'
@@ -123,7 +125,7 @@ export default function AuthFrom({
           if (result && isSignUpForm) {
             navigate('/auth/signin');
           } else if (result && !isSignUpForm) {
-            navigate('/chatPage');
+            navigate('/chatPage/0');
           }
         }}
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'

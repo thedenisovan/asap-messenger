@@ -1,5 +1,6 @@
 import type ValidationResult from '../../types/error';
 import type { Dispatch, SetStateAction } from 'react';
+import URL from '../../constants/constants';
 
 async function userAuth(
   username: string,
@@ -10,7 +11,7 @@ async function userAuth(
   setResultArray: Dispatch<SetStateAction<string[]>>,
 ) {
   try {
-    const response = await fetch('http://localhost:8080/' + path, {
+    const response = await fetch(URL.BASE_URL + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
