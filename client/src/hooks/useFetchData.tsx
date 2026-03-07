@@ -8,11 +8,11 @@ export default function useFetchData(path: string) {
   const [serverError, setServerError] = useState<unknown | string | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsLoading(true);
     const token = localStorage.getItem('token');
 
     const fetchData = async () => {
+      setIsLoading(true);
+
       try {
         const response = await fetch(`${URL.BASE_URL}${path}`, {
           headers: {

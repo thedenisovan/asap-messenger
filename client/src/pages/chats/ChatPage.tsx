@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import getPayload from '../../services/api/getPayload';
 import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
-// import getData from '../../services/api/getData';
 import signOut from '../../utils/signout';
 import ProfileHeader from './sections/ProfileHeader';
 
@@ -31,7 +30,6 @@ export default function ChatPage() {
       }
 
       navigate(`/chatPage/${localStorage.getItem('uid')}`);
-      // getData(`chatPage/${localStorage.getItem('uid')}`);
     };
 
     validatePayload();
