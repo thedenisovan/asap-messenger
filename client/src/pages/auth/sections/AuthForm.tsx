@@ -114,9 +114,7 @@ export default function AuthFrom({
             password,
             passwordConfirm,
             // If user is in signup page use signup api url else signin
-            isSignUpForm
-              ? 'http://localhost:8080/signup'
-              : 'http://localhost:8080/signin',
+            isSignUpForm ? 'signup' : 'signin',
             setErrMessage,
           );
 
@@ -124,9 +122,8 @@ export default function AuthFrom({
           // redirect him to sing in page
           if (result && isSignUpForm) {
             navigate('/auth/signin');
-            // TODO: redirect user to home page after successful signin
           } else if (result && !isSignUpForm) {
-            navigate('/');
+            navigate('/chatPage');
           }
         }}
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'

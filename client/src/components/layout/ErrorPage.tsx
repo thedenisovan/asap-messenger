@@ -11,7 +11,7 @@ const ErrorPage = () => {
       </p>
       <Link
         to='/'
-        className='px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition'
+        className='px-6 py-3 bg-black text-white rounded-lg hover:bg-black/80 transition'
       >
         Go back home
       </Link>

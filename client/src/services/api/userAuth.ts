@@ -6,11 +6,11 @@ async function userAuth(
   email: string,
   password: string,
   passwordConfirmation: string,
-  url: string,
+  path: string,
   setResultArray: Dispatch<SetStateAction<string[]>>,
 ) {
   try {
-    const response = await fetch(url, {
+    const response = await fetch('http://localhost:8080/' + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

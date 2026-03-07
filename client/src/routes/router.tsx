@@ -5,6 +5,7 @@ import Auth from '../pages/auth/Auth';
 import SignIn from '../pages/auth/SingIn';
 import SingUp from '../pages/auth/SignUp';
 import ErrorPage from '../components/layout/ErrorPage';
+import ChatPage from '../pages/chats/ChatPage';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +23,8 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'chats',
-        element: <h1>hi</h1>,
+        path: 'chatPage',
+        Component: ChatPage,
       },
     ],
   },
