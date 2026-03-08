@@ -125,6 +125,8 @@ export default function AuthFrom({
           if (result && isSignUpForm) {
             navigate('/auth/signin');
           } else if (result && !isSignUpForm) {
+            // Navigate to chat page with uid 0,
+            // later it is redirected to page of users uid
             navigate('/chatPage/0');
           }
         }}

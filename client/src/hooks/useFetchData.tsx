@@ -5,7 +5,7 @@ import type ProfileData from '../types/apiData';
 export default function useFetchData(path: string) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiData, setApiData] = useState<ProfileData | null>(null);
-  const [serverError, setServerError] = useState<unknown | string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -28,8 +28,9 @@ export default function useFetchData(path: string) {
 
         setApiData(result);
         setIsLoading(false);
-      } catch (error: unknown) {
-        if (error instanceof Error) setServerError(error);
+        setServerError(null);
+      } catch (error) {
+        if (error instanceof Error) setServerError(String(error));
         else setServerError('Unknown error');
       }
     };

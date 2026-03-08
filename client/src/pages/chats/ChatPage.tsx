@@ -4,6 +4,7 @@ import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
 import signOut from '../../utils/signout';
 import ProfileHeader from './sections/ProfileHeader';
+import isOnlineUpdate from '../../services/api/isOnlineUpdate';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -14,19 +15,19 @@ export default function ChatPage() {
       // decode it and save it's payload data in local storage
       const isPayloadAssigned = await getPayload();
 
-      // If did getPayload failed navigate to homepage
+      // If did getPayload failed navigate to prev page
       if (!isPayloadAssigned) {
         navigate(-1);
         signOut();
       }
 
-      // If autSignout returns false then payload is expired
+      // If autoSignout returns false then payload is expired
       // and removed from localstorage
       const isPayloadExp = autoSignout();
 
       if (!isPayloadExp) {
-        signOut();
         navigate(-1);
+        signOut();
       }
 
       navigate(`/chatPage/${localStorage.getItem('uid')}`);
@@ -39,6 +40,7 @@ export default function ChatPage() {
       <ProfileHeader />
       <button
         onClick={() => {
+          isOnlineUpdate(false);
           signOut();
           navigate('/');
         }}
