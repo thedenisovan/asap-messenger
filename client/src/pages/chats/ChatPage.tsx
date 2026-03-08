@@ -4,7 +4,6 @@ import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
 import signOut from '../../utils/signout';
 import ProfileHeader from './sections/ProfileHeader';
-import isOnlineUpdate from '../../services/api/isOnlineUpdate';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -36,17 +35,8 @@ export default function ChatPage() {
     validatePayload();
   }, [navigate]);
   return (
-    <>
+    <div className='dark:bg-gray-950 dark:text-white h-screen'>
       <ProfileHeader />
-      <button
-        onClick={() => {
-          isOnlineUpdate(false);
-          signOut();
-          navigate('/');
-        }}
-      >
-        Sign out
-      </button>
-    </>
+    </div>
   );
 }
