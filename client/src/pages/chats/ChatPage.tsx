@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import getPayload from '../../services/api/getPayload';
 import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
@@ -7,6 +7,7 @@ import ProfileHeader from './sections/ProfileHeader';
 
 export default function ChatPage() {
   const navigate = useNavigate();
+  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   useEffect(() => {
     const validatePayload = async () => {
@@ -35,8 +36,16 @@ export default function ChatPage() {
     validatePayload();
   }, [navigate]);
   return (
-    <div className='dark:bg-gray-950 dark:text-white h-screen'>
-      <ProfileHeader />
-    </div>
+    <main
+      onClick={() => {
+        // If dropdown is not hidden clicking any where on page should
+        // close dropdown
+        if (!isHidden) setIsHidden(true);
+      }}
+    >
+      <aside className='dark:bg-gray-950 dark:text-white h-screen'>
+        <ProfileHeader isHidden={isHidden} setIsHidden={setIsHidden} />
+      </aside>
+    </main>
   );
 }

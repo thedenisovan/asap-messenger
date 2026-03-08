@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, type Dispatch, type SetStateAction } from 'react';
 import useFetchData from '../../../hooks/useFetchData';
 import isOnlineUpdate from '../../../services/api/isOnlineUpdate';
 import exports from '../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
 
-export default function ProfileHeader() {
+export default function ProfileHeader({
+  isHidden,
+  setIsHidden,
+}: {
+  isHidden: boolean;
+  setIsHidden: Dispatch<SetStateAction<boolean>>;
+}) {
   const { isLoading, serverError, apiData } = useFetchData(
     `chatPage/${localStorage.getItem('uid')}`,
   );
-  const [isHidden, setIsHidden] = useState<boolean>(true);
 
   useEffect(() => {
     // Init is online update after user signs in ad uid
@@ -56,7 +61,9 @@ export default function ProfileHeader() {
             </div>
           </div>
           <div
-            onClick={() => setIsHidden((val) => !val)}
+            onClick={() => {
+              setIsHidden((val) => !val);
+            }}
             className='flex items-center relative'
           >
             <img
