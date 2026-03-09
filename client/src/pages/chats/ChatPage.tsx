@@ -43,7 +43,7 @@ export default function ChatPage() {
         if (!isHidden) setIsHidden(true);
       }}
     >
-      <aside className='dark:bg-gray-950 dark:text-white h-screen'>
+      <aside className='dark:bg-black/93  dark:text-white h-screen'>
         <ProfileHeader isHidden={isHidden} setIsHidden={setIsHidden} />
       </aside>
     </main>
