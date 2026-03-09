@@ -28,60 +28,74 @@ export default function ProfileHeader({
     }, 120000);
 
     return () => clearInterval(interval);
-  });
+  }, []);
 
   return (
     <header>
-      {serverError !== null && <h1>ERROR</h1>}
-      {isLoading && !apiData?.profile ? (
-        <h1>LOADING</h1>
-      ) : (
-        <div className='flex p-5 justify-between'>
-          <div className='flex gap-2 items-center'>
-            <div className='bg-black dark:bg-white w-fit p-2 rounded-full'>
+      <div
+        style={{
+          justifyContent: isLoading ? '' : 'space-between',
+          gap: isLoading ? '1rem' : '',
+        }}
+        className={`flex p-5`}
+      >
+        {serverError !== null && <h1>ERROR</h1>}
+        {isLoading && !apiData?.profile ? (
+          <>
+            <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 h-13 w-13'></div>
+            <div className='flex flex-col animate-pulse duration-900'>
+              <p className='h-5 rounded-2xl w-50 mb-2  bg-black/70'></p>
+              <p className='h-5 rounded-2xl w-70  bg-black/70'></p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className='flex gap-2 items-center'>
+              <div className='bg-black dark:bg-white w-fit p-2 rounded-full'>
+                <img
+                  className='dark:hidden! block!'
+                  width={25}
+                  src={exports.whiteUser}
+                  alt='default profile image'
+                />
+                <img
+                  className='hidden! dark:block!'
+                  width={25}
+                  src={exports.blackUser}
+                  alt='default profile image'
+                />
+              </div>
+              <div>
+                <h1 className='text-lg font-bold'>
+                  {apiData?.profile?.username}
+                </h1>
+                {/* User all ways sees his status as online */}
+                <p className='text-gray-600 dark:text-gray-200'>online</p>
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsHidden((val) => !val);
+              }}
+              className='flex items-center relative'
+            >
               <img
                 className='dark:hidden! block!'
                 width={25}
-                src={exports.whiteUser}
+                src={exports.moreBlack}
                 alt='default profile image'
               />
               <img
                 className='hidden! dark:block!'
                 width={25}
-                src={exports.blackUser}
+                src={exports.moreWhite}
                 alt='default profile image'
               />
+              <ProfileDropdown isHidden={isHidden} />
             </div>
-            <div>
-              <h1 className='text-lg font-bold'>
-                {apiData?.profile?.username}
-              </h1>
-              {/* User all ways sees his status as online */}
-              <p className='text-gray-600 dark:text-gray-200'>online</p>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setIsHidden((val) => !val);
-            }}
-            className='flex items-center relative'
-          >
-            <img
-              className='dark:hidden! block!'
-              width={25}
-              src={exports.moreBlack}
-              alt='default profile image'
-            />
-            <img
-              className='hidden! dark:block!'
-              width={25}
-              src={exports.moreWhite}
-              alt='default profile image'
-            />
-            <ProfileDropdown isHidden={isHidden} />
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </div>
     </header>
   );
 }
