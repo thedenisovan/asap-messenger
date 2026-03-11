@@ -42,10 +42,10 @@ export default function ProfileHeader({
         {serverError !== null && <h1>ERROR</h1>}
         {isLoading && !apiData?.profile ? (
           <>
-            <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 h-13 w-13'></div>
+            <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 dark:bg-white/20 h-13 w-13'></div>
             <div className='flex flex-col animate-pulse duration-900'>
-              <p className='h-5 rounded-2xl w-50 mb-2  bg-black/70'></p>
-              <p className='h-5 rounded-2xl w-70  bg-black/70'></p>
+              <p className='h-5 rounded-2xl w-50 mb-2  bg-black/70 dark:bg-white/20'></p>
+              <p className='h-5 rounded-2xl w-70  bg-black/70 dark:bg-white/20'></p>
             </div>
           </>
         ) : (
