@@ -3,8 +3,6 @@ import useFetchData from '../../../hooks/useFetchData';
 import isOnlineUpdate from '../../../services/api/isOnlineUpdate';
 import exports from '../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
-import DarkIcon from '../../../components/common/DarkIcon';
-import LightIcon from '../../../components/common/LightIcon';
 
 export default function ProfileHeader({
   isHidden,
@@ -16,7 +14,7 @@ export default function ProfileHeader({
   const { isLoading, serverError, apiData } = useFetchData(
     `dashboard/${localStorage.getItem('uid')}`,
   );
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Init is online update after user signs in ad uid
     // variable updates in local storage
@@ -81,8 +79,18 @@ export default function ProfileHeader({
               }}
               className='flex items-center relative'
             >
-              <DarkIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
-              <LightIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
+              <img
+                className='dark:hidden! block!'
+                width={25}
+                src={exports.moreBlack}
+                alt='default profile image'
+              />
+              <img
+                className='hidden! dark:block!'
+                width={25}
+                src={exports.moreWhite}
+                alt='default profile image'
+              />
               <ProfileDropdown isHidden={isHidden} />
             </div>
           </>
