@@ -3,6 +3,9 @@ import useFetchData from '../../../hooks/useFetchData';
 import isOnlineUpdate from '../../../services/api/isOnlineUpdate';
 import exports from '../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
+import DarkIcon from '../../../components/common/DarkIcon';
+import LightIcon from '../../../components/common/LightIcon';
+import { useNavigate } from 'react-router';
 
 export default function ProfileHeader({
   isHidden,
@@ -11,10 +14,11 @@ export default function ProfileHeader({
   isHidden: boolean;
   setIsHidden: Dispatch<SetStateAction<boolean>>;
 }) {
+  const navigate = useNavigate();
   const { isLoading, serverError, apiData } = useFetchData(
     `dashboard/${localStorage.getItem('uid')}`,
   );
-  const navigate = useNavigate();
+
   useEffect(() => {
     // Init is online update after user signs in ad uid
     // variable updates in local storage
@@ -30,6 +34,10 @@ export default function ProfileHeader({
     return () => clearInterval(interval);
   }, []);
 
+  if (serverError !== null) {
+    navigate('/');
+  }
+
   return (
     <header>
       <div
@@ -39,7 +47,6 @@ export default function ProfileHeader({
         }}
         className={`flex p-5`}
       >
-        {serverError !== null && <h1>ERROR</h1>}
         {isLoading && !apiData?.profile ? (
           <>
             <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 dark:bg-white/20 h-13 w-13'></div>
@@ -79,18 +86,8 @@ export default function ProfileHeader({
               }}
               className='flex items-center relative'
             >
-              <img
-                className='dark:hidden! block!'
-                width={25}
-                src={exports.moreBlack}
-                alt='default profile image'
-              />
-              <img
-                className='hidden! dark:block!'
-                width={25}
-                src={exports.moreWhite}
-                alt='default profile image'
-              />
+              <DarkIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
+              <LightIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
               <ProfileDropdown isHidden={isHidden} />
             </div>
           </>
