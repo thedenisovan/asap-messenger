@@ -17,7 +17,7 @@ export default function ProfileDropdown({ isHidden }: { isHidden: boolean }) {
       className='absolute rounded-xl dark:bg-white/10 bg-gray-50 border border-gray-200 dark:border-gray-800 transition-transform origin-top-right duration-100 right-5 top-10 min-w-50'
       style={{ transform: isHidden ? 'scale(0)' : 'scale(1)' }}
     >
-      <li className='hover:bg-gray-100 gap-4 flex cursor-pointer dark:hover:bg-gray-800/80 rounded-t-lg transition-colors duration-75 py-3 pl-4 pr-9'>
+      <li className='hover:bg-gray-100 gap-4 flex cursor-pointer dark:hover:bg-gray-800/80 rounded-t-lg transition-colors duration-75 py-3 pl-4'>
         <img
           src={exports.whiteUser}
           width={20}
@@ -30,7 +30,7 @@ export default function ProfileDropdown({ isHidden }: { isHidden: boolean }) {
           className='block! dark:hidden!'
           alt='user profile img'
         />
-        <p className='text-gray-800 dark:text-gray-200'>Profile Setting</p>
+        <p className='text-gray-800 dark:text-gray-200'>Profile Settings</p>
       </li>
       <li className='flex gap-3 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-800/80 transition-colors duration-75 py-3 pl-4 pr-9'>
         <LightIcon path='M720-400v-120H600v-80h120v-120h80v120h120v80H800v120h-80ZM247-527q-47-47-47-113t47-113q47-47 113-47t113 47q47 47 47 113t-47 113q-47 47-113 47t-113-47ZM40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm80-80h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm296.5-343.5Q440-607 440-640t-23.5-56.5Q393-720 360-720t-56.5 23.5Q280-673 280-640t23.5 56.5Q327-560 360-560t56.5-23.5ZM360-640Zm0 400Z' />
