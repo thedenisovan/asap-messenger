@@ -14,6 +14,7 @@ dashboard.get('/', verifyToken, (req, res) =>
 
 dashboard.get('/:profileId/contacts', verifyToken, getContactList);
 dashboard.get('/:profileId', verifyToken, getProfileData);
+
 dashboard.put('/isOnlineUpdate', verifyToken, isOnlineUpdate);
 dashboard.put('/addNewContact', verifyToken, addNewContact);
 

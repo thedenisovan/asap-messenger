@@ -7,7 +7,12 @@ export default async function getContactList(req: Request, res: Response) {
   try {
     const contacts = await prisma.user.findUnique({
       where: { profileId: Number(profileId) },
-      select: { contacts: true, blocked: true },
+      select: {
+        contacts: true,
+        blocked: true,
+        contactBy: true,
+        blockedBy: true,
+      },
     });
 
     if (!contacts)

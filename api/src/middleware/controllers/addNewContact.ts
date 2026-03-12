@@ -10,16 +10,17 @@ export default async function addNewContact(req: Request, res: Response) {
     });
 
     const profile = await prisma.profile.findUnique({
-      where: { id: profileId },
+      where: { id: Number(profileId) },
     });
 
+    // If user with given email does not exist
     if (!newContact || !profile) return res.sendStatus(404);
 
     // If user tries to add him self to contact forbid it
     if (newContact.email === profile.email)
       return res
         .status(403)
-        .json({ message: 'cant add your self to contacts' });
+        .json({ message: 'Cant add your self to contacts' });
 
     // Update user who adds new contact, by adding contact to his contact list
     await prisma.user.update({
@@ -31,11 +32,13 @@ export default async function addNewContact(req: Request, res: Response) {
     // person who adds him
     await prisma.user.update({
       where: { profileId: Number(newContact.id) },
-      data: { contactBy: { connect: { profileId } } },
+      data: { contactBy: { connect: { profileId: Number(profileId) } } },
     });
 
     return res.sendStatus(200);
-  } catch (error) {
-    return res.status(500).json({ error });
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      return res.status(500).json({ errorMessage: error.message });
+    else return res.status(500).json({ errorMessage: String(error) });
   }
 }
