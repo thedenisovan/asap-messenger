@@ -7,7 +7,7 @@ async function getPayload() {
 
     if (!token) return false;
 
-    const response = await fetch(URL.BASE_URL + 'chatPage', {
+    const response = await fetch(URL.BASE_URL + 'dashboard', {
       headers: {
         'Content-Type': 'application/json',
         authorization: 'Bearer ' + token,

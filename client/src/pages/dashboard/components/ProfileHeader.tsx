@@ -3,6 +3,8 @@ import useFetchData from '../../../hooks/useFetchData';
 import isOnlineUpdate from '../../../services/api/isOnlineUpdate';
 import exports from '../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
+import DarkIcon from '../../../components/common/DarkIcon';
+import LightIcon from '../../../components/common/LightIcon';
 
 export default function ProfileHeader({
   isHidden,
@@ -12,7 +14,7 @@ export default function ProfileHeader({
   setIsHidden: Dispatch<SetStateAction<boolean>>;
 }) {
   const { isLoading, serverError, apiData } = useFetchData(
-    `chatPage/${localStorage.getItem('uid')}`,
+    `dashboard/${localStorage.getItem('uid')}`,
   );
 
   useEffect(() => {
@@ -79,18 +81,8 @@ export default function ProfileHeader({
               }}
               className='flex items-center relative'
             >
-              <img
-                className='dark:hidden! block!'
-                width={25}
-                src={exports.moreBlack}
-                alt='default profile image'
-              />
-              <img
-                className='hidden! dark:block!'
-                width={25}
-                src={exports.moreWhite}
-                alt='default profile image'
-              />
+              <DarkIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
+              <LightIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
               <ProfileDropdown isHidden={isHidden} />
             </div>
           </>

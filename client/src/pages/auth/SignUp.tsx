@@ -1,6 +1,6 @@
-import AuthFrom from './sections/AuthForm';
-import AuthHeader from './sections/AuthHeader';
-import AuthFooter from './sections/AuthFooter';
+import AuthFrom from './components/AuthForm';
+import AuthHeader from './components/AuthHeader';
+import AuthFooter from './components/AuthFooter';
 
 export default function SingUp() {
   return (

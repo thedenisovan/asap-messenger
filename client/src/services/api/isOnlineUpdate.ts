@@ -2,7 +2,7 @@ import URL from '../../constants/constants';
 
 export default async function isOnlineUpdate(isOnline: boolean) {
   try {
-    const response = await fetch(`${URL.BASE_URL}chatPage/isOnlineUpdate`, {
+    const response = await fetch(`${URL.BASE_URL}dashboard/isOnlineUpdate`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -2,7 +2,7 @@ import '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { describe, test, expect, afterEach } from 'vitest';
 import { fireEvent, render, screen, cleanup } from '@testing-library/react';
-import AuthFrom from '../../pages/auth/sections/AuthForm';
+import AuthFrom from '../../pages/auth/components/AuthForm';
 import { MemoryRouter } from 'react-router';
 
 afterEach(() => {

@@ -21,16 +21,16 @@ export default function useFetchData(path: string) {
           },
         });
 
-        if (!response.ok)
+        if (!response.ok) {
           setServerError(`Error exit status ${response.status}`);
+        } else {
+          const result = await response.json();
+          setApiData(result);
+        }
 
-        const result = await response.json();
-
-        setApiData(result);
         setIsLoading(false);
-        setServerError(null);
       } catch (error) {
-        if (error instanceof Error) setServerError(String(error));
+        if (error instanceof Error) setServerError(String(error.message));
         else setServerError('Unknown error');
       }
     };

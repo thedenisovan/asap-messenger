@@ -5,7 +5,7 @@ import Auth from '../pages/auth/Auth';
 import SignIn from '../pages/auth/SingIn';
 import SingUp from '../pages/auth/SignUp';
 import ErrorPage from '../components/layout/ErrorPage';
-import ChatPage from '../pages/chats/ChatPage';
+import Dashboard from '../pages/dashboard/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'chatPage/:uid',
-        Component: ChatPage,
+        path: 'dashboard/:uid',
+        Component: Dashboard,
       },
     ],
   },

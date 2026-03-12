@@ -1,6 +1,6 @@
-import AuthFooter from './sections/AuthFooter';
-import AuthFrom from './sections/AuthForm';
-import AuthHeader from './sections/AuthHeader';
+import AuthFooter from './components/AuthFooter';
+import AuthFrom from './components/AuthForm';
+import AuthHeader from './components/AuthHeader';
 
 export default function Signin() {
   return (

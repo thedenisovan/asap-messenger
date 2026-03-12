@@ -127,7 +127,7 @@ export default function AuthFrom({
           } else if (result && !isSignUpForm) {
             // Navigate to chat page with uid 0,
             // later it is redirected to page of users uid
-            navigate('/chatPage/0');
+            navigate('/dashboard/0');
           }
         }}
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'

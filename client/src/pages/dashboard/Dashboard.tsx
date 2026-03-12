@@ -3,9 +3,9 @@ import getPayload from '../../services/api/getPayload';
 import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
 import signOut from '../../utils/signout';
-import ProfileHeader from './sections/ProfileHeader';
+import ProfileHeader from './components/ProfileHeader';
 
-export default function ChatPage() {
+export default function Dashboard() {
   const navigate = useNavigate();
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
@@ -30,7 +30,7 @@ export default function ChatPage() {
         signOut();
       }
 
-      navigate(`/chatPage/${localStorage.getItem('uid')}`);
+      navigate(`/dashboard/${localStorage.getItem('uid')}`);
     };
 
     validatePayload();
