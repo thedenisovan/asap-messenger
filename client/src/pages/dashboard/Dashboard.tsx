@@ -4,6 +4,7 @@ import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
 import signOut from '../../utils/signout';
 import ProfileHeader from './components/ProfileHeader';
+import NewContactForm from './components/NewContactForm';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function Dashboard() {
     >
       <aside className='dark:bg-black/93  dark:text-white h-screen'>
         <ProfileHeader isHidden={isHidden} setIsHidden={setIsHidden} />
+        <NewContactForm />
       </aside>
     </main>
   );
