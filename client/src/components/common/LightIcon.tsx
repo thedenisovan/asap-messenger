@@ -1,10 +1,16 @@
-export default function LightIcon({ path }: { path: string }) {
+export default function LightIcon({
+  path,
+  width = '24px',
+}: {
+  path: string;
+  width?: string;
+}) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      height='24px'
+      height={width}
       viewBox='0 -960 960 960'
-      width='24px'
+      width={width}
       fill='#e5e7eb'
       className='hidden! dark:block!'
     >
