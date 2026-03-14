@@ -2,15 +2,28 @@ import { useContext, useState } from 'react';
 import DarkIcon from '../../../components/common/DarkIcon';
 import LightIcon from '../../../components/common/LightIcon';
 import DashboardContext from '../../../context/DashboardContext';
+import addNewContact from '../../../services/api/addNewContact';
 
 export default function NewContactForm() {
   const [email, setEmail] = useState<string>('');
+  const [dialogError, setDialogError] = useState<string>('');
   const dashboard = useContext(DashboardContext);
+
+  const clearDialog = () => {
+    dashboard.setIsBlurred(false);
+    setEmail('');
+    setDialogError('');
+  };
 
   return (
     <dialog
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          clearDialog();
+        }
+      }}
       id='new-contact-dialog'
-      className='dark:text-white  dark:bg-white/10 gap-4 rounded-2xl w-[90%] max-w-140 border border-gray-400 dark:border-gray-600 absolute top-[50%] left-[50%] -translate-[50%]'
+      className='dark:text-white  dark:bg-neutral-800 gap-4 rounded-2xl w-[90%] max-w-140 border border-gray-400 dark:border-gray-600 absolute top-[50%] left-[50%] -translate-[50%]'
     >
       <header className='px-6 py-6 border-b border-gray-300 dark:border-gray-500 flex justify-between'>
         <div className='flex gap-1 items-center'>
@@ -32,18 +45,18 @@ export default function NewContactForm() {
           command='close'
           commandfor='new-contact-dialog'
           onClick={() => {
-            setEmail('');
-            dashboard.setIsBlurred(false);
+            clearDialog();
           }}
         >
           <DarkIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
-          <LightIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"' />
+          <LightIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
         </button>
       </header>
-      <p className='px-6 pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300'>
+      <p className='px-6 pt-6 pb-3 text-sm text-gray-700 dark:text-gray-300'>
         Enter the unique email of person you want to find and add to your
         contact's.
       </p>
+      <p className='px-6 pb-3 text-red-400 list-disc'>{dialogError}</p>
       <form
         className='flex px-6 flex-col gap-4'
         onSubmit={(e) => e.preventDefault()}
@@ -67,19 +80,31 @@ export default function NewContactForm() {
             command='close'
             commandfor='new-contact-dialog'
             onClick={() => {
-              setEmail('');
-              dashboard.setIsBlurred(false);
+              clearDialog();
             }}
           >
             Cancel
           </button>
           <button
             type='button'
-            command='close'
-            commandfor='new-contact-dialog'
-            onClick={() => {
+            onClick={async () => {
+              const result = await addNewContact(email);
+              const dialog = document.getElementById(
+                'new-contact-dialog',
+              ) as HTMLDialogElement | null;
+
+              // if result is 403 or 404 show error message eg cant add your self
+              // or user not found
+              if (result === 403) {
+                setDialogError('Cant add your self to contacts.');
+              } else if (result === 404) {
+                setDialogError('Cant find user with given email.');
+              } else {
+                // close module
+                clearDialog();
+                dialog?.close();
+              }
               setEmail('');
-              dashboard.setIsBlurred(false);
             }}
             className='hover:bg-black/10 dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-300 border'
           >

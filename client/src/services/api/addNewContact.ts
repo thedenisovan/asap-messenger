@@ -15,9 +15,13 @@ export default async function addNewContact(email: string) {
     });
 
     if (!response.ok) {
+      if (response.status === 404 || response.status === 403)
+        return response.status;
+
       const text = await response.text();
       throw new Error(`Error status: ${response.status}, message: ${text}`);
     }
+
     // Because server does not return json don't try to extract result.json()
   } catch (error) {
     if (error instanceof Error) throw new Error(error.message);
