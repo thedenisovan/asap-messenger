@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DarkIcon from '../../../components/common/DarkIcon';
 import LightIcon from '../../../components/common/LightIcon';
+import DashboardContext from '../../../context/DashboardContext';
 
 export default function NewContactForm() {
   const [email, setEmail] = useState<string>('');
+  const dashboard = useContext(DashboardContext);
 
   return (
     <dialog
       id='new-contact-dialog'
       className='dark:text-white  dark:bg-white/10 gap-4 rounded-2xl w-[90%] max-w-140 border border-gray-400 dark:border-gray-600 absolute top-[50%] left-[50%] -translate-[50%]'
     >
-      <header className='px-6 py-6 border-b border-gray-400 dark:border-gray-500 flex justify-between'>
+      <header className='px-6 py-6 border-b border-gray-300 dark:border-gray-500 flex justify-between'>
         <div className='flex gap-1 items-center'>
           <LightIcon
             width='26px'
@@ -29,13 +31,16 @@ export default function NewContactForm() {
           type='button'
           command='close'
           commandfor='new-contact-dialog'
-          onClick={() => setEmail('')}
+          onClick={() => {
+            setEmail('');
+            dashboard.setIsBlurred(false);
+          }}
         >
           <DarkIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
           <LightIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"' />
         </button>
       </header>
-      <p className='px-6 pt-6 pb-6 text-sm dark:text-gray-300'>
+      <p className='px-6 pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300'>
         Enter the unique email of person you want to find and add to your
         contact's.
       </p>
@@ -43,12 +48,12 @@ export default function NewContactForm() {
         className='flex px-6 flex-col gap-4'
         onSubmit={(e) => e.preventDefault()}
       >
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col'>
           <label htmlFor='email'>Referral Email</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className='p-4! dark:bg-black/30!'
+            className='p-3! dark:bg-black/30!'
             type='email'
             name='email'
             id='email'
@@ -57,11 +62,14 @@ export default function NewContactForm() {
         </div>
         <div className='grid grid-cols-2 pt-2 pb-4 gap-4'>
           <button
-            className='hover:bg-black/60 dark:text-white transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white/10 bg-black/50 dark:border-gray-600 text-white border-gray-400 border  '
+            className='hover:bg-black/60 dark:text-white transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white/10 bg-black dark:border-gray-600 text-white border-gray-400 border  '
             type='button'
             command='close'
             commandfor='new-contact-dialog'
-            onClick={() => setEmail('')}
+            onClick={() => {
+              setEmail('');
+              dashboard.setIsBlurred(false);
+            }}
           >
             Cancel
           </button>
@@ -69,8 +77,11 @@ export default function NewContactForm() {
             type='button'
             command='close'
             commandfor='new-contact-dialog'
-            onClick={() => setEmail('')}
-            className='hover:bg-black/10 dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-400 border'
+            onClick={() => {
+              setEmail('');
+              dashboard.setIsBlurred(false);
+            }}
+            className='hover:bg-black/10 dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-300 border'
           >
             Find & Add
           </button>

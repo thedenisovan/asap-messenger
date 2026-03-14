@@ -1,32 +1,29 @@
-import { useEffect, type Dispatch, type SetStateAction } from 'react';
-import useFetchData from '../../../hooks/useFetchData';
-import isOnlineUpdate from '../../../services/api/isOnlineUpdate';
-import exports from '../../../utils/imports';
+import { useEffect } from 'react';
+import useFetchData from '../../../../../../hooks/useFetchData';
+import isOnlineUpdate from '../../../../../../services/api/isOnlineUpdate';
+import exports from '../../../../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
-import DarkIcon from '../../../components/common/DarkIcon';
-import LightIcon from '../../../components/common/LightIcon';
+import DarkIcon from '../../../../../../components/common/DarkIcon';
+import LightIcon from '../../../../../../components/common/LightIcon';
 import { useNavigate } from 'react-router';
+import { useContext } from 'react';
+import DashboardContext from '../../../../../../context/DashboardContext';
 
-export default function ProfileHeader({
-  isHidden,
-  setIsHidden,
-}: {
-  isHidden: boolean;
-  setIsHidden: Dispatch<SetStateAction<boolean>>;
-}) {
+export default function ProfileHeader() {
   const navigate = useNavigate();
   const { isLoading, serverError, apiData } = useFetchData(
     `dashboard/${localStorage.getItem('uid')}`,
   );
+  const dashContext = useContext(DashboardContext);
 
   useEffect(() => {
-    // Init is online update after user signs in ad uid
+    // Init is online update after user signs in, uid
     // variable updates in local storage
     setTimeout(() => {
       isOnlineUpdate(true);
     }, 1000);
 
-    // Update user last online time every 2mins
+    // Update user last online time every 2mins by sending request
     const interval = setInterval(() => {
       isOnlineUpdate(true);
     }, 120000);
@@ -74,7 +71,7 @@ export default function ProfileHeader({
                 />
               </div>
               <div>
-                <h1 className='text-lg font-bold'>
+                <h1 className='text-md font-bold'>
                   {apiData?.profile?.username}
                 </h1>
                 {/* User all ways sees his status as online */}
@@ -83,14 +80,13 @@ export default function ProfileHeader({
             </div>
             <div
               onClick={() => {
-                setIsHidden((val) => !val);
+                dashContext.setIsHidden((val) => !val);
               }}
               className='flex items-center relative'
             >
               <DarkIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
               <LightIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
-
-              <ProfileDropdown isHidden={isHidden} />
+              <ProfileDropdown />
             </div>
           </>
         )}
