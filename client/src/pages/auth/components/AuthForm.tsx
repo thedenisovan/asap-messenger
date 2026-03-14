@@ -105,6 +105,10 @@ export default function AuthFrom({
         role='auth-button'
         onClick={async (e) => {
           e.preventDefault();
+          setEmail('');
+          setPassword('');
+          setPasswordConfirm('');
+          setUsername('');
 
           validatePassword();
 
