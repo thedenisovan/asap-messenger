@@ -1,5 +1,5 @@
 export default function LightIcon({
-  path,
+  path = '',
   width = '24px',
 }: {
   path: string;

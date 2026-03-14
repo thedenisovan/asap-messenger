@@ -45,7 +45,7 @@ export default function ProfileHeader() {
         className={`flex p-5`}
       >
         {/* If data from fetch request is still loading display skeleton loader */}
-        {isLoading && !apiData?.profile ? (
+        {isLoading ? (
           <>
             <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 dark:bg-white/20 h-13 w-13'></div>
             <div className='flex flex-col animate-pulse duration-900'>

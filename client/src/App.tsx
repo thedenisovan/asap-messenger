@@ -1,10 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function App() {
   const [globalTheme, setGlobalTheme] = useState<string>(
     localStorage.theme ?? 'dark',
   );
+  const navigate = useNavigate();
+  const uid = localStorage.getItem('uid');
+
+  useEffect(() => {
+    const navSignedUser = () => {
+      if (uid !== '0') {
+        navigate(`/dashboard/${uid}`, { replace: true });
+      }
+    };
+
+    navSignedUser();
+  }, [uid, navigate]);
 
   // Toggles between dark and light theme
   const toggleGlobalTheme = () => {
