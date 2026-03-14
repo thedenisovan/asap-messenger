@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
-import DarkIcon from '../../../components/common/DarkIcon';
-import LightIcon from '../../../components/common/LightIcon';
-import DashboardContext from '../../../context/DashboardContext';
-import addNewContact from '../../../services/api/addNewContact';
+import DarkIcon from '../../components/common/DarkIcon';
+import LightIcon from '../../components/common/LightIcon';
+import DashboardContext from '../../context/DashboardContext';
+import addNewContact from '../../services/api/addNewContact';
 
 export default function NewContactForm() {
   const [email, setEmail] = useState<string>('');

@@ -3,10 +3,10 @@ import getPayload from '../../services/api/getPayload';
 import autoSignout from '../../utils/autoSignout';
 import { useNavigate } from 'react-router';
 import signOut from '../../utils/signout';
-import NewContactForm from './components/NewContactForm';
+import NewContactForm from './NewContactForm';
 import DashboardContext from '../../context/DashboardContext';
-import Aside from './components/sections/aside/Aside';
-import ChatSection from './components/sections/chats/ChatSection';
+import ChatSection from './sections/chats/ChatSection';
+import Aside from './sections/aside/Aside';
 
 export default function Dashboard() {
   const navigate = useNavigate();

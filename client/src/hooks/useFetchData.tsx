@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import URL from '../constants/constants';
 import type ProfileData from '../types/apiData';
+// import type { ContactProfile } from '../types/apiData';
 
 export default function useFetchData(path: string) {
   const [isLoading, setIsLoading] = useState<boolean>(false);

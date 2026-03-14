@@ -1,11 +1,11 @@
-import isOnlineUpdate from '../../../../../../services/api/isOnlineUpdate';
-import signOut from '../../../../../../utils/signout';
+import isOnlineUpdate from '../../../../../services/api/isOnlineUpdate';
+import signOut from '../../../../../utils/signout';
 import { useNavigate, useOutletContext } from 'react-router';
-import exports from '../../../../../../utils/imports';
-import LightIcon from '../../../../../../components/common/LightIcon';
-import DarkIcon from '../../../../../../components/common/DarkIcon';
+import exports from '../../../../../utils/imports';
+import LightIcon from '../../../../../components/common/LightIcon';
+import DarkIcon from '../../../../../components/common/DarkIcon';
 import { useContext } from 'react';
-import DashboardContext from '../../../../../../context/DashboardContext';
+import DashboardContext from '../../../../../context/DashboardContext';
 
 export default function ProfileDropdown() {
   const navigate = useNavigate();

@@ -1,11 +1,12 @@
 export default interface ProfileData {
-  profile: {
+  profile?: {
     avatarUrl: string;
     email: string;
     id: number;
     isOnline: boolean;
-    latOnline: string;
+    lastOnline: string;
     password: string;
     username: string;
   };
+  contactsProfiles?: profile[];
 }

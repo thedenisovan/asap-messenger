@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import useFetchData from '../../../../../../hooks/useFetchData';
-import isOnlineUpdate from '../../../../../../services/api/isOnlineUpdate';
-import exports from '../../../../../../utils/imports';
+import useFetchData from '../../../../../hooks/useFetchData';
+import isOnlineUpdate from '../../../../../services/api/isOnlineUpdate';
+import exports from '../../../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
-import DarkIcon from '../../../../../../components/common/DarkIcon';
-import LightIcon from '../../../../../../components/common/LightIcon';
+import DarkIcon from '../../../../../components/common/DarkIcon';
+import LightIcon from '../../../../../components/common/LightIcon';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
-import DashboardContext from '../../../../../../context/DashboardContext';
+import DashboardContext from '../../../../../context/DashboardContext';
 
 export default function ProfileHeader() {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function ProfileHeader() {
   }
 
   return (
-    <header>
+    <header className='border-b dark:border-b-gray-700 border-b-gray-300'>
       <div
         style={{
           justifyContent: isLoading ? '' : 'space-between',

@@ -15,10 +15,18 @@ export default async function getContactList(req: Request, res: Response) {
       },
     });
 
-    if (!contacts)
+    const contactsProfiles = await prisma.profile.findMany({
+      where: {
+        id: {
+          in: contacts?.contacts.map((user) => user.profileId),
+        },
+      },
+    });
+
+    if (!contacts || !contactsProfiles)
       return res.status(200).json({ message: 'profile not found' });
 
-    return res.status(200).json({ contacts });
+    return res.status(200).json({ contactsProfiles });
   } catch (error) {
     return res.status(500).json({ error });
   }
