@@ -24,5 +24,3 @@ export default function Contacts() {
     </div>
   );
 }
-
-// <div>{isLoading ? <h1>LOading</h1> : <ul>{apiData?.contacts}</ul>}</div>
