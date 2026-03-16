@@ -7,12 +7,14 @@ import NewContactForm from './NewContactForm';
 import DashboardContext from '../../context/DashboardContext';
 import ChatSection from './sections/chats/ChatSection';
 import Aside from './sections/aside/Aside';
+import type ProfileData from '../../types/apiData';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [isHidden, setIsHidden] = useState<boolean>(true);
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
+  const [contactsProfile, setContactsProfile] = useState<ProfileData[]>([]);
 
   useEffect(() => {
     const validatePayload = async () => {
@@ -40,10 +42,18 @@ export default function Dashboard() {
 
     validatePayload();
   }, [navigate]);
+
   return (
     <>
       <DashboardContext
-        value={{ setIsBlurred, isHidden, setIsHidden, isBlurred }}
+        value={{
+          setIsBlurred,
+          isHidden,
+          setIsHidden,
+          isBlurred,
+          contactsProfile,
+          setContactsProfile,
+        }}
       >
         <main
           className='flex  dark:bg-black/87 dark:text-white min-h-screen min-w-screen'

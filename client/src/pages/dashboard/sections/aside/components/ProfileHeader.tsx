@@ -8,12 +8,15 @@ import LightIcon from '../../../../../components/common/LightIcon';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
+import type ProfileData from '../../../../../types/apiData';
 
 export default function ProfileHeader() {
   const navigate = useNavigate();
-  const { isLoading, serverError, apiData } = useFetchData(
+  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
     `dashboard/${localStorage.getItem('uid')}`,
   );
+
+  console.log(apiData);
   const dashContext = useContext(DashboardContext);
 
   useEffect(() => {
@@ -42,7 +45,7 @@ export default function ProfileHeader() {
           justifyContent: isLoading ? '' : 'space-between',
           gap: isLoading ? '1rem' : '',
         }}
-        className={`flex p-5`}
+        className={`flex p-3`}
       >
         {/* If data from fetch request is still loading display skeleton loader */}
         {isLoading ? (
@@ -71,16 +74,14 @@ export default function ProfileHeader() {
                 />
               </div>
               <div>
-                <h1 className='text-md font-bold'>
-                  {apiData?.profile?.username}
-                </h1>
+                <h1 className='text-md font-bold'>{apiData?.username}</h1>
                 {/* User all ways sees his status as online */}
                 <p className='text-gray-600 dark:text-gray-200'>online</p>
               </div>
             </div>
             <div
               onClick={() => {
-                dashContext.setIsHidden((val) => !val);
+                dashContext!.setIsHidden((val) => !val);
               }}
               className='flex items-center relative'
             >

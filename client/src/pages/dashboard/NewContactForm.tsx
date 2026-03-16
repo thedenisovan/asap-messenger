@@ -10,7 +10,7 @@ export default function NewContactForm() {
   const dashboard = useContext(DashboardContext);
 
   const clearDialog = () => {
-    dashboard.setIsBlurred(false);
+    dashboard?.setIsBlurred(false);
     setEmail('');
     setDialogError('');
   };
@@ -62,7 +62,7 @@ export default function NewContactForm() {
         onSubmit={(e) => e.preventDefault()}
       >
         <div className='flex flex-col'>
-          <label htmlFor='email'>Referral Email</label>
+          <label htmlFor='email'>Contacts Email</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,8 @@ export default function NewContactForm() {
               } else if (result === 404) {
                 setDialogError('Cant find user with given email.');
               } else {
-                // close module
+                // close module and update contacts state
+                dashboard?.setContactsProfile((val) => [...val, result]);
                 clearDialog();
                 dialog?.close();
               }

@@ -6,7 +6,7 @@ export default function ChatSection() {
 
   return (
     <section
-      className={`w-full bg-gray-50 dark:bg-black/20 ${dashboard.isBlurred ? '*:blur-xs' : ''}`}
+      className={`w-full bg-gray-50 dark:bg-black/20 ${dashboard!.isBlurred ? '*:blur-xs' : ''}`}
     ></section>
   );
 }
