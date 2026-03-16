@@ -26,7 +26,7 @@ export default async function getContactList(req: Request, res: Response) {
     if (!contacts || !contactsProfiles)
       return res.status(200).json({ message: 'profile not found' });
 
-    return res.status(200).json({ contactsProfiles });
+    return res.status(200).json(contactsProfiles);
   } catch (error) {
     return res.status(500).json({ error });
   }

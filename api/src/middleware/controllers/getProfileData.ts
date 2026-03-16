@@ -11,7 +11,7 @@ export default async function getProfileData(req: Request, res: Response) {
 
     if (!profile) return res.status(200).json({ message: 'profile not found' });
 
-    return res.status(200).json({ profile });
+    return res.status(200).json(profile);
   } catch (error) {
     return res.status(500).json({ error });
   }

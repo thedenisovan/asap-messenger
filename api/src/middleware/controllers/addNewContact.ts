@@ -17,10 +17,7 @@ export default async function addNewContact(req: Request, res: Response) {
     if (!newContact || !profile) return res.sendStatus(404);
 
     // If user tries to add him self to contact forbid it
-    if (newContact.email === profile.email)
-      return res
-        .status(403)
-        .json({ message: 'Cant add your self to contacts' });
+    if (newContact.email === profile.email) return res.sendStatus(403);
 
     // Update user who adds new contact, by adding contact to his contact list
     await prisma.user.update({
@@ -35,7 +32,7 @@ export default async function addNewContact(req: Request, res: Response) {
       data: { contactBy: { connect: { profileId: Number(profileId) } } },
     });
 
-    return res.sendStatus(200);
+    return res.status(200).json(newContact);
   } catch (error: unknown) {
     if (error instanceof Error)
       return res.status(500).json({ errorMessage: error.message });
