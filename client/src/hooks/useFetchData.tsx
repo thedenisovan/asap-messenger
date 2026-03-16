@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import URL from '../constants/constants';
-import type ProfileData from '../types/apiData';
 // import type { ContactProfile } from '../types/apiData';
 
-export default function useFetchData(path: string) {
+export default function useFetchData<T>(path: string) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiData, setApiData] = useState<ProfileData | null>(null);
+  const [apiData, setApiData] = useState<T | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const uid = localStorage.getItem('uid');
 

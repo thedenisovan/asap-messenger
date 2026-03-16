@@ -22,7 +22,9 @@ export default async function addNewContact(email: string) {
       throw new Error(`Error status: ${response.status}, message: ${text}`);
     }
 
-    // Because server does not return json don't try to extract result.json()
+    const result = await response.json();
+
+    return result;
   } catch (error) {
     if (error instanceof Error) throw new Error(error.message);
     else return console.log(`Unknown error : ${error}`);
