@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import type ProfileData from '../../../../../types/apiData';
+import lastOnline from '../../../../../utils/lastOnline';
 
 export default function Contacts() {
   const { isLoading, serverError, apiData } = useFetchData<ProfileData[]>(
@@ -30,32 +31,16 @@ export default function Contacts() {
       {isLoading ? (
         <h1>LOADING</h1>
       ) : (
-        <ul>
+        <ul className='flex flex-col gap-2'>
           {dashboard?.contactsProfile.length
             ? dashboard?.contactsProfile?.map((contact) => (
                 <li key={contact.id} className='flex justify-between'>
                   <div>
                     <p className='font-medium'>{contact.username}</p>
-                    <p className='text-xs text-neutral-800'>
-                      {!contact.isOnline ||
-                      new Date(Date()).getTime() -
-                        new Date(contact.lastOnline).getTime() >
-                        120000
-                        ? 'offline'
-                        : 'online'}
+                    <p className='text-xs text-neutral-800 dark:text-neutral-300'>
+                      {lastOnline(contact.lastOnline)}
                     </p>
                   </div>
-                  <p className='text-xs text-neutral-800'>
-                    {/* {contact.lastOnline
-                      .split('T')[1]
-                      .split('.')[0]
-                      .split(':')[0] +
-                      ':' +
-                      contact.lastOnline
-                        .split('T')[1]
-                        .split('.')[0]
-                        .split(':')[1]} */}
-                  </p>
                 </li>
               ))
             : 'No contacts'}

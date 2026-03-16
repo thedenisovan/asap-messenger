@@ -11,7 +11,7 @@ export default async function isOnlineUpdate(req: Request, res: Response) {
       data: { isOnline, lastOnline: new Date() },
     });
 
-    return res.json({ profile });
+    return res.json(profile);
   } catch (error) {
     return res.status(500).json({ error });
   }

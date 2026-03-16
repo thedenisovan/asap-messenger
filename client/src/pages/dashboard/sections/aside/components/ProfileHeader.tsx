@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import type ProfileData from '../../../../../types/apiData';
+import URL from '../../../../../constants/constants';
 
 export default function ProfileHeader() {
   const navigate = useNavigate();
@@ -16,23 +17,39 @@ export default function ProfileHeader() {
     `dashboard/${localStorage.getItem('uid')}`,
   );
 
-  console.log(apiData);
   const dashContext = useContext(DashboardContext);
 
   useEffect(() => {
     // Init is online update after user signs in, uid
     // variable updates in local storage
-    setTimeout(() => {
-      isOnlineUpdate(true);
+    setTimeout(async () => {
+      await isOnlineUpdate(true);
     }, 1000);
 
-    // Update user last online time every 2mins by sending request
-    const interval = setInterval(() => {
-      isOnlineUpdate(true);
-    }, 120000);
+    // Update user last online time every 3 mins by sending request
+    const updateIsOnline = setInterval(async () => {
+      await isOnlineUpdate(true);
 
-    return () => clearInterval(interval);
-  }, []);
+      // Fetch contacts array
+      const response = await fetch(
+        `${URL.BASE_URL}dashboard/${localStorage.getItem('uid')}/contacts`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        },
+      );
+
+      const result = await response.json();
+
+      // Update contacts state to rerender they'r last online status
+      dashContext?.setContactsProfile(result);
+    }, 180000);
+
+    return () => clearInterval(updateIsOnline);
+  }, [dashContext]);
 
   if (serverError !== null) {
     navigate('/');
