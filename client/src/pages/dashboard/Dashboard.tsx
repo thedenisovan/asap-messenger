@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const [contactsProfile, setContactsProfile] = useState<ProfileData[]>([]);
   const [userProfile, setUserProfile] = useState<ProfileData | null>(null);
-  // Fetches data about user profile
+  // Fetches user profile data
   const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
     `dashboard/${localStorage.getItem('uid')}`,
   );
