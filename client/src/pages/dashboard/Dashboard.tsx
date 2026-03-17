@@ -8,6 +8,8 @@ import DashboardContext from '../../context/DashboardContext';
 import ChatSection from './sections/chats/ChatSection';
 import Aside from './sections/aside/Aside';
 import type ProfileData from '../../types/apiData';
+import ProfileSettings from './ProfileSettings';
+import useFetchData from '../../hooks/useFetchData';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -15,6 +17,11 @@ export default function Dashboard() {
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const [contactsProfile, setContactsProfile] = useState<ProfileData[]>([]);
+  const [userProfile, setUserProfile] = useState<ProfileData | null>(null);
+  // Fetches data about user profile
+  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
+    `dashboard/${localStorage.getItem('uid')}`,
+  );
 
   useEffect(() => {
     const validatePayload = async () => {
@@ -53,6 +60,11 @@ export default function Dashboard() {
           isBlurred,
           contactsProfile,
           setContactsProfile,
+          userProfile,
+          setUserProfile,
+          isLoading,
+          serverError,
+          apiData,
         }}
       >
         <main
@@ -68,6 +80,7 @@ export default function Dashboard() {
           <ChatSection />
         </main>
         <NewContactForm />
+        <ProfileSettings />
       </DashboardContext>
     </>
   );

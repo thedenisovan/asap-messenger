@@ -8,6 +8,11 @@ type DashboardContextType = {
   setIsBlurred: React.Dispatch<React.SetStateAction<boolean>>;
   contactsProfile: ProfileData[];
   setContactsProfile: React.Dispatch<React.SetStateAction<ProfileData[]>>;
+  userProfile: ProfileData | null;
+  setUserProfile: React.Dispatch<React.SetStateAction<ProfileData | null>>;
+  isLoading: boolean;
+  serverError: string | null;
+  apiData: ProfileData | null;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);

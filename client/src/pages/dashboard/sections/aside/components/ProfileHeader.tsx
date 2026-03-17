@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import useFetchData from '../../../../../hooks/useFetchData';
 import isOnlineUpdate from '../../../../../services/api/isOnlineUpdate';
 import exports from '../../../../../utils/imports';
 import ProfileDropdown from './ProfileDropdown';
@@ -8,14 +7,10 @@ import LightIcon from '../../../../../components/common/LightIcon';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
-import type ProfileData from '../../../../../types/apiData';
 import URL from '../../../../../constants/constants';
 
 export default function ProfileHeader() {
   const navigate = useNavigate();
-  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
-    `dashboard/${localStorage.getItem('uid')}`,
-  );
 
   const dashContext = useContext(DashboardContext);
 
@@ -51,7 +46,7 @@ export default function ProfileHeader() {
     return () => clearInterval(updateIsOnline);
   }, [dashContext]);
 
-  if (serverError !== null) {
+  if (dashContext?.serverError !== null) {
     navigate('/');
   }
 
@@ -59,13 +54,13 @@ export default function ProfileHeader() {
     <header className='border-b dark:border-b-gray-700 border-b-gray-300'>
       <div
         style={{
-          justifyContent: isLoading ? '' : 'space-between',
-          gap: isLoading ? '1rem' : '',
+          justifyContent: dashContext?.isLoading ? '' : 'space-between',
+          gap: dashContext?.isLoading ? '1rem' : '',
         }}
         className={`flex p-3`}
       >
         {/* If data from fetch request is still loading display skeleton loader */}
-        {isLoading ? (
+        {dashContext?.isLoading ? (
           <>
             <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 dark:bg-white/20 h-13 w-13'></div>
             <div className='flex flex-col animate-pulse duration-900'>
@@ -91,7 +86,9 @@ export default function ProfileHeader() {
                 />
               </div>
               <div>
-                <h1 className='text-md font-bold'>{apiData?.username}</h1>
+                <h1 className='text-md font-bold'>
+                  {dashContext?.apiData?.username}
+                </h1>
                 {/* User all ways sees his status as online */}
                 <p className='text-gray-600 dark:text-gray-200'>online</p>
               </div>
