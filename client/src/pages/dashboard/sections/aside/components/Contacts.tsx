@@ -40,6 +40,9 @@ export default function Contacts() {
                     <p className='text-xs text-neutral-800 dark:text-neutral-300'>
                       {lastOnline(contact.lastOnline)}
                     </p>
+                    <p className='text-xl'>
+                      {dashboard.apiData?.lastOnline.split('T')[1]}
+                    </p>
                   </div>
                 </li>
               ))

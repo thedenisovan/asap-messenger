@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var signup_routes_js_1 = require("./routes/signup.routes.js");
+var signin_routes_js_1 = require("./routes/signin.routes.js");
+var dashboard_routes_js_1 = require("./routes/dashboard.routes.js");
+var cors_1 = require("cors");
+var app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: false }));
+app.use('/signup', signup_routes_js_1.default);
+app.use('/signin', signin_routes_js_1.default);
+app.use('/dashboard', dashboard_routes_js_1.default);
+exports.default = app;
