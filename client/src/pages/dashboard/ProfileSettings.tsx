@@ -7,6 +7,10 @@ export default function ProfileSettings() {
   const dashboard = useContext(DashboardContext);
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  // Checks if user has made changes to his password or username if has
+  // display pass confirmation input
+  const [hasMadeChanges, setHasMadeChanges] = useState<boolean>(false);
 
   useEffect(() => {
     const updateProfileData = () => {
@@ -92,6 +96,27 @@ export default function ProfileSettings() {
             <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
               {' '}
               (6+ chars, at least one uppercase, lowercase, number and symbol.)
+            </span>
+          </label>
+          <input
+            placeholder='********'
+            className='w-full mb-5 bg-neutral-100 dark:bg-neutral-900! p-3!'
+            type='password'
+            name='password'
+            id='password'
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+        </div>
+
+        <div
+          className={`flex-col gap-2  ${username === dashboard?.apiData?.username && newPassword === '' ? 'hidden' : 'flex'}`}
+        >
+          <label htmlFor='username' className='font-bold!'>
+            Current Password
+            <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
+              {' '}
+              (enter current password to save changes.)
             </span>
           </label>
           <input
