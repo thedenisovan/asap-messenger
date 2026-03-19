@@ -8,9 +8,6 @@ export default function ProfileSettings() {
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
-  // Checks if user has made changes to his password or username if has
-  // display pass confirmation input
-  const [hasMadeChanges, setHasMadeChanges] = useState<boolean>(false);
 
   useEffect(() => {
     const updateProfileData = () => {
@@ -110,6 +107,8 @@ export default function ProfileSettings() {
         </div>
 
         <div
+          // Checks if user has made changes to his password or username if has
+          // display pass confirmation input
           className={`flex-col gap-2  ${username === dashboard?.apiData?.username && newPassword === '' ? 'hidden' : 'flex'}`}
         >
           <label htmlFor='username' className='font-bold!'>
