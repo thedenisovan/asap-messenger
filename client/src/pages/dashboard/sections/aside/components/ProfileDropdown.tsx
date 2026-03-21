@@ -20,12 +20,12 @@ export default function ProfileDropdown() {
       className='absolute rounded-xl dark:bg-[#333333] bg-gray-50 border border-gray-200 dark:border-gray-800 transition-transform origin-top-right duration-100 right-5 top-10 min-w-50'
       style={{ transform: dashContext!.isHidden ? 'scale(0)' : 'scale(1)' }}
     >
-      <li className='hover:bg-gray-100 cursor-pointer dark:hover:bg-[#222222] rounded-t-lg transition-colors duration-75 py-3 pl-4'>
+      <li className='hover:bg-gray-100 dark:hover:bg-[#222222] rounded-t-lg transition-colors duration-75'>
         <button
           command='show-modal'
           commandfor='profile-settings-modal'
           onClick={() => dashContext!.setIsBlurred(true)}
-          className='flex gap-4'
+          className='flex gap-4 w-full py-3 pl-4 cursor-pointer'
         >
           <img
             src={exports.whiteUser}
@@ -45,7 +45,7 @@ export default function ProfileDropdown() {
       <li className=' hover:bg-gray-100 cursor-pointer dark:hover:bg-[#222222] transition-colors duration-75'>
         <button
           onClick={() => dashContext!.setIsBlurred(true)}
-          className='flex gap-3 w-full py-3 pl-4 pr-9'
+          className='flex gap-3 w-full py-3 pl-4 pr-9 cursor-pointer'
           command='show-modal'
           commandfor='new-contact-dialog'
         >

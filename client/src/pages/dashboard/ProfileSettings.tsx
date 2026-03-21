@@ -2,23 +2,29 @@ import DarkIcon from '../../components/common/DarkIcon';
 import LightIcon from '../../components/common/LightIcon';
 import DashboardContext from '../../context/DashboardContext';
 import { useContext, useEffect, useState } from 'react';
+import updateProfile from '../../services/api/updateProfile';
+import type ValidationResult from '../../types/error';
 
 export default function ProfileSettings() {
   const dashboard = useContext(DashboardContext);
+  const apiData = dashboard?.apiData;
+
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>('');
+  const [errors, setErrors] = useState<ValidationResult[] | null>(null);
 
   useEffect(() => {
     const updateProfileData = () => {
-      if (dashboard?.apiData) {
-        setUsername(dashboard?.apiData?.username);
-        setEmail(dashboard?.apiData?.email);
+      if (apiData) {
+        setUsername(apiData?.username);
+        setEmail(apiData?.email);
       }
     };
 
     updateProfileData();
-  }, [dashboard]);
+  }, [apiData]);
 
   return (
     <dialog
@@ -40,6 +46,7 @@ export default function ProfileSettings() {
           commandfor='profile-settings-modal'
           onClick={() => {
             dashboard?.setIsBlurred(false);
+            setErrors(null);
           }}
         >
           <DarkIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
@@ -48,7 +55,7 @@ export default function ProfileSettings() {
       </header>
       {/* Avatar image */}
       <section className='flex flex-col justify-center items-center gap-2 my-7 '>
-        <div className='flex justify-center items-center bg-neutral-300 dark:bg-neutral-900 w-30 h-30 rounded-full'>
+        <div className='hover:cursor-pointer flex justify-center items-center bg-neutral-300 dark:bg-neutral-900 w-30 h-30 rounded-full'>
           {/* <img src="" alt="" /> */}
           AVATAR
         </div>
@@ -56,18 +63,32 @@ export default function ProfileSettings() {
           Click to change avatar photo
         </p>
       </section>
-      <form className='m-6 px-4 py-6 rounded-xl border border-neutral-300 dark:border-neutral-700'>
+      <ul className='flex flex-col justify-center px-11.5 text-red-400'>
+        {errors?.map((error) => {
+          if (error.msg !== 'Invalid value')
+            return (
+              <li className='list-disc' key={error.msg}>
+                {error.msg}
+              </li>
+            );
+        })}
+      </ul>
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className='m-6 px-4 py-6 rounded-xl border border-neutral-300 dark:border-neutral-700'
+      >
         <div className='flex flex-col gap-2'>
           <label htmlFor='email' className='font-bold!'>
             Your Email{' '}
             <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
-              (you can be found by this email. - can't be changed!)
+              (you can be found by this email - can't be changed!)
             </span>
           </label>
           <input
             value={email}
             type='email'
             id='email'
+            name='email'
             className='w-full mb-5 bg-neutral-100 dark:bg-neutral-900! p-3!'
             readOnly
           />
@@ -75,32 +96,39 @@ export default function ProfileSettings() {
 
         <div className='flex flex-col gap-2'>
           <label htmlFor='username' className='font-bold!'>
-            Username
+            Username{' '}
+            <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
+              {' '}
+              (6-16 chars long)
+            </span>
           </label>
           <input
             className='w-full mb-5 bg-neutral-100 dark:bg-neutral-900! p-3!'
             type='text'
             name='username'
             id='username'
+            minLength={6}
+            maxLength={16}
+            placeholder='johnDoe123'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
         <div className='flex flex-col gap-2'>
-          <label htmlFor='username' className='font-bold!'>
+          <label htmlFor='newPassword' className='font-bold!'>
             New Password
             <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
               {' '}
-              (6+ chars, at least one uppercase, lowercase, number and symbol.)
+              (6+ chars, at least one uppercase, lowercase, number and symbol)
             </span>
           </label>
           <input
             placeholder='********'
             className='w-full mb-5 bg-neutral-100 dark:bg-neutral-900! p-3!'
             type='password'
-            name='password'
-            id='password'
+            name='newPassword'
+            id='newPassword'
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
@@ -109,9 +137,9 @@ export default function ProfileSettings() {
         <div
           // Checks if user has made changes to his password or username if has
           // display pass confirmation input
-          className={`flex-col gap-2  ${username === dashboard?.apiData?.username && newPassword === '' ? 'hidden' : 'flex'}`}
+          className={`flex-col gap-2  ${username === apiData?.username && newPassword === '' ? 'hidden' : 'flex'}`}
         >
-          <label htmlFor='username' className='font-bold!'>
+          <label htmlFor='currentPassword' className='font-bold!'>
             Current Password
             <span className='text-sm font-normal text-neutral-700 dark:text-neutral-300'>
               {' '}
@@ -122,9 +150,65 @@ export default function ProfileSettings() {
             placeholder='********'
             className='w-full mb-5 bg-neutral-100 dark:bg-neutral-900! p-3!'
             type='password'
-            name='password'
-            id='password'
+            name='currentPassword'
+            id='currentPassword'
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
           />
+        </div>
+        <div className='flex justify-between'>
+          <button
+            type='button'
+            className='hover:cursor-pointer bg-black text-white hover:bg-neutral-700 dark:bg-neutral-500 px-4 py-1 dark:hover:bg-neutral-600 transition-colors  rounded-2xl'
+            command='close'
+            commandfor='profile-settings-modal'
+            onClick={() => {
+              dashboard?.setIsBlurred(false);
+              setErrors(null);
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={async () => {
+              const result = await updateProfile(
+                email,
+                username,
+                newPassword,
+                currentPassword,
+              );
+              dashboard?.setUserProfile((val) => ({ ...val!, username }));
+
+              if (result.errors) {
+                setErrors(result.errors);
+              } else if (result.message === 'Wrong current password') {
+                setErrors([
+                  {
+                    type: '',
+                    value: '',
+                    msg: result.message,
+                    path: '',
+                    location: '',
+                  },
+                ]);
+
+                setCurrentPassword('');
+              } else {
+                setErrors(null);
+                dashboard?.setIsBlurred(false);
+                setCurrentPassword('');
+
+                const modal = document.getElementById(
+                  'profile-settings-modal',
+                ) as HTMLDialogElement;
+                modal.close();
+              }
+            }}
+            type='button'
+            className='hover:cursor-pointer dark:bg-neutral-900 px-4 py-1 dark:hover:bg-neutral-700 transition-colors bg-neutral-500 text-white hover:bg-neutral-600  rounded-2xl'
+          >
+            Update
+          </button>
         </div>
       </form>
     </dialog>
