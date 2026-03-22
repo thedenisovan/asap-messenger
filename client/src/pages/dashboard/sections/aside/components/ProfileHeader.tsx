@@ -87,7 +87,7 @@ export default function ProfileHeader() {
               </div>
               <div>
                 <h1 className='text-md font-bold'>
-                  {dashContext?.apiData?.username}
+                  {dashContext?.userProfile?.username}
                 </h1>
                 {/* User all ways sees his status as online */}
                 <p className='text-gray-600 dark:text-gray-200'>online</p>

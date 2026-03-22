@@ -7,7 +7,7 @@ import type ValidationResult from '../../types/error';
 
 export default function ProfileSettings() {
   const dashboard = useContext(DashboardContext);
-  const apiData = dashboard?.apiData;
+  const userProfileData = dashboard?.userProfile;
 
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -17,14 +17,14 @@ export default function ProfileSettings() {
 
   useEffect(() => {
     const updateProfileData = () => {
-      if (apiData) {
-        setUsername(apiData?.username);
-        setEmail(apiData?.email);
+      if (userProfileData) {
+        setUsername(userProfileData?.username);
+        setEmail(userProfileData?.email);
       }
     };
 
     updateProfileData();
-  }, [apiData]);
+  }, [userProfileData]);
 
   // Clear error element and disable blur
   const closeModule = () => {
@@ -179,7 +179,7 @@ export default function ProfileSettings() {
         <div
           // Checks if user has made changes to his password or username if has
           // display pass confirmation input
-          className={`${username === apiData?.username && newPassword === '' ? 'hidden' : 'flex flex-col gap-2'}`}
+          className={`${username === userProfileData?.username && newPassword === '' ? 'hidden' : 'flex flex-col gap-2'}`}
         >
           <label htmlFor='currentPassword' className='font-bold!'>
             Current Password

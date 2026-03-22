@@ -47,8 +47,15 @@ export default function Dashboard() {
       navigate(`/dashboard/${localStorage.getItem('uid')}`);
     };
 
+    const updateProfileInfo = () => {
+      if (localStorage.getItem('uid') !== '0') {
+        setUserProfile(apiData);
+      }
+    };
+
+    updateProfileInfo();
     validatePayload();
-  }, [navigate]);
+  }, [navigate, apiData]);
 
   return (
     <>
