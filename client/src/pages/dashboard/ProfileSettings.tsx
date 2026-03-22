@@ -26,6 +26,50 @@ export default function ProfileSettings() {
     updateProfileData();
   }, [apiData]);
 
+  // Clear error element and disable blur
+  const closeModule = () => {
+    dashboard?.setIsBlurred(false);
+    setErrors(null);
+  };
+
+  const updateProfileData = async () => {
+    // Update profile with given data
+    const result = await updateProfile(
+      email,
+      username,
+      newPassword,
+      currentPassword,
+    );
+
+    // If error or wrong current password
+    if (result.errors) {
+      setErrors(result.errors);
+    } else if (result.message === 'Wrong current password') {
+      setErrors([
+        {
+          type: '',
+          value: '',
+          msg: result.message,
+          path: '',
+          location: '',
+        },
+      ]);
+
+      setCurrentPassword('');
+      // If all correct update data
+    } else {
+      closeModule();
+      setCurrentPassword('');
+      dashboard?.setUserProfile((val) => ({ ...val!, username }));
+
+      const modal = document.getElementById(
+        'profile-settings-modal',
+      ) as HTMLDialogElement;
+
+      modal.close();
+    }
+  };
+
   return (
     <dialog
       onKeyDown={(e) => {
@@ -44,10 +88,7 @@ export default function ProfileSettings() {
           className='hover:cursor-pointer'
           command='close'
           commandfor='profile-settings-modal'
-          onClick={() => {
-            dashboard?.setIsBlurred(false);
-            setErrors(null);
-          }}
+          onClick={() => closeModule()}
         >
           <DarkIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
           <LightIcon path='m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z' />
@@ -63,6 +104,7 @@ export default function ProfileSettings() {
           Click to change avatar photo
         </p>
       </section>
+      {/* Errors element */}
       <ul className='flex flex-col justify-center px-11.5 text-red-400'>
         {errors?.map((error) => {
           if (error.msg !== 'Invalid value')
@@ -137,7 +179,7 @@ export default function ProfileSettings() {
         <div
           // Checks if user has made changes to his password or username if has
           // display pass confirmation input
-          className={`flex-col gap-2  ${username === apiData?.username && newPassword === '' ? 'hidden' : 'flex'}`}
+          className={`${username === apiData?.username && newPassword === '' ? 'hidden' : 'flex flex-col gap-2'}`}
         >
           <label htmlFor='currentPassword' className='font-bold!'>
             Current Password
@@ -156,54 +198,19 @@ export default function ProfileSettings() {
             onChange={(e) => setCurrentPassword(e.target.value)}
           />
         </div>
+
         <div className='flex justify-between'>
           <button
             type='button'
             className='hover:cursor-pointer bg-black text-white hover:bg-neutral-700 dark:bg-neutral-500 px-4 py-1 dark:hover:bg-neutral-600 transition-colors  rounded-2xl'
             command='close'
             commandfor='profile-settings-modal'
-            onClick={() => {
-              dashboard?.setIsBlurred(false);
-              setErrors(null);
-            }}
+            onClick={() => closeModule()}
           >
             Cancel
           </button>
           <button
-            onClick={async () => {
-              const result = await updateProfile(
-                email,
-                username,
-                newPassword,
-                currentPassword,
-              );
-              dashboard?.setUserProfile((val) => ({ ...val!, username }));
-
-              if (result.errors) {
-                setErrors(result.errors);
-              } else if (result.message === 'Wrong current password') {
-                setErrors([
-                  {
-                    type: '',
-                    value: '',
-                    msg: result.message,
-                    path: '',
-                    location: '',
-                  },
-                ]);
-
-                setCurrentPassword('');
-              } else {
-                setErrors(null);
-                dashboard?.setIsBlurred(false);
-                setCurrentPassword('');
-
-                const modal = document.getElementById(
-                  'profile-settings-modal',
-                ) as HTMLDialogElement;
-                modal.close();
-              }
-            }}
+            onClick={async () => await updateProfileData()}
             type='button'
             className='hover:cursor-pointer dark:bg-neutral-900 px-4 py-1 dark:hover:bg-neutral-700 transition-colors bg-neutral-500 text-white hover:bg-neutral-600  rounded-2xl'
           >
