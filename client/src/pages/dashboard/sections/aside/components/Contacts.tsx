@@ -27,20 +27,20 @@ export default function Contacts() {
     navigate('/');
   }
   return (
-    <div className='p-3'>
+    <div>
       {isLoading ? (
         <h1>LOADING</h1>
       ) : (
-        <ul className='flex flex-col gap-2'>
+        <ul className='flex flex-col'>
           {dashboard?.contactsProfile.length
             ? dashboard?.contactsProfile?.map((contact) => (
                 <li key={contact.id} className='flex justify-between'>
-                  <div>
-                    <p className='font-medium'>{contact.username}</p>
-                    <p className='text-xs text-neutral-800 dark:text-neutral-300'>
+                  <button className='p-2 cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'>
+                    <p className='font-medium text-left'>{contact.username}</p>
+                    <p className='text-xs text-left text-neutral-800 dark:text-neutral-300'>
                       {lastOnline(contact.lastOnline)}
                     </p>
-                  </div>
+                  </button>
                 </li>
               ))
             : 'No contacts'}
