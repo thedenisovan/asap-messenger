@@ -1,16 +1,19 @@
 import { useEffect } from 'react';
-import useFetchData from '../../../../../hooks/useFetchData';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
+import { io } from 'socket.io-client';
 import DashboardContext from '../../../../../context/DashboardContext';
-import type ProfileData from '../../../../../types/apiData';
 import lastOnline from '../../../../../utils/lastOnline';
+import useFetchData from '../../../../../hooks/useFetchData';
+import URL from '../../../../../constants/constants';
+import type ProfileData from '../../../../../types/apiData';
+
+const socket = io(URL.BASE_URL);
 
 export default function Contacts() {
   const { isLoading, serverError, apiData } = useFetchData<ProfileData[]>(
     `dashboard/${localStorage.getItem('uid')}/contacts`,
   );
-
   const dashboard = useContext(DashboardContext);
   const navigate = useNavigate();
 

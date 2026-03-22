@@ -1,12 +1,21 @@
 import express from 'express';
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
+import cors from 'cors';
 import signupRoute from './routes/signup.routes.js';
 import signinRoute from './routes/signin.routes.js';
 import dashboard from './routes/dashboard.routes.js';
-import cors from 'cors';
 
 const app = express();
-
 app.use(cors());
+
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  },
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -14,4 +23,8 @@ app.use('/signup', signupRoute);
 app.use('/signin', signinRoute);
 app.use('/dashboard', dashboard);
 
-export default app;
+io.on('connection', (socket) => {
+  console.log('user connected');
+});
+
+export default server;

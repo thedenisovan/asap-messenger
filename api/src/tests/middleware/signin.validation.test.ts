@@ -43,7 +43,7 @@ describe('POST /signin validator test', () => {
     request(app)
       .post('/signin')
       .send({
-        email: 'johnDoe@odin.com',
+        email: 'dilevkadainis@gmail.com',
         password: 'wrongPass',
       })
       .expect('Content-Type', /json/)
