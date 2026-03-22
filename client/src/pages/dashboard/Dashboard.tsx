@@ -16,11 +16,23 @@ export default function Dashboard() {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
-  const [contactsProfile, setContactsProfile] = useState<ProfileData[]>([]);
+  const [contactsProfile, setContactsProfile] = useState<ProfileData[] | null>(
+    [],
+  );
   const [userProfile, setUserProfile] = useState<ProfileData | null>(null);
+
   // Fetches user profile data
   const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
     `dashboard/${localStorage.getItem('uid')}`,
+  );
+
+  // Fetches user contact data
+  const {
+    isLoading: contactLoading,
+    serverError: contactError,
+    apiData: contactData,
+  } = useFetchData<ProfileData[]>(
+    `dashboard/${localStorage.getItem('uid')}/contacts`,
   );
 
   useEffect(() => {
@@ -48,14 +60,16 @@ export default function Dashboard() {
     };
 
     const updateProfileInfo = () => {
+      // When user signs in set state of his profile and his contacts by fetched data
       if (localStorage.getItem('uid') !== '0') {
         setUserProfile(apiData);
+        setContactsProfile(contactData);
       }
     };
 
     updateProfileInfo();
     validatePayload();
-  }, [navigate, apiData]);
+  }, [navigate, apiData, contactData]);
 
   return (
     <>
@@ -72,6 +86,9 @@ export default function Dashboard() {
           isLoading,
           serverError,
           apiData,
+          contactLoading,
+          contactError,
+          contactData,
         }}
       >
         <main

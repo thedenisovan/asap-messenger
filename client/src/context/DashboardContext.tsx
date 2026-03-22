@@ -6,13 +6,18 @@ type DashboardContextType = {
   setIsHidden: React.Dispatch<React.SetStateAction<boolean>>;
   isBlurred: boolean;
   setIsBlurred: React.Dispatch<React.SetStateAction<boolean>>;
-  contactsProfile: ProfileData[];
-  setContactsProfile: React.Dispatch<React.SetStateAction<ProfileData[]>>;
+  contactsProfile: ProfileData[] | null;
+  setContactsProfile: React.Dispatch<
+    React.SetStateAction<ProfileData[] | null>
+  >;
   userProfile: ProfileData | null;
   setUserProfile: React.Dispatch<React.SetStateAction<ProfileData | null>>;
   isLoading: boolean;
   serverError: string | null;
   apiData: ProfileData | null;
+  contactLoading: boolean;
+  contactError: string | null;
+  contactData: ProfileData[] | null;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);
