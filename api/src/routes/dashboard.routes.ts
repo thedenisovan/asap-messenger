@@ -8,6 +8,7 @@ import updateProfileInformation from '../middleware/controllers/updateProfileInf
 import profileUpdateValidator from '../validators/profileUpdate.validator.js';
 import validatorResult from '../validators/validationResult.js';
 import getChats from '../middleware/controllers/getChats.js';
+import getChat from '../middleware/controllers/getChat.js';
 
 const dashboard = Router();
 
@@ -18,8 +19,9 @@ dashboard.get('/', verifyToken, (req, res) =>
 
 dashboard.get('/:profileId/contacts', verifyToken, getContactList);
 dashboard.get('/:profileId', verifyToken, getProfileData);
-dashboard.get('/:profileId/chats', verifyToken, getChats);
 
+// Get chat if not exist create/put new one
+dashboard.put('/:profileId/chat/', verifyToken, getChat);
 dashboard.put('/isOnlineUpdate', verifyToken, isOnlineUpdate);
 dashboard.put('/addNewContact', verifyToken, addNewContact);
 dashboard.put(

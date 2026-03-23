@@ -1,33 +1,29 @@
 import { Request, Response } from 'express';
 import { prisma } from '../../db/prisma.js';
 
-export default async function getChats(req: Request, res: Response) {
-  const { profileId, contactId } = req.params;
+export default async function getChat(req: Request, res: Response) {
+  const { profileId, contactId } = req.body;
 
   try {
     if (!profileId || !contactId)
-      return res.status(404).json({ message: 'Could not get request params.' });
+      return res
+        .status(404)
+        .json({ message: 'Could not get request body parameters.' });
 
-    // Get users id's with given profile id's
-    const usersId = await prisma.user.findMany({
-      where: {
-        OR: [
-          { profileId: Number(profileId) },
-          { profileId: Number(contactId) },
-        ],
-      },
-      select: { id: true },
-    });
+    const [intProfileId, intContactId] = [Number(profileId), Number(contactId)];
+
+    if (isNaN(intProfileId) || isNaN(intContactId))
+      return res.status(400).json({ message: 'Invalid ID(s)' });
 
     // Find chat in which there is users with profileId and contactId
     let chat = await prisma.chat.findFirst({
       where: {
         AND: [
-          { users: { some: { id: usersId[0].id } } },
-          { users: { some: { id: usersId[1].id } } },
+          { users: { some: { profileId: intProfileId } } },
+          { users: { some: { profileId: intContactId } } },
         ],
       },
-      include: { messages: true },
+      include: { messages: true, users: true },
     });
 
     // If chat does not exists create it
@@ -35,14 +31,13 @@ export default async function getChats(req: Request, res: Response) {
       chat = await prisma.chat.create({
         data: {
           users: {
-            connect: [{ id: usersId[0].id }, { id: usersId[1].id }],
+            connect: [{ profileId: intProfileId }, { profileId: intContactId }],
           },
         },
         include: { messages: true, users: true }, // messages will be empty array
       });
     }
 
-    // Returns
     return res.status(200).json(chat);
   } catch (error) {
     return res
