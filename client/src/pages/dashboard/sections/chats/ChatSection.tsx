@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import DashboardContext from '../../../../context/DashboardContext';
 import Welcome from './components/Welcome';
+import Chat from './components/Chat';
 
 export default function ChatSection() {
   const dashboard = useContext(DashboardContext);
@@ -9,7 +10,7 @@ export default function ChatSection() {
     <section
       className={`w-full relative bg-gray-50 dark:bg-black/20 ${dashboard!.isBlurred ? '*:blur-sm' : ''}`}
     >
-      <Welcome />
+      {!dashboard?.isChatOpen ? <Welcome /> : <Chat />}
     </section>
   );
 }

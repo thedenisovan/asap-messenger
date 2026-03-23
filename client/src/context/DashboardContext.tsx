@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import type ProfileData from '../types/apiData';
+import type { CurrentChat } from '../types/apiData';
 
 type DashboardContextType = {
   isHidden: boolean;
@@ -18,6 +19,11 @@ type DashboardContextType = {
   contactLoading: boolean;
   contactError: string | null;
   contactData: ProfileData[] | null;
+  isChatOpen: boolean;
+  setIsChatOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  //! REPLACE MESSAGES ARRAY
+  currentChat: CurrentChat | null;
+  setCurrentChat: React.Dispatch<React.SetStateAction<CurrentChat | null>>;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);

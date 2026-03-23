@@ -7,3 +7,11 @@ export default interface ProfileData {
   password: string;
   username: string;
 }
+
+export interface CurrentChat {
+  //! REPLACE MESSAGES ARRAY
+  id: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  messages: any[];
+  users: { id: number; profileId: number }[];
+}

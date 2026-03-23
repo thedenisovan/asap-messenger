@@ -17,8 +17,6 @@ export default async function getChat(contactId: number | string) {
 
     const result = await response.json();
 
-    console.log(result);
-
     return result;
   } catch (error) {
     if (error instanceof Error)

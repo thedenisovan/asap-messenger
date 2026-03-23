@@ -1,14 +1,12 @@
 import { useState } from 'react';
-
 import NewContactForm from './NewContactForm';
 import DashboardContext from '../../context/DashboardContext';
 import ChatSection from './sections/chats/ChatSection';
 import Aside from './sections/aside/Aside';
-
 import ProfileSettings from './ProfileSettings';
-
 import useValidatePayload from '../../hooks/useValidatePayload';
 import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
+import type { CurrentChat } from '../../types/apiData';
 
 export default function Dashboard() {
   // Validates payload of user data stored in local storage
@@ -30,6 +28,8 @@ export default function Dashboard() {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+  const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
 
   return (
     <>
@@ -49,6 +49,10 @@ export default function Dashboard() {
           contactLoading,
           contactError,
           contactData,
+          isChatOpen,
+          currentChat,
+          setCurrentChat,
+          setIsChatOpen,
         }}
       >
         <main

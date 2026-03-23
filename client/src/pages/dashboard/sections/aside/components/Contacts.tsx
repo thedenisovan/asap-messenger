@@ -33,7 +33,11 @@ export default function Contacts() {
             dashboard?.contactsProfile?.map((contact) => (
               <li key={contact.id} className='flex justify-between'>
                 <button
-                  onClick={() => getChat(contact.id)}
+                  onClick={async () => {
+                    // Saves current chat to state
+                    dashboard.setCurrentChat(await getChat(contact.id));
+                    dashboard.setIsChatOpen(true);
+                  }}
                   className='p-2 cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >
                   <p className='font-medium text-left'>{contact.username}</p>

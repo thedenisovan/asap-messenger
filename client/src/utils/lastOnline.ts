@@ -1,4 +1,6 @@
 export default function lastOnline(lastOnline: string) {
+  if (!lastOnline) return 'Last online recently';
+
   const now = Date();
   const lastOnlineDate = new Date(lastOnline).toString();
 
@@ -28,5 +30,5 @@ export default function lastOnline(lastOnline: string) {
     return 'Last online ' + lastOnlineArr[1] + ' ' + lastOnlineArr[2];
     // If last online more than year ago
   } else if (nowArr[3] > lastOnlineArr[3])
-    return 'Last online more than year ago.';
+    return 'Last online more than year ago';
 }
