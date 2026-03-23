@@ -64,12 +64,17 @@ export default function Dashboard() {
       if (localStorage.getItem('uid') !== '0') {
         setUserProfile(apiData);
         setContactsProfile(contactData);
+
+        // Sort in alphabetical order
+        contactsProfile?.sort((a: ProfileData, b: ProfileData) =>
+          a.username.localeCompare(b.username),
+        );
       }
     };
 
     updateProfileInfo();
     validatePayload();
-  }, [navigate, apiData, contactData]);
+  }, [navigate, apiData, contactData, contactsProfile]);
 
   return (
     <>
