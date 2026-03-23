@@ -1,80 +1,35 @@
-import { useEffect, useState } from 'react';
-import getPayload from '../../services/api/getPayload';
-import autoSignout from '../../utils/autoSignout';
-import { useNavigate } from 'react-router';
-import signOut from '../../utils/signout';
+import { useState } from 'react';
+
 import NewContactForm from './NewContactForm';
 import DashboardContext from '../../context/DashboardContext';
 import ChatSection from './sections/chats/ChatSection';
 import Aside from './sections/aside/Aside';
-import type ProfileData from '../../types/apiData';
+
 import ProfileSettings from './ProfileSettings';
-import useFetchData from '../../hooks/useFetchData';
+
+import useValidatePayload from '../../hooks/useValidatePayload';
+import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  // Validates payload of user data stored in local storage
+  useValidatePayload();
+  // Updates api data fetched after user signs in to page
+  const {
+    userProfile,
+    apiData,
+    contactData,
+    contactsProfile,
+    serverError,
+    isLoading,
+    contactLoading,
+    contactError,
+    setContactsProfile,
+    setUserProfile,
+  } = useUpdateAfterFetch();
+
   const [isHidden, setIsHidden] = useState<boolean>(true);
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
-  const [contactsProfile, setContactsProfile] = useState<ProfileData[] | null>(
-    [],
-  );
-  const [userProfile, setUserProfile] = useState<ProfileData | null>(null);
-
-  // Fetches user profile data
-  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
-    `dashboard/${localStorage.getItem('uid')}`,
-  );
-
-  // Fetches user contact data
-  const {
-    isLoading: contactLoading,
-    serverError: contactError,
-    apiData: contactData,
-  } = useFetchData<ProfileData[]>(
-    `dashboard/${localStorage.getItem('uid')}/contacts`,
-  );
-
-  useEffect(() => {
-    const validatePayload = async () => {
-      // If token provided after user auth is valid
-      // decode it and save it's payload data in local storage
-      const isPayloadAssigned = await getPayload();
-
-      // If did getPayload failed navigate to prev page
-      if (!isPayloadAssigned) {
-        navigate(-1);
-        signOut();
-      }
-
-      // If autoSignout returns false then payload is expired
-      // and removed from localstorage
-      const isPayloadExp = autoSignout();
-
-      if (!isPayloadExp) {
-        navigate(-1);
-        signOut();
-      }
-
-      navigate(`/dashboard/${localStorage.getItem('uid')}`);
-    };
-
-    const updateProfileInfo = () => {
-      // When user signs in set state of his profile and his contacts by fetched data
-      if (localStorage.getItem('uid') !== '0') {
-        setUserProfile(apiData);
-        setContactsProfile(contactData);
-
-        // Sort in alphabetical order
-        contactsProfile?.sort((a: ProfileData, b: ProfileData) =>
-          a.username.localeCompare(b.username),
-        );
-      }
-    };
-
-    updateProfileInfo();
-    validatePayload();
-  }, [navigate, apiData, contactData, contactsProfile]);
 
   return (
     <>
