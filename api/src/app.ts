@@ -24,7 +24,15 @@ app.use('/signin', signinRoute);
 app.use('/dashboard', dashboard);
 
 io.on('connection', (socket) => {
-  console.log('user connected');
+  console.log(`User connected on socket id: ${socket.id}`);
+
+  socket.on('disconnect', () => {
+    console.log(`User disconnected from socket with id: ${socket.id}`);
+  });
+
+  socket.on('send_message', (data) => {
+    socket.broadcast.emit('receive_message', data);
+  });
 });
 
 export default server;
