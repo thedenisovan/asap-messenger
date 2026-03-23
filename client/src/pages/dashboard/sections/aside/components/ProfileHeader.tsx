@@ -15,12 +15,6 @@ export default function ProfileHeader() {
   const dashContext = useContext(DashboardContext);
 
   useEffect(() => {
-    // Init is online update after user signs in, uid
-    // variable updates in local storage
-    setTimeout(async () => {
-      await isOnlineUpdate(true);
-    }, 1000);
-
     // Update user last online time every 3 mins by sending request
     const updateIsOnline = setInterval(async () => {
       await isOnlineUpdate(true);

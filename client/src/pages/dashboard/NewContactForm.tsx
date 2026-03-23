@@ -101,7 +101,7 @@ export default function NewContactForm() {
                 setDialogError('Cant find user with given email.');
               } else {
                 // close module and update contacts state
-                dashboard?.setContactsProfile((val) => [...val, result]);
+                dashboard?.setContactsProfile((val) => val ? [...val, result] : [result]);
                 clearDialog();
                 dialog?.close();
               }

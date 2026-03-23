@@ -6,17 +6,16 @@ export default function useFetchData<T>(path: string) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiData, setApiData] = useState<T | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
-  const uid = localStorage.getItem('uid');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const uid = localStorage.getItem('uid');
 
     const fetchData = async () => {
+      setIsLoading(true);
       // uid is initially set to 0 in local storage
       // after user signs in ti is changed to new uid(user id)
-      if (uid !== '0') {
-        setIsLoading(true);
-
+      if (uid && uid !== '0') {
         try {
           const response = await fetch(`${URL.BASE_URL}${path}`, {
             headers: {
@@ -41,7 +40,7 @@ export default function useFetchData<T>(path: string) {
     };
 
     fetchData();
-  }, [path, uid]);
+  }, [path]);
 
   return { isLoading, apiData, serverError };
 }

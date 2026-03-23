@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import getPayload from '../services/api/getPayload';
 import signOut from '../utils/signout';
 import autoSignout from '../utils/autoSignout';
+import isOnlineUpdate from '../services/api/isOnlineUpdate';
 
 export default function useValidatePayload() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const validate = async () => {
@@ -24,8 +26,21 @@ export default function useValidatePayload() {
         navigate(-1);
         return;
       }
+
+      const uid = localStorage.getItem('uid');
+      const expectedPath = `/dashboard/${uid}`;
+
+      if (location.pathname !== expectedPath) {
+        navigate(expectedPath);
+      }
+      // Dispatch event to notify uid update
+      window.dispatchEvent(new CustomEvent('uidUpdated'));
+
+      // Init is online update after user signs in, uid
+      // variable updates in local storage
+      await isOnlineUpdate(true);
     };
 
     validate();
-  }, [navigate]);
+  }, [navigate, location.pathname]);
 }
