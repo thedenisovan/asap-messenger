@@ -17,7 +17,7 @@ export default function ProfileDropdown() {
 
   return (
     <ul
-      className='absolute rounded-xl dark:bg-[#333333] bg-gray-50 border border-gray-200 dark:border-gray-800 transition-transform origin-top-right duration-100 right-5 top-10 min-w-50'
+      className='z-10 absolute rounded-xl dark:bg-[#333333] bg-gray-50 border border-gray-200 dark:border-gray-800 transition-transform origin-top-right duration-100 right-5 top-10 min-w-50'
       style={{ transform: dashContext!.isHidden ? 'scale(0)' : 'scale(1)' }}
     >
       <li className='hover:bg-gray-100 dark:hover:bg-[#222222] rounded-t-lg transition-colors duration-75'>

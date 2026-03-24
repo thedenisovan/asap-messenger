@@ -48,16 +48,13 @@ export default function useUpdateAfterFetch() {
       // When user signs in set state of his profile and his contacts by fetched data
       if (uid && uid !== '0') {
         setUserProfile(apiData);
-        setContactsProfile(contactData);
-
-        // Sort in alphabetical order
-        contactsProfile?.sort((a: ProfileData, b: ProfileData) =>
-          a.username.localeCompare(b.username),
-        );
+        // Sort contacts by oldest first
+        const sortedContacts = contactData ? [...contactData].sort((a: ProfileData, b: ProfileData) => a.id - b.id) : null;
+        setContactsProfile(sortedContacts);
       }
     };
     updateData();
-  }, [apiData, contactsProfile, contactData, uid]);
+  }, [apiData, contactData, uid]);
 
   return {
     userProfile,
