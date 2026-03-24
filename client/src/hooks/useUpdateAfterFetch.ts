@@ -49,7 +49,11 @@ export default function useUpdateAfterFetch() {
       if (uid && uid !== '0') {
         setUserProfile(apiData);
         // Sort contacts by oldest first
-        const sortedContacts = contactData ? [...contactData].sort((a: ProfileData, b: ProfileData) => a.id - b.id) : null;
+        const sortedContacts = contactData
+          ? [...contactData].sort(
+              (a: ProfileData, b: ProfileData) => a.id - b.id,
+            )
+          : null;
         setContactsProfile(sortedContacts);
       }
     };

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import URL from '../../../../../constants/constants';
+import LoadingUser from '../../../../../components/common/LoadingUser';
 
 export default function ProfileHeader() {
   const navigate = useNavigate();
@@ -55,13 +56,7 @@ export default function ProfileHeader() {
       >
         {/* If data from fetch request is still loading display skeleton loader */}
         {dashContext?.isLoading ? (
-          <>
-            <div className='animate-pulse transition-none duration-900 rounded-full bg-black/70 dark:bg-white/20 h-13 w-13'></div>
-            <div className='flex flex-col animate-pulse duration-900'>
-              <p className='h-5 rounded-2xl w-50 mb-2  bg-black/70 dark:bg-white/20'></p>
-              <p className='h-5 rounded-2xl w-70  bg-black/70 dark:bg-white/20'></p>
-            </div>
-          </>
+          <LoadingUser />
         ) : (
           <>
             <div className='flex gap-2 items-center'>
