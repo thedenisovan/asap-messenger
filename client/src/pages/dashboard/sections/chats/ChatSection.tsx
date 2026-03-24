@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import DashboardContext from '../../../../context/DashboardContext';
-import Welcome from './components/Welcome';
-import Chat from './components/Chat';
+import Welcome from './sections/Welcome';
+import Chat from './sections/Chat';
 
 export default function ChatSection() {
   const dashboard = useContext(DashboardContext);

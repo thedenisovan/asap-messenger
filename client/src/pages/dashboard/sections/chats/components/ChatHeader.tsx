@@ -1,40 +1,33 @@
-import useFetchData from '../../../../../hooks/useFetchData';
+import type ProfileData from '../../../../../types/apiData';
+import DarkIcon from '../../../../../components/common/DarkIcon';
+import LightIcon from '../../../../../components/common/LightIcon';
+import LoadingUser from '../../../../../components/common/LoadingUser';
+import lastOnline from '../../../../../utils/lastOnline';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
-import type ProfileData from '../../../../../types/apiData';
-import { useNavigate } from 'react-router';
-import extractChatterId from '../../../../../utils/extractChatterId';
-import lastOnline from '../../../../../utils/lastOnline';
-import LoadingUser from '../../../../../components/common/LoadingUser';
 
-export default function Chat() {
-  const navigate = useNavigate();
-  const dashContext = useContext(DashboardContext);
-  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
-    `dashboard/${extractChatterId(dashContext!.currentChat!)}`,
-  );
-
-  if (serverError !== null) navigate('/');
-  return (
-    <section>
-      <ChatHeader isLoading={isLoading} apiData={apiData}></ChatHeader>
-    </section>
-  );
-}
-
-function ChatHeader({
+export default function ChatHeader({
   apiData,
   isLoading,
 }: {
   apiData: ProfileData | null;
   isLoading: boolean;
 }) {
+  const dashContext = useContext(DashboardContext);
+
   return (
     <header className='p-4 border-b flex bg-white border-b-neutral-200 dark:bg-neutral-800 dark:border-b-neutral-800'>
       {isLoading ? (
         <LoadingUser />
       ) : (
         <div className='flex items-center gap-2'>
+          <button
+            onClick={() => dashContext?.setIsChatOpen(false)}
+            className='md:hidden'
+          >
+            <DarkIcon path='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
+            <LightIcon path='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
+          </button>
           {apiData?.avatarUrl ? (
             ''
           ) : (
