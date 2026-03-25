@@ -1,23 +1,26 @@
-import { io } from 'socket.io-client';
-import URL from '../../../../../constants/constants';
 import { useEffect, useState } from 'react';
-
-const socket = io(URL.BASE_URL);
+import { useContext } from 'react';
+import DashboardContext from '../../../../../context/DashboardContext';
 
 export default function ChatFooter() {
   const [message, setMessage] = useState<string>('');
+  const dashContext = useContext(DashboardContext);
 
   useEffect(() => {
-    const handler = (msg: string) => console.log(msg);
+    if (!dashContext?.socket) return;
+
+    const handler = (msg: string) => console.log('Received message:', msg);
 
     // When receive message fire handler
-    socket.on('receive_message', handler);
+    dashContext.socket.on('receive_message', handler);
 
     // After remove it so it isn't stacking
     return () => {
-      socket.off('receive_message', handler);
+      dashContext.socket.off('receive_message', handler);
     };
-  }, []);
+  }, [dashContext?.socket]);
+
+  if (!dashContext?.socket) return null;
 
   return (
     <footer className='border-t dark:border-t-neutral-800 p-5 '>
@@ -29,12 +32,15 @@ export default function ChatFooter() {
           type='text'
           name='message'
           id='message'
-          placeholder='Message'
+          placeholder='Message...'
         />
         <button
           onClick={() => {
-            socket.emit('send_message', message);
-
+            dashContext.socket.emit('send_message', {
+              roomName: dashContext?.currentChat?.id,
+              message,
+            });
+            console.log('Sent message:', message, 'to room:', dashContext?.currentChat?.id);
             setMessage('');
           }}
           type='button'

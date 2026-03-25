@@ -7,6 +7,8 @@ import ProfileSettings from './ProfileSettings';
 import useValidatePayload from '../../hooks/useValidatePayload';
 import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
 import type { CurrentChat } from '../../types/apiData';
+import { io } from 'socket.io-client';
+import URL from '../../constants/constants';
 
 export default function Dashboard() {
   // Validates payload of user data stored in local storage
@@ -31,6 +33,8 @@ export default function Dashboard() {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
 
+  const socket = io(URL.BASE_URL);
+
   return (
     <>
       <DashboardContext
@@ -53,6 +57,7 @@ export default function Dashboard() {
           currentChat,
           setCurrentChat,
           setIsChatOpen,
+          socket,
         }}
       >
         <main

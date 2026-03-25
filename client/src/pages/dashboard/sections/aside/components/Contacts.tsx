@@ -4,22 +4,18 @@ import DashboardContext from '../../../../../context/DashboardContext';
 import lastOnline from '../../../../../utils/lastOnline';
 import DarkIcon from '../../../../../components/common/DarkIcon';
 import LightIcon from '../../../../../components/common/LightIcon';
-// import { io } from 'socket.io-client';
-// import URL from '../../../../../constants/constants';
-// import { useEffect } from 'react';
 import getChat from '../../../../../services/api/getChat';
-
-// const socket = io(URL.BASE_URL);
+import { useEffect } from 'react';
 
 export default function Contacts() {
   const dashboard = useContext(DashboardContext);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   socket.on('receive_message', (data) => {
-  //     console.log(data.msg);
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (dashboard?.currentChat && dashboard.socket) {
+      dashboard.socket.emit('joinRoom', dashboard.currentChat.id);
+    }
+  }, [dashboard?.currentChat, dashboard?.socket]);
 
   if (dashboard?.contactError) {
     navigate('/');

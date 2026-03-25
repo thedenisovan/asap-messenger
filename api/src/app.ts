@@ -28,12 +28,17 @@ app.use('/dashboard', dashboard);
 io.on('connection', (socket) => {
   console.log(`User connected on socket id: ${socket.id}`);
 
-  socket.on('disconnect', () => {
-    console.log(`User disconnected from socket with id: ${socket.id}`);
+  socket.on('joinRoom', (roomName) => {
+    socket.join(roomName);
+    console.log(`${socket.id} joined room: ${roomName}`);
   });
 
-  socket.on('send_message', (data) => {
-    socket.broadcast.emit('receive_message', data);
+  socket.on('send_message', ({ roomName, message }) => {
+    socket.to(roomName).emit('receive_message', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`User disconnected from socket with id: ${socket.id}`);
   });
 });
 
