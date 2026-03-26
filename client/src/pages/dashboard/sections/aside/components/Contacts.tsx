@@ -45,6 +45,7 @@ export default function Contacts() {
                       // Saves current chat to state
                       dashboard.setCurrentChat(await getChat(contact.id));
                       dashboard.setIsChatOpen(true);
+                      console.log(dashboard.currentChat);
                     }}
                     className='p-2 cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                   >

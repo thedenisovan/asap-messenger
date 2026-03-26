@@ -7,8 +7,8 @@ import addNewContact from '../middleware/controllers/addNewContact.js';
 import updateProfileInformation from '../middleware/controllers/updateProfileInformation.js';
 import profileUpdateValidator from '../validators/profileUpdate.validator.js';
 import validatorResult from '../validators/validationResult.js';
-import getChats from '../middleware/controllers/getChats.js';
 import getChat from '../middleware/controllers/getChat.js';
+import postNewMessage from '../middleware/controllers/postNewMessage.js';
 
 const dashboard = Router();
 
@@ -31,5 +31,7 @@ dashboard.put(
   verifyToken,
   updateProfileInformation,
 );
+
+dashboard.post('/postNewMessage', verifyToken, postNewMessage);
 
 export default dashboard;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
+import postNewMessage from '../../../../../services/api/postNewMessage';
 
 export default function ChatFooter() {
   const [message, setMessage] = useState<string>('');
@@ -36,11 +37,21 @@ export default function ChatFooter() {
         />
         <button
           onClick={() => {
+            postNewMessage(
+              dashContext.userProfile!.id,
+              dashContext.currentChat!.id,
+              message,
+            );
             dashContext.socket.emit('send_message', {
               roomName: dashContext?.currentChat?.id,
               message,
             });
-            console.log('Sent message:', message, 'to room:', dashContext?.currentChat?.id);
+            console.log(
+              'Sent message:',
+              message,
+              'to room:',
+              dashContext?.currentChat?.id,
+            );
             setMessage('');
           }}
           type='button'
