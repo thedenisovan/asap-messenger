@@ -36,8 +36,8 @@ export default function ChatFooter() {
           placeholder='Message...'
         />
         <button
-          onClick={() => {
-            postNewMessage(
+          onClick={async () => {
+            await postNewMessage(
               dashContext.userProfile!.id,
               dashContext.currentChat!.id,
               message,

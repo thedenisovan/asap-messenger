@@ -22,8 +22,6 @@ export default async function postNewMessage(
 
     const result = await response.json();
 
-    console.log(result);
-
     return result;
   } catch (error) {
     if (error instanceof Error) throw new Error(`Error: ${error.message}`);
