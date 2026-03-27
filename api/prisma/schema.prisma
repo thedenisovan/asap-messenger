@@ -64,7 +64,7 @@ model Message {
 
   message String
 
-  messageBy   User?    @relation(fields: [userId], references: [id])
+  messageBy   User?    @relation(fields: [userId], references: [profileId])
   userId      Int?
   dateCreated DateTime @default(now())
 
