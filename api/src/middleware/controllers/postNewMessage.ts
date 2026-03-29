@@ -27,7 +27,7 @@ export default async function postNewMessage(req: Request, res: Response) {
       data: { message: messageText, userId: user.id, chatId: intChatId },
     });
 
-    return res.status(200).json({ message, sentById: userId });
+    return res.status(200).json(message);
   } catch (error) {
     return res
       .status(500)
