@@ -6,7 +6,7 @@ import Aside from './sections/aside/Aside';
 import ProfileSettings from './ProfileSettings';
 import useValidatePayload from '../../hooks/useValidatePayload';
 import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
-import type { CurrentChat } from '../../types/apiData';
+import type { Message, CurrentChat } from '../../types/apiData';
 import { io } from 'socket.io-client';
 import URL from '../../constants/constants';
 
@@ -32,6 +32,7 @@ export default function Dashboard() {
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const socket = io(URL.BASE_URL);
 
@@ -58,10 +59,12 @@ export default function Dashboard() {
           setCurrentChat,
           setIsChatOpen,
           socket,
+          messages,
+          setMessages,
         }}
       >
         <main
-          className='flex  dark:bg-black/87 dark:text-white min-h-screen min-w-screen'
+          className='flex dark:bg-black/87 dark:text-white min-h-screen min-w-screen'
           onClick={() => {
             // If dropdown is not hidden clicking any where on page should
             // close dropdown

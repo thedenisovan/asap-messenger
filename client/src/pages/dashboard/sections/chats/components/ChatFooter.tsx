@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import postNewMessage from '../../../../../services/api/postNewMessage';
@@ -6,20 +6,6 @@ import postNewMessage from '../../../../../services/api/postNewMessage';
 export default function ChatFooter() {
   const [message, setMessage] = useState<string>('');
   const dashContext = useContext(DashboardContext);
-
-  useEffect(() => {
-    if (!dashContext?.socket) return;
-
-    const handler = (msg: string) => console.log('Received message:', msg);
-
-    // When receive message fire handler
-    dashContext.socket.on('receive_message', handler);
-
-    // After remove it so it isn't stacking
-    return () => {
-      dashContext.socket.off('receive_message', handler);
-    };
-  }, [dashContext?.socket]);
 
   if (!dashContext?.socket) return null;
 
@@ -37,22 +23,24 @@ export default function ChatFooter() {
         />
         <button
           onClick={async () => {
-            await postNewMessage(
+            const newMsg = await postNewMessage(
               dashContext.userProfile!.id,
               dashContext.currentChat!.id,
               message,
             );
             dashContext.socket.emit('send_message', {
               roomName: dashContext?.currentChat?.id,
-              message,
+              newMsg,
             });
             console.log(
               'Sent message:',
-              message,
+              newMsg,
               'to room:',
               dashContext?.currentChat?.id,
             );
             setMessage('');
+
+            dashContext.setMessages((prev) => [...prev, newMsg]);
           }}
           type='button'
         >

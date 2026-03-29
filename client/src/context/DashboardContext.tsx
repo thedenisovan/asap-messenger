@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import type ProfileData from '../types/apiData';
-import type { CurrentChat } from '../types/apiData';
+import type { CurrentChat, Message } from '../types/apiData';
 import { Socket } from 'socket.io-client';
 
 type DashboardContextType = {
@@ -25,6 +25,8 @@ type DashboardContextType = {
   currentChat: CurrentChat | null;
   setCurrentChat: React.Dispatch<React.SetStateAction<CurrentChat | null>>;
   socket: Socket;
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);

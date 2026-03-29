@@ -15,7 +15,7 @@ export default function Contacts() {
     if (dashboard?.currentChat && dashboard.socket) {
       dashboard.socket.emit('joinRoom', dashboard.currentChat.id);
     }
-  }, [dashboard?.currentChat, dashboard?.socket]);
+  }, [dashboard]);
 
   if (dashboard?.contactError) {
     navigate('/');
@@ -43,8 +43,10 @@ export default function Contacts() {
                   <button
                     onClick={async () => {
                       // Saves current chat to state
-                      dashboard.setCurrentChat(await getChat(contact.id));
+                      const chat = await getChat(contact.id);
+                      dashboard.setCurrentChat(chat);
                       dashboard.setIsChatOpen(true);
+                      dashboard.setMessages(chat.messages);
                     }}
                     className='p-2 cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                   >

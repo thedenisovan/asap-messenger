@@ -1,14 +1,32 @@
-import { useContext } from 'react';
+// /* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
+import type { Message } from '../../../../../types/apiData';
 
 export default function ChatMain() {
   const dashContext = useContext(DashboardContext);
 
+  useEffect(() => {
+    if (!dashContext?.socket) return;
+
+    const handler = (newMsg: Message) => {
+      dashContext.setMessages((prev) => [...prev, newMsg]);
+    };
+
+    // When receive message fire handler
+    dashContext.socket.on('receive_message', handler);
+
+    // After remove it so it isn't stacking
+    return () => {
+      dashContext.socket.off('receive_message', handler);
+    };
+  }, [dashContext]);
+
   return (
-    <main className='flex-1 relative'>
-      {dashContext?.currentChat?.messages.length ? (
-        <ul className='flex flex-col w-full p-4 space-y-2'>
-          {dashContext.currentChat.messages.map((message) => (
+    <main className='flex-1 h-96 relative'>
+      {dashContext?.messages?.length ? (
+        <ul className='flex flex-col overflow-y-auto h-full overflow-x-hidden w-full p-4 space-y-2'>
+          {dashContext.messages.map((message) => (
             <li
               key={message.id}
               className={`flex ${
