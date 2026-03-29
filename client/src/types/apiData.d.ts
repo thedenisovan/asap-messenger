@@ -9,9 +9,16 @@ export default interface ProfileData {
 }
 
 export interface CurrentChat {
-  //! REPLACE MESSAGES ARRAY
   id: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  messages: any[];
+  messages: Message[];
   users: { id: number; profileId: number }[];
+}
+
+interface Message {
+  chatId: number | null;
+  dateCreated: string;
+  groupChatId: number | null;
+  id: number;
+  message: string;
+  userId: number;
 }
