@@ -16,7 +16,7 @@ export default function ChatHeader({
   const dashContext = useContext(DashboardContext);
 
   return (
-    <header className='p-4 border-b flex bg-white border-b-neutral-200 dark:bg-neutral-800 dark:border-b-neutral-800'>
+    <header className='p-4 border-bw-full fixed top-0 w-full flex bg-white border-b-neutral-200 dark:bg-neutral-800 dark:border-b-neutral-800'>
       {isLoading ? (
         <LoadingUser />
       ) : (

@@ -10,7 +10,7 @@ export default function ChatFooter() {
   if (!dashContext?.socket) return null;
 
   return (
-    <footer className='border-t dark:border-t-neutral-800 p-5 '>
+    <footer className='border-t fixed w-full -bottom-1 dark:bg-neutral-800 bg-white border-t-neutral-100 dark:border-t-neutral-800 p-5 '>
       <form onSubmit={(e) => e.preventDefault()}>
         <button type='button'>Add</button>
         <input
@@ -22,6 +22,7 @@ export default function ChatFooter() {
           placeholder='Message...'
         />
         <button
+          className='lg:absolute lg:right-100'
           onClick={async () => {
             const newMsg = await postNewMessage(
               dashContext.userProfile!.id,

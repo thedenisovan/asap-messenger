@@ -1,13 +1,17 @@
 // /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import type { Message } from '../../../../../types/apiData';
 
 export default function ChatMain() {
   const dashContext = useContext(DashboardContext);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!dashContext?.socket) return;
+
+    // Scroll in to view when new message is sent
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 
     const handler = (newMsg: Message) => {
       dashContext.setMessages((prev) => [...prev, newMsg]);
@@ -23,9 +27,9 @@ export default function ChatMain() {
   }, [dashContext]);
 
   return (
-    <main className='flex-1 h-96 relative'>
+    <main className='h-screen py-19'>
       {dashContext?.messages?.length ? (
-        <ul className='flex flex-col overflow-y-auto h-full overflow-x-hidden w-full p-4 space-y-2'>
+        <ul className='flex flex-col overflow-y-scroll h-full overflow-x-hidden w-full p-4 space-y-2'>
           {dashContext.messages.map((message) => (
             <li
               key={message.id}
@@ -36,7 +40,7 @@ export default function ChatMain() {
               }`}
             >
               <div
-                className={`max-w-xs px-4 py-2 rounded-lg ${
+                className={`max-w-xs wrap-break-word px-4 py-2 rounded-lg ${
                   message.userId === dashContext.userProfile!.id
                     ? 'bg-blue-500 text-white'
                     : 'bg-gray-200 text-black'
@@ -46,6 +50,7 @@ export default function ChatMain() {
               </div>
             </li>
           ))}
+          <div ref={chatEndRef} />
         </ul>
       ) : (
         <p className='absolute top-[50%] text-center left-[50%] -translate-[50%] dark:text-neutral-300'>
