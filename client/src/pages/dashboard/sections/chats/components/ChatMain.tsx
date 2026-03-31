@@ -46,7 +46,16 @@ export default function ChatMain() {
                     : 'bg-gray-200 text-black rounded-tl-none'
                 }`}
               >
-                {message.message}
+                <p>{message.message}</p>
+                <span
+                  className={`flex justify-end text-[10px] ${
+                    message.userId === dashContext.userProfile!.id
+                      ? 'text-neutral-200'
+                      : 'text-neutral-700'
+                  }`}
+                >
+                  {displayMessageTime(message.dateCreated)}
+                </span>
               </div>
             </li>
           ))}
@@ -59,4 +68,20 @@ export default function ChatMain() {
       )}
     </main>
   );
+}
+
+function displayMessageTime(text: string) {
+  const today = new Date();
+
+  const dateOfMessage = new Date(text);
+
+  // If message sent today display its time
+  if (
+    today.getDate() === dateOfMessage.getDate() &&
+    today.getMonth() === dateOfMessage.getMonth() &&
+    today.getFullYear() === dateOfMessage.getFullYear()
+  ) {
+    return dateOfMessage.toTimeString().split(' ')[0];
+    // Else display date of message
+  } else return dateOfMessage.toDateString();
 }

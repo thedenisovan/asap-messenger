@@ -9,6 +9,7 @@ import profileUpdateValidator from '../validators/profileUpdate.validator.js';
 import validatorResult from '../validators/validationResult.js';
 import getChat from '../middleware/controllers/getChat.js';
 import postNewMessage from '../middleware/controllers/postNewMessage.js';
+import clearChat from '../middleware/controllers/clearChat.js';
 
 const dashboard = Router();
 
@@ -33,5 +34,7 @@ dashboard.put(
 );
 
 dashboard.post('/postNewMessage', verifyToken, postNewMessage);
+
+dashboard.delete('/clearChat', verifyToken, clearChat);
 
 export default dashboard;
