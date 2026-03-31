@@ -27,9 +27,9 @@ export default function ChatMain() {
   }, [dashContext]);
 
   return (
-    <main className='max-h-[calc(100vh-152px)] flex-1'>
+    <main className='flex-1'>
       {dashContext?.messages?.length ? (
-        <ul className='flex flex-col h-full overflow-x-hidden w-full p-4 space-y-2'>
+        <ul className='flex flex-col max-h-[calc(100vh-152px)] h-full overflow-x-hidden w-full p-4 space-y-2'>
           {dashContext.messages.map((message) => (
             <li
               key={message.id}
