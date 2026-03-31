@@ -8,7 +8,7 @@ export default function ChatSection() {
 
   return (
     <section
-      className={`w-full relative bg-gray-50 dark:bg-black/20 ${dashboard!.isBlurred ? '*:blur-sm' : ''}`}
+      className={`max-h-screen relative w-full md:flex ${dashboard?.isChatOpen ? 'flex' : 'hidden'} w-full bg-gray-50 dark:bg-black/20 ${dashboard!.isBlurred ? '*:blur-sm' : ''} flex-8`}
     >
       {!dashboard?.isChatOpen ? <Welcome /> : <Chat />}
     </section>

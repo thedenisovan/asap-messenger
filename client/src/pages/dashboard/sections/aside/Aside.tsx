@@ -8,7 +8,7 @@ export default function Aside() {
 
   return (
     <aside
-      className={`overflow-hidden ${dashboard?.isChatOpen ? 'hidden md:block' : ''} min-w-screen md:border-r dark:border-r-neutral-900 border-r-gray-100 md:min-w-[calc(200px+10vw)] xl:min-w-[calc(420px + 2vw)] ${dashboard!.isBlurred ? '*:blur-sm' : ''}`}
+      className={`flex-2 w-screen h-screen md:min-w-70 ${dashboard?.isChatOpen ? 'hidden md:block' : ''} md:border-r dark:border-r-neutral-900 border-r-gray-100  ${dashboard!.isBlurred ? '*:blur-sm' : ''}`}
     >
       <ProfileHeader />
       <Contacts />

@@ -5,7 +5,7 @@ export default function Welcome() {
   const dashContext = useContext(DashboardContext);
 
   return (
-    <div className='hidden absolute md:flex flex-col gap-3 items-center text-center top-[30%] right-[50%] translate-[50%]'>
+    <div className='hidden absolute md:flex flex-col gap-3 items-center text-center justify-center h-full w-full'>
       <div className='bg-neutral-200 dark:bg-neutral-700 border-neutral-300 border dark:border-neutral-500 p-4 rounded-full'>
         <div className='text-6xl'>&#128075;</div>
       </div>

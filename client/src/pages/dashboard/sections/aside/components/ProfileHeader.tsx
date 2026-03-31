@@ -46,7 +46,7 @@ export default function ProfileHeader() {
   }
 
   return (
-    <header className='border-b dark:border-b-neutral-800 border-b-neutral-200'>
+    <header className='border- dark:border-b-neutral-800 border-b-neutral-200'>
       <div
         style={{
           justifyContent: dashContext?.isLoading ? '' : 'space-between',

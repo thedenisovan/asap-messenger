@@ -3,6 +3,7 @@
 
 :root {
   font-family: 'Space Grotesk', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* max-height: 100vh; */
 }
 
 #root,

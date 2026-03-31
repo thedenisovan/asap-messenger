@@ -64,7 +64,7 @@ export default function Dashboard() {
         }}
       >
         <main
-          className='flex dark:bg-black/87 dark:text-white h-screen overflow-hidden min-w-screen'
+          className='flex  dark:bg-black/87 dark:text-white max-h-screen min-w-screen'
           onClick={() => {
             // If dropdown is not hidden clicking any where on page should
             // close dropdown

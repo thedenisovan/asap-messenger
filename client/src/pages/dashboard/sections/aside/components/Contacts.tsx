@@ -22,7 +22,7 @@ export default function Contacts() {
   }
 
   return (
-    <div className='relative z-0 h-screen'>
+    <div className='relative z-0'>
       {dashboard?.contactLoading || !dashboard?.contactsProfile ? (
         <div className='w-fit flex absolute top-50 right-[50%] translate-x-[50%] animate-spin'>
           <LightIcon

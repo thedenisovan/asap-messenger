@@ -17,7 +17,7 @@ export default function Chat() {
 
   if (serverError !== null) navigate('/');
   return (
-    <section className='min-h-screen flex flex-col'>
+    <section className='min-h-screen w-full flex flex-col'>
       <ChatHeader isLoading={isLoading} apiData={apiData}></ChatHeader>
       <ChatMain />
       <ChatFooter />
