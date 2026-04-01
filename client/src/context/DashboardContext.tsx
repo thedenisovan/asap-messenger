@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import type ProfileData from '../types/apiData';
-import type { CurrentChat, Message } from '../types/apiData';
 import { Socket } from 'socket.io-client';
+import type { GroupChat, CurrentChat, Message } from '../types/apiData';
 
 type DashboardContextType = {
   isHidden: boolean;
@@ -27,6 +27,10 @@ type DashboardContextType = {
   socket: Socket;
   messages: Message[];
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  groupChat: GroupChat[];
+  setGroupChat: React.Dispatch<React.SetStateAction<GroupChat[] | []>>;
+  groupLoading: boolean;
+  groupError: string | null;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);

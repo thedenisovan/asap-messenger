@@ -22,3 +22,16 @@ interface Message {
   message: string;
   userId: number;
 }
+
+export interface GroupChat {
+  admin: {
+    id: number;
+    profileId: number;
+  }[];
+  chatters: {
+    id: number;
+    profileId: number;
+  }[];
+  chatName: string;
+  id: number;
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type ProfileData from '../types/apiData';
 import useFetchData from './useFetchData';
+import type { GroupChat } from '../types/apiData';
 
 export default function useUpdateAfterFetch() {
   const [uid, setUid] = useState(localStorage.getItem('uid'));
@@ -16,11 +17,19 @@ export default function useUpdateAfterFetch() {
     apiData: contactData,
   } = useFetchData<ProfileData[]>(`dashboard/${uid}/contacts`);
 
+  // Fetches group chat data
+  const {
+    isLoading: groupLoading,
+    serverError: groupError,
+    apiData: groupData,
+  } = useFetchData<GroupChat[]>(`dashboard/${uid}/getGroupChat`);
+
   // States for contact data and user profile data
   const [contactsProfile, setContactsProfile] = useState<ProfileData[] | null>(
     [],
   );
   const [userProfile, setUserProfile] = useState<ProfileData | null>(null);
+  const [groupChat, setGroupChat] = useState<GroupChat[]>([]);
 
   useEffect(() => {
     const checkUid = () => {
@@ -55,10 +64,13 @@ export default function useUpdateAfterFetch() {
             )
           : null;
         setContactsProfile(sortedContacts);
+        if (groupData) {
+          setGroupChat(groupData);
+        }
       }
     };
     updateData();
-  }, [apiData, contactData, uid]);
+  }, [apiData, contactData, uid, groupData]);
 
   return {
     userProfile,
@@ -71,5 +83,10 @@ export default function useUpdateAfterFetch() {
     contactError,
     setContactsProfile,
     setUserProfile,
+    groupChat,
+    setGroupChat,
+    groupData,
+    groupError,
+    groupLoading,
   };
 }

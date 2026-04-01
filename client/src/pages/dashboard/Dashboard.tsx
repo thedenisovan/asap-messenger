@@ -26,6 +26,10 @@ export default function Dashboard() {
     contactError,
     setContactsProfile,
     setUserProfile,
+    groupChat,
+    setGroupChat,
+    groupError,
+    groupLoading,
   } = useUpdateAfterFetch();
 
   const [isHidden, setIsHidden] = useState<boolean>(true);
@@ -62,6 +66,10 @@ export default function Dashboard() {
           socket,
           messages,
           setMessages,
+          groupChat,
+          setGroupChat,
+          groupError,
+          groupLoading,
         }}
       >
         <main

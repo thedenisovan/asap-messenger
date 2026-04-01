@@ -21,12 +21,6 @@ export default async function newGroupChat(
 
     if (!response.ok)
       throw new Error(`Error while fetching data ${await response.text()}`);
-
-    const result = await response.json();
-
-    console.log(result);
-
-    return result;
   } catch (e) {
     if (e instanceof Error) throw new Error(`Error ${e.message}`);
     else throw new Error('Unknown error');

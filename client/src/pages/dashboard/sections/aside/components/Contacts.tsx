@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import lastOnline from '../../../../../utils/lastOnline';
 import DarkIcon from '../../../../../components/common/DarkIcon';
 import LightIcon from '../../../../../components/common/LightIcon';
 import getChat from '../../../../../services/api/getChat';
-import { useEffect } from 'react';
 
 export default function Contacts() {
   const dashboard = useContext(DashboardContext);
@@ -17,13 +16,17 @@ export default function Contacts() {
     }
   }, [dashboard]);
 
-  if (dashboard?.contactError) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (dashboard?.contactError || dashboard?.groupError) {
+      navigate('/');
+    }
+  }, [dashboard, navigate]);
 
   return (
     <div className='relative z-0'>
-      {dashboard?.contactLoading || !dashboard?.contactsProfile ? (
+      {dashboard?.contactLoading ||
+      !dashboard?.contactsProfile ||
+      dashboard?.groupLoading ? (
         <div className='w-fit flex absolute top-50 right-[50%] translate-x-[50%] animate-spin'>
           <LightIcon
             width='50'
@@ -36,42 +39,66 @@ export default function Contacts() {
         </div>
       ) : (
         <ul className='flex flex-col'>
-          {dashboard.contactsProfile.length ? (
-            dashboard?.contactsProfile?.map((contact) => {
-              return (
-                <li key={contact.id} className='flex justify-between'>
-                  <button
-                    onClick={async () => {
-                      // Saves current chat to state
-                      const chat = await getChat(contact.id);
-                      dashboard.setCurrentChat(chat);
-                      dashboard.setIsChatOpen(true);
-                      dashboard.setMessages(chat.messages);
-                    }}
-                    className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
-                  >
-                    <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-8 h-8 flex items-center justify-center'>
-                      <h3 className='font-bold  text-xl'>
-                        {contact?.username[0].toUpperCase()}
-                      </h3>
-                    </div>
-                    <div>
-                      <p className='font-medium text-left'>
-                        {contact.username}
-                      </p>
-                      <p className='text-xs text-left text-neutral-800 dark:text-neutral-300'>
-                        {lastOnline(contact.lastOnline)}
-                      </p>
-                    </div>
-                  </button>
-                </li>
-              );
-            })
-          ) : (
-            <li className='py-10 text-center text-neutral-700 dark:text-neutral-300'>
-              <p>No contacts yet.</p>
-            </li>
-          )}
+          {/* Contacts */}
+          {dashboard?.contactsProfile?.length > 0 &&
+            dashboard.contactsProfile.map((contact) => (
+              <li key={contact.id} className='flex justify-between'>
+                <button
+                  onClick={async () => {
+                    const chat = await getChat(contact.id);
+                    dashboard.setCurrentChat(chat);
+                    dashboard.setIsChatOpen(true);
+                    dashboard.setMessages(chat.messages);
+                  }}
+                  className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
+                >
+                  <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-8 h-8 flex items-center justify-center'>
+                    <h3 className='font-bold text-xl'>
+                      {contact?.username[0].toUpperCase()}
+                    </h3>
+                  </div>
+                  <div>
+                    <p className='font-medium text-left'>{contact.username}</p>
+                    <p className='text-xs text-left text-neutral-800 dark:text-neutral-300'>
+                      {lastOnline(contact.lastOnline)}
+                    </p>
+                  </div>
+                </button>
+              </li>
+            ))}
+
+          {/* Group Chats */}
+          {dashboard?.groupChat?.length > 0 &&
+            dashboard.groupChat.map((chat) => (
+              <li key={chat.id} className='flex justify-between'>
+                <button
+                  // onClick={async () => {
+                  //   const chat = await getChat(chat.id);
+                  //   dashboard.setCurrentChat(chat);
+                  //   dashboard.setIsChatOpen(true);
+                  //   dashboard.setMessages(chat.messages);
+                  // }}
+                  className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
+                >
+                  <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-8 h-8 flex items-center justify-center'>
+                    <h3 className='font-bold text-xl'>
+                      {chat?.chatName[0].toUpperCase()}
+                    </h3>
+                  </div>
+                  <div>
+                    <p className='font-medium text-left'>{chat.chatName}</p>
+                  </div>
+                </button>
+              </li>
+            ))}
+
+          {/* Fallback */}
+          {dashboard?.contactsProfile?.length === 0 &&
+            dashboard?.groupChat?.length === 0 && (
+              <li className='py-10 text-center text-neutral-700 dark:text-neutral-300'>
+                <p>No contacts or groups yet.</p>
+              </li>
+            )}
         </ul>
       )}
     </div>
