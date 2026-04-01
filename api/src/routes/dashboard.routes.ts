@@ -11,6 +11,7 @@ import getChat from '../middleware/controllers/getChat.js';
 import postNewMessage from '../middleware/controllers/postNewMessage.js';
 import clearChat from '../middleware/controllers/clearChat.js';
 import newGroupChat from '../middleware/controllers/newGroupChat.js';
+import getGroupChat from '../middleware/controllers/getGroupChat.js';
 
 const dashboard = Router();
 
@@ -21,6 +22,7 @@ dashboard.get('/', verifyToken, (req, res) =>
 
 dashboard.get('/:profileId/contacts', verifyToken, getContactList);
 dashboard.get('/:profileId', verifyToken, getProfileData);
+dashboard.get('/:profileId/getGroupChat', verifyToken, getGroupChat);
 
 // Get chat if not exist create/put new one
 dashboard.put('/:profileId/chat/', verifyToken, getChat);

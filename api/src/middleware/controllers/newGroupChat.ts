@@ -14,7 +14,7 @@ export default async function newGroupChat(req: Request, res: Response) {
   }
 
   try {
-    const groupChat = await prisma.groupChat.create({
+    await prisma.groupChat.create({
       data: {
         chatName,
         admin: {
@@ -28,7 +28,7 @@ export default async function newGroupChat(req: Request, res: Response) {
       include: { chatters: true },
     });
 
-    return res.status(200).json(groupChat);
+    return res.status(200);
   } catch (e) {
     return res.status(500).json({ msg: `Error message ${e}` });
   }
