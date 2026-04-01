@@ -54,6 +54,7 @@ model Chat {
 
 model GroupChat {
   id       Int       @id @default(autoincrement())
+  chatName String
   admin    User[]    @relation("GroupAdmin")
   chatters User[]    @relation("GroupChatter")
   messages Message[] @relation("GroupMessages")
