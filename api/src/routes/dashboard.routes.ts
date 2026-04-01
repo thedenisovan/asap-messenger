@@ -10,6 +10,7 @@ import validatorResult from '../validators/validationResult.js';
 import getChat from '../middleware/controllers/getChat.js';
 import postNewMessage from '../middleware/controllers/postNewMessage.js';
 import clearChat from '../middleware/controllers/clearChat.js';
+import newGroupChat from '../middleware/controllers/newGroupChat.js';
 
 const dashboard = Router();
 
@@ -34,6 +35,7 @@ dashboard.put(
 );
 
 dashboard.post('/postNewMessage', verifyToken, postNewMessage);
+dashboard.post('/newGroupChat', verifyToken, newGroupChat);
 
 dashboard.delete('/clearChat', verifyToken, clearChat);
 

@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import DarkIcon from '../../components/common/DarkIcon';
 import LightIcon from '../../components/common/LightIcon';
 import DashboardContext from '../../context/DashboardContext';
+import newGroupChat from '../../services/api/newGroupChat.client';
 
 export default function NewGroupChatForm() {
   const [groupName, setGroupName] = useState<string>('');
@@ -115,11 +116,20 @@ export default function NewGroupChatForm() {
           <button
             type='button'
             command='close'
-            onClick={() => clearDialog()}
+            onClick={() => {
+              if (dashContext?.userProfile) {
+                newGroupChat(
+                  groupMembers,
+                  groupName,
+                  dashContext?.userProfile.id,
+                );
+                clearDialog();
+              }
+            }}
             commandfor='new-group-dialog'
-            className='hover:bg-black/10 dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-300 border'
+            className='hover:bg-black/10 disabled:cursor-not-allowed dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-300 border'
           >
-            Find & Add
+            Create Group
           </button>
         </div>
       </form>
