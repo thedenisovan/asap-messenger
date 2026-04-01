@@ -48,12 +48,21 @@ export default function Contacts() {
                       dashboard.setIsChatOpen(true);
                       dashboard.setMessages(chat.messages);
                     }}
-                    className='p-2 cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
+                    className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                   >
-                    <p className='font-medium text-left'>{contact.username}</p>
-                    <p className='text-xs text-left text-neutral-800 dark:text-neutral-300'>
-                      {lastOnline(contact.lastOnline)}
-                    </p>
+                    <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-8 h-8 flex items-center justify-center'>
+                      <h3 className='font-bold  text-xl'>
+                        {contact?.username[0].toUpperCase()}
+                      </h3>
+                    </div>
+                    <div>
+                      <p className='font-medium text-left'>
+                        {contact.username}
+                      </p>
+                      <p className='text-xs text-left text-neutral-800 dark:text-neutral-300'>
+                        {lastOnline(contact.lastOnline)}
+                      </p>
+                    </div>
                   </button>
                 </li>
               );

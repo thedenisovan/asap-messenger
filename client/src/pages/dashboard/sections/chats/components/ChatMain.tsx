@@ -20,6 +20,10 @@ export default function ChatMain() {
     // When receive message fire handler
     dashContext.socket.on('receive_message', handler);
 
+    dashContext.socket.on('chat_deleted', () => {
+      dashContext.setMessages([]);
+    });
+
     // After remove it so it isn't stacking
     return () => {
       dashContext.socket.off('receive_message', handler);
@@ -81,7 +85,25 @@ function displayMessageTime(text: string) {
     today.getMonth() === dateOfMessage.getMonth() &&
     today.getFullYear() === dateOfMessage.getFullYear()
   ) {
-    return dateOfMessage.toTimeString().split(' ')[0];
-    // Else display date of message
-  } else return dateOfMessage.toDateString();
+    return (
+      dateOfMessage.toTimeString().split(' ')[0].split(':')[0] +
+      ':' +
+      dateOfMessage.toTimeString().split(' ')[0].split(':')[1]
+    );
+    // Else if message is this year display date of message
+  } else if (
+    today.getDate() !== dateOfMessage.getDate() &&
+    (today.getMonth() === dateOfMessage.getMonth() ||
+      today.getMonth() !== dateOfMessage.getMonth()) &&
+    today.getFullYear() === dateOfMessage.getFullYear()
+  ) {
+    return (
+      dateOfMessage.toDateString().split(' ')[1] +
+      ' ' +
+      dateOfMessage.toDateString().split(' ')[2]
+    );
+    // Else return full date with year
+  } else {
+    return dateOfMessage.toDateString();
+  }
 }

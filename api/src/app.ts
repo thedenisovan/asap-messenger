@@ -37,6 +37,10 @@ io.on('connection', (socket) => {
     socket.to(roomName).emit('receive_message', newMsg);
   });
 
+  socket.on('clear_chat', ({ roomName }) => {
+    socket.to(roomName).emit('chat_deleted');
+  });
+
   socket.on('disconnect', () => {
     console.log(`User disconnected from socket with id: ${socket.id}`);
   });
