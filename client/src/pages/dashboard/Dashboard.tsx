@@ -9,6 +9,7 @@ import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
 import type { Message, CurrentChat } from '../../types/apiData';
 import { io } from 'socket.io-client';
 import URL from '../../constants/constants';
+import NewGroupChatForm from './NewGroupChatForm';
 
 export default function Dashboard() {
   // Validates payload of user data stored in local storage
@@ -77,6 +78,7 @@ export default function Dashboard() {
         </main>
         <NewContactForm />
         <ProfileSettings />
+        <NewGroupChatForm />
       </DashboardContext>
     </>
   );
