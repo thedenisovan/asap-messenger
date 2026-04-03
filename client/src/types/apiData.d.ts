@@ -14,6 +14,12 @@ export interface CurrentChat {
   users: { id: number; profileId: number }[];
 }
 
+export interface DirectChat {
+  id: number;
+  messages: Message[];
+  users: { id: number; profileId: number }[];
+}
+
 interface Message {
   chatId: number | null;
   dateCreated: string;
@@ -44,4 +50,4 @@ export interface GroupChat {
   chatName: string;
 }
 
-// type Chat = DirectChat | GroupChat;
+type Chat = DirectChat | GroupChat;
