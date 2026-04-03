@@ -5,6 +5,7 @@ import lastOnline from '../../../../../utils/lastOnline';
 import DarkIcon from '../../../../../components/common/DarkIcon';
 import LightIcon from '../../../../../components/common/LightIcon';
 import getChat from '../../../../../services/api/getChat';
+import getSingleGroupChat from '../../../../../services/api/getSingleGroupChat.client';
 
 export default function Contacts() {
   const dashboard = useContext(DashboardContext);
@@ -72,12 +73,9 @@ export default function Contacts() {
             dashboard.groupChat.map((chat) => (
               <li key={chat.id} className='flex justify-between'>
                 <button
-                  // onClick={async () => {
-                  //   const chat = await getChat(chat.id);
-                  //   dashboard.setCurrentChat(chat);
-                  //   dashboard.setIsChatOpen(true);
-                  //   dashboard.setMessages(chat.messages);
-                  // }}
+                  onClick={async () => {
+                    getSingleGroupChat(chat.id);
+                  }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >
                   <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-8 h-8 flex items-center justify-center'>

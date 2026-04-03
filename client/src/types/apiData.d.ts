@@ -32,6 +32,16 @@ export interface GroupChat {
     id: number;
     profileId: number;
   }[];
-  chatName: string;
+  messages: {
+    id: number;
+    message: string;
+    userId: number | null;
+    dateCreated: Date;
+    chatId: number;
+    groupChatId: number | null;
+  }[];
   id: number;
+  chatName: string;
 }
+
+// type Chat = DirectChat | GroupChat;
