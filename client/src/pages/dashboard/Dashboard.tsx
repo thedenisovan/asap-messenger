@@ -6,7 +6,7 @@ import Aside from './sections/aside/Aside';
 import ProfileSettings from './ProfileSettings';
 import useValidatePayload from '../../hooks/useValidatePayload';
 import useUpdateAfterFetch from '../../hooks/useUpdateAfterFetch';
-import type { Message, CurrentChat } from '../../types/apiData';
+import type { Message, Chat } from '../../types/apiData';
 import { io } from 'socket.io-client';
 import URL from '../../constants/constants';
 import NewGroupChatForm from './NewGroupChatForm';
@@ -36,7 +36,7 @@ export default function Dashboard() {
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-  const [currentChat, setCurrentChat] = useState<CurrentChat | null>(null);
+  const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const socket = io(URL.BASE_URL);

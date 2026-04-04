@@ -7,12 +7,19 @@ import extractChatterId from '../../../../../utils/extractChatterId';
 import ChatHeader from '../components/ChatHeader';
 import ChatMain from '../components/ChatMain';
 import ChatFooter from '../components/ChatFooter';
+import type { Chat } from '../../../../../types/apiData';
 
 export default function Chat() {
   const navigate = useNavigate();
   const dashContext = useContext(DashboardContext);
-  const { isLoading, serverError, apiData } = useFetchData<ProfileData>(
-    `dashboard/${extractChatterId(dashContext!.currentChat!)}`,
+
+  // If user opens direct chat fetch users profile data else fetch group chat data
+  const { isLoading, serverError, apiData } = useFetchData<ProfileData | Chat>(
+    `${
+      'chatters' in dashContext!.currentChat!
+        ? `dashboard/groupChat/${dashContext?.currentChat.id}`
+        : `dashboard/${extractChatterId(dashContext?.currentChat)}`
+    }`,
   );
 
   if (serverError !== null) navigate('/');

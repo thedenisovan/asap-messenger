@@ -20,7 +20,7 @@ export default async function getSingleGroupChat(chatId: number) {
 
     const result = await response.json();
 
-    console.log(result);
+    return result;
   } catch (e) {
     if (e instanceof Error) throw new Error(`${e.message}`);
   }

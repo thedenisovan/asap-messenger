@@ -8,12 +8,6 @@ export default interface ProfileData {
   username: string;
 }
 
-export interface CurrentChat {
-  id: number;
-  messages: Message[];
-  users: { id: number; profileId: number }[];
-}
-
 export interface DirectChat {
   id: number;
   messages: Message[];

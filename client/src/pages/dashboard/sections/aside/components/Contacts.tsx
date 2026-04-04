@@ -74,7 +74,10 @@ export default function Contacts() {
               <li key={chat.id} className='flex justify-between'>
                 <button
                   onClick={async () => {
-                    getSingleGroupChat(chat.id);
+                    const groupChat = await getSingleGroupChat(chat.id);
+                    dashboard.setCurrentChat(groupChat);
+                    dashboard.setIsChatOpen(true);
+                    dashboard.setMessages(groupChat.messages);
                   }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >

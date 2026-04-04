@@ -6,15 +6,19 @@ import lastOnline from '../../../../../utils/lastOnline';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import clearChat from '../../../../../services/api/clearChat.client';
+import type { Chat } from '../../../../../types/apiData';
 
 export default function ChatHeader({
   apiData,
   isLoading,
 }: {
-  apiData: ProfileData | null;
+  apiData: ProfileData | Chat | null;
   isLoading: boolean;
 }) {
   const dashContext = useContext(DashboardContext);
+  // If this is direct chat avatar url will be in api data obj
+  const isDirectChat = apiData && 'avatarUrl' in apiData;
+  const isGroupChat = apiData && 'chatters' in apiData;
 
   if (!dashContext?.socket) return null;
 
@@ -32,21 +36,34 @@ export default function ChatHeader({
               <DarkIcon path='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
               <LightIcon path='m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z' />
             </button>
-            {apiData?.avatarUrl ? (
+            {isDirectChat && apiData?.avatarUrl ? (
               ''
             ) : (
               <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-10 h-10 flex items-center justify-center'>
                 <h3 className='font-bold  text-xl'>
-                  {apiData?.username[0].toUpperCase()}
+                  {isDirectChat && apiData?.username
+                    ? `${apiData?.username[0].toUpperCase()}`
+                    : isGroupChat
+                      ? `${apiData.chatName[0].toUpperCase()}`
+                      : null}
                 </h3>
               </div>
             )}
             <div className='flex flex-col'>
-              <h2 className='font-bold'>{apiData?.username}</h2>
+              <h2 className='font-bold'>
+                {isDirectChat && apiData?.username
+                  ? apiData.username
+                  : isGroupChat
+                    ? apiData.chatName
+                    : null}
+              </h2>
               <p className='text-neutral-600 dark:text-neutral-300 text-xs'>
-                {apiData?.lastOnline
+                {/* If direct chat display users last online else how many members in group */}
+                {isDirectChat && apiData?.lastOnline
                   ? lastOnline(apiData.lastOnline)
-                  : 'Last online recently'}
+                  : isGroupChat
+                    ? `Group members ${apiData.chatters.length}`
+                    : null}
               </p>
             </div>
           </div>
