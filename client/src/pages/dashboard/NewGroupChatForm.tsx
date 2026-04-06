@@ -116,14 +116,15 @@ export default function NewGroupChatForm() {
           <button
             type='button'
             command='close'
-            onClick={() => {
+            onClick={async () => {
               if (dashContext?.userProfile) {
-                newGroupChat(
+                const newChat = await newGroupChat(
                   groupMembers,
                   groupName,
                   dashContext?.userProfile.id,
                 );
                 clearDialog();
+                dashContext.setGroupChat((prev) => [...prev, newChat]);
               }
             }}
             commandfor='new-group-dialog'

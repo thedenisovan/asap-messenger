@@ -2,7 +2,6 @@ import { useState } from 'react';
 import clientPassValidator from '../../../utils/clientPassValidator';
 import userAuth from '../../../services/api/userAuth';
 import { useNavigate } from 'react-router';
-import LightIcon from '../../../components/common/LightIcon';
 
 export default function AuthFrom({
   isSignUpForm = false,

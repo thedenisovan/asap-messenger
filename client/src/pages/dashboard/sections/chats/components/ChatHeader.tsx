@@ -41,6 +41,7 @@ export default function ChatHeader({
             ) : (
               <div className='bg-neutral-300 dark:bg-black p-3 rounded-full w-10 h-10 flex items-center justify-center'>
                 <h3 className='font-bold  text-xl'>
+                  {/* If direct chat display username else group name */}
                   {isDirectChat && apiData?.username
                     ? `${apiData?.username[0].toUpperCase()}`
                     : isGroupChat
