@@ -65,12 +65,12 @@ model Message {
 
   message String
 
-  messageBy   User?    @relation(fields: [userId], references: [profileId])
-  userId      Int?
+  messageBy   User     @relation(fields: [userId], references: [profileId])
+  userId      Int
   dateCreated DateTime @default(now())
 
   chat   Chat? @relation(fields: [chatId], references: [id])
-  chatId Int
+  chatId Int?
 
   groupChat   GroupChat? @relation("GroupMessages", fields: [groupChatId], references: [id])
   groupChatId Int?
