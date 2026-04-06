@@ -2,6 +2,7 @@ import { useState } from 'react';
 import clientPassValidator from '../../../utils/clientPassValidator';
 import userAuth from '../../../services/api/userAuth';
 import { useNavigate } from 'react-router';
+import LightIcon from '../../../components/common/LightIcon';
 
 export default function AuthFrom({
   isSignUpForm = false,
@@ -13,6 +14,7 @@ export default function AuthFrom({
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string[]>([]);
+  const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const validatePassword = () => {
@@ -109,6 +111,7 @@ export default function AuthFrom({
           setPassword('');
           setPasswordConfirm('');
           setUsername('');
+          setIsButtonLoading(true);
 
           validatePassword();
 
@@ -124,6 +127,8 @@ export default function AuthFrom({
             setErrMessage,
           );
 
+          setIsButtonLoading(false);
+
           // If result is true and user is in signup page
           // redirect him to sing in page
           if (result && isSignUpForm) {
@@ -137,7 +142,21 @@ export default function AuthFrom({
         className='bg-blue-500 rounded-lg p-2 text-white hover:bg-blue-500/90 hover:cursor-pointer transition-colors text-lg! font-medium!'
         type='submit'
       >
-        {isSignUpForm ? 'Create account' : 'Sign In'}
+        {isSignUpForm && !isButtonLoading && 'Create account'}
+        {!isSignUpForm && !isButtonLoading && 'Sign In'}
+        {isButtonLoading && (
+          <span className='flex justify-center animate-spin!'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              height='24px'
+              viewBox='0 -960 960 960'
+              width='24px'
+              fill='#fff'
+            >
+              <path d='M325-111.5q-73-31.5-127.5-86t-86-127.5Q80-398 80-480.5t31.5-155q31.5-72.5 86-127t127.5-86Q398-880 480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480.5-80Q398-80 325-111.5Z' />
+            </svg>
+          </span>
+        )}
       </button>
     </form>
   );
