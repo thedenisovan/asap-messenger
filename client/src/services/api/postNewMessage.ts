@@ -4,6 +4,7 @@ export default async function postNewMessage(
   userId: number | string,
   chatId: number | string,
   messageText: string,
+  isGroupChat: boolean,
 ) {
   const token = localStorage.getItem('token');
 
@@ -14,7 +15,12 @@ export default async function postNewMessage(
         'Content-Type': 'application/json',
         authorization: 'Bearer ' + token,
       },
-      body: JSON.stringify({ userId, chatId, messageText }),
+      body: JSON.stringify({
+        userId,
+        chatId: !isGroupChat ? chatId : null,
+        groupChatId: isGroupChat ? chatId : null,
+        messageText,
+      }),
     });
 
     if (!response.ok)

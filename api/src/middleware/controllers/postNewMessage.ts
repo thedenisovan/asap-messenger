@@ -2,13 +2,13 @@ import { Request, Response } from 'express';
 import { prisma } from '../../db/prisma.js';
 
 export default async function postNewMessage(req: Request, res: Response) {
-  const { userId, chatId, messageText } = req.body;
-  const [intUserId, intChatId] = [Number(userId), Number(chatId)];
+  const { userId, groupChatId, chatId, messageText } = req.body;
+  const [intUserId] = [Number(userId)];
 
-  if (!userId || !chatId) {
-    return res.status(404).json({ msg: 'No user id or chat id provided' });
-  } else if (isNaN(intUserId) || isNaN(intChatId))
-    return res.status(404).json({ msg: 'Invalid user id or chat id: NaN' });
+  if (!userId) {
+    return res.status(404).json({ msg: 'No user id  provided' });
+  } else if (isNaN(intUserId))
+    return res.status(404).json({ msg: 'Invalid user id NaN' });
   else if (messageText === '' || typeof messageText !== 'string')
     return res.status(404).json({ msg: 'No message provided' });
 
@@ -24,7 +24,12 @@ export default async function postNewMessage(req: Request, res: Response) {
         .json({ msg: 'No user found with given id profileId' });
 
     const message = await prisma.message.create({
-      data: { message: messageText, userId: user.id, chatId: intChatId },
+      data: {
+        message: messageText,
+        userId: user.id,
+        chatId: chatId,
+        groupChatId: groupChatId,
+      },
     });
 
     return res.status(200).json(message);

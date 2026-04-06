@@ -8,6 +8,7 @@ import LightIcon from '../../../../../components/common/LightIcon';
 export default function ChatFooter() {
   const [message, setMessage] = useState<string>('');
   const dashContext = useContext(DashboardContext);
+  const isGroupChat = 'chatters' in dashContext!.currentChat!;
 
   if (!dashContext?.socket) return null;
 
@@ -40,9 +41,12 @@ export default function ChatFooter() {
               dashContext.userProfile!.id,
               dashContext.currentChat!.id,
               message,
+              isGroupChat,
             );
             dashContext.socket.emit('send_message', {
-              roomName: dashContext?.currentChat?.id,
+              roomName: isGroupChat
+                ? 'group-' + dashContext.currentChat?.id
+                : 'direct-' + dashContext.currentChat?.id,
               newMsg,
             });
             console.log(

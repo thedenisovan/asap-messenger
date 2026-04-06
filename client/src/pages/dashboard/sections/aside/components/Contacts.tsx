@@ -13,7 +13,9 @@ export default function Contacts() {
 
   useEffect(() => {
     if (dashboard?.currentChat && dashboard.socket) {
-      dashboard.socket.emit('joinRoom', dashboard.currentChat.id);
+      const chatType =
+        'chatters' in dashboard.currentChat ? 'group-' : 'direct-';
+      dashboard.socket.emit('joinRoom', chatType + dashboard.currentChat.id);
     }
   }, [dashboard]);
 

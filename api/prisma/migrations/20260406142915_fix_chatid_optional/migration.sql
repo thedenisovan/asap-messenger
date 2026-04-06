@@ -1,0 +1,21 @@
+/*
+  Warnings:
+
+  - Made the column `userId` on table `Message` required. This step will fail if there are existing NULL values in that column.
+
+*/
+-- DropForeignKey
+ALTER TABLE "Message" DROP CONSTRAINT "Message_chatId_fkey";
+
+-- DropForeignKey
+ALTER TABLE "Message" DROP CONSTRAINT "Message_userId_fkey";
+
+-- AlterTable
+ALTER TABLE "Message" ALTER COLUMN "userId" SET NOT NULL,
+ALTER COLUMN "chatId" DROP NOT NULL;
+
+-- AddForeignKey
+ALTER TABLE "Message" ADD CONSTRAINT "Message_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("profileId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Message" ADD CONSTRAINT "Message_chatId_fkey" FOREIGN KEY ("chatId") REFERENCES "Chat"("id") ON DELETE SET NULL ON UPDATE CASCADE;
