@@ -7,6 +7,9 @@ type DashboardContextType = {
   isHidden: boolean;
   setIsHidden: React.Dispatch<React.SetStateAction<boolean>>;
 
+  isChatDropdownHidden: boolean;
+  setIsChatDropdownHidden: React.Dispatch<React.SetStateAction<boolean>>;
+
   isBlurred: boolean;
   setIsBlurred: React.Dispatch<React.SetStateAction<boolean>>;
 

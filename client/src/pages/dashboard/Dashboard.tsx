@@ -32,7 +32,11 @@ export default function Dashboard() {
     groupLoading,
   } = useUpdateAfterFetch();
 
+  // State for user header dropdown
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  // State for chat section dropdown
+  const [isChatDropdownHidden, setIsChatDropdownHidden] =
+    useState<boolean>(true);
   // Blur state for when module window is open
   const [isBlurred, setIsBlurred] = useState<boolean>(false);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
@@ -73,6 +77,8 @@ export default function Dashboard() {
           groupLoading,
           message,
           setMessage,
+          isChatDropdownHidden,
+          setIsChatDropdownHidden,
         }}
       >
         <main
@@ -81,6 +87,7 @@ export default function Dashboard() {
             // If dropdown is not hidden clicking any where on page should
             // close dropdown
             if (!isHidden) setIsHidden(true);
+            if (!isChatDropdownHidden) setIsChatDropdownHidden(true);
           }}
         >
           {/* '*:blur-xs' Blurs all children elements when blur state is set to  true */}

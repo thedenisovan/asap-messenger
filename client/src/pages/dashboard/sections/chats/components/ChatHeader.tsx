@@ -5,8 +5,8 @@ import LoadingUser from '../../../../../components/common/LoadingUser';
 import lastOnline from '../../../../../utils/lastOnline';
 import { useContext } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
-import clearChat from '../../../../../services/api/clearChat.client';
 import type { Chat } from '../../../../../types/apiData';
+import ChatDropdown from './ChatDropdown';
 
 export default function ChatHeader({
   apiData,
@@ -19,7 +19,6 @@ export default function ChatHeader({
   // If this is direct chat avatar url will be in api data obj
   const isDirectChat = apiData && 'avatarUrl' in apiData;
   const isGroupChat = apiData && 'chatters' in apiData;
-  const isGroupChatBoolean = isGroupChat ? true : false;
 
   if (!dashContext?.socket) return null;
 
@@ -69,25 +68,11 @@ export default function ChatHeader({
               </p>
             </div>
           </div>
-          <button
-            onClick={() => {
-              // Clear chat
-              const confirm = window.confirm(
-                `Do you want to delete all messages from this chat?`,
-              );
-
-              if (confirm) {
-                dashContext?.setMessages([]);
-                dashContext.socket.emit('clear_chat', {
-                  roomName: dashContext?.currentChat?.id,
-                });
-                clearChat(dashContext!.currentChat!.id, isGroupChatBoolean);
-              }
-            }}
-          >
-            <LightIcon path='m656-120-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Zm-176 0q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q11 0 20.5-.5T520-203v81q-10 1-19.5 1.5t-20.5.5ZM120-560v-240h80v94q51-64 124.5-99T480-840q150 0 255 105t105 255h-80q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120Zm414 190-94-94v-216h80v184l56 56-42 70Z' />
-            <DarkIcon path='m656-120-56-56 84-84-84-84 56-56 84 84 84-84 56 56-83 84 83 84-56 56-84-83-84 83Zm-176 0q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q11 0 20.5-.5T520-203v81q-10 1-19.5 1.5t-20.5.5ZM120-560v-240h80v94q51-64 124.5-99T480-840q150 0 255 105t105 255h-80q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120Zm414 190-94-94v-216h80v184l56 56-42 70Z' />
+          <button onClick={() => dashContext.setIsChatDropdownHidden(false)}>
+            <LightIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
+            <DarkIcon path='M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z' />
           </button>
+          <ChatDropdown />
         </div>
       )}
     </header>

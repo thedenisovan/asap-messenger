@@ -17,6 +17,7 @@ export default function ChatFooter() {
         onSubmit={(e) => e.preventDefault()}
       >
         <button
+          onClick={() => alert('Sorry not implemented yet :(')}
           className={`cursor-pointer hover:bg-gray-200 dark:hover:bg-neutral-700 rounded-full w-10 h-10 flex justify-center items-center transition-colors`}
           type='button'
         >
