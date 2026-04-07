@@ -13,6 +13,7 @@ import clearChat from '../middleware/controllers/clearChat.js';
 import newGroupChat from '../middleware/controllers/newGroupChat.js';
 import getGroupChats from '../middleware/controllers/getGroupChats.js';
 import getSingleGroupChat from '../middleware/controllers/getSingleGroupChat.js';
+import leaveGroup from '../middleware/controllers/leaveGroup.js';
 
 const dashboard = Router();
 
@@ -37,6 +38,7 @@ dashboard.put(
   verifyToken,
   updateProfileInformation,
 );
+dashboard.put('/leaveGroup', verifyToken, leaveGroup);
 
 dashboard.post('/postNewMessage', verifyToken, postNewMessage);
 dashboard.post('/newGroupChat', verifyToken, newGroupChat);

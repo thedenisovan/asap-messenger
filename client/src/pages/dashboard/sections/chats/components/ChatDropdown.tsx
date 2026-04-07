@@ -3,6 +3,7 @@ import DashboardContext from '../../../../../context/DashboardContext';
 import clearChat from '../../../../../services/api/clearChat.client';
 import LightIcon from '../../../../../components/common/LightIcon';
 import DarkIcon from '../../../../../components/common/DarkIcon';
+import leaveGroup from '../../../../../services/api/leaveGroup.client';
 
 export default function ChatDropdown() {
   const dashContext = useContext(DashboardContext);
@@ -35,6 +36,7 @@ export default function ChatDropdown() {
         <button
           className='flex gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
           onClick={() => {
+            // Only admin can clear group chat history
             if ('admin' in dashContext.currentChat!) {
               const isAdmin = dashContext.currentChat.admin.find(
                 (admin) => admin.profileId === dashContext.userProfile!.id,
@@ -46,7 +48,7 @@ export default function ChatDropdown() {
               }
             }
 
-            // Clear chat
+            // Clear chat confirm
             const confirm = window.confirm(
               `Do you want to delete all messages from this chat?`,
             );
@@ -75,7 +77,24 @@ export default function ChatDropdown() {
       </li>
       {isGroupChat ? (
         <li className=' hover:bg-red-100 dark:hover:bg-red-900/20 rounded-t-lg transition-colors duration-75'>
-          <button className='flex text-red-500 dark:text-red-400 gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'>
+          <button
+            // Remove user from given group and close chat window
+            onClick={() => {
+              leaveGroup(
+                dashContext.userProfile!.id,
+                dashContext.currentChat!.id,
+              );
+              dashContext.setIsChatOpen(false);
+
+              // Set user group chat state to filtered down version of chats not including current chat
+              dashContext.setGroupChat(
+                dashContext.groupChat.filter(
+                  (groupChat) => groupChat.id !== dashContext.currentChat!.id,
+                ),
+              );
+            }}
+            className='flex text-red-500 dark:text-red-400 gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
+          >
             Leave Group
           </button>
         </li>

@@ -117,7 +117,8 @@ export default function NewGroupChatForm() {
             type='button'
             command='close'
             onClick={async () => {
-              if (dashContext?.userProfile) {
+              // If group name is not empty string create new group and close dialog
+              if (dashContext?.userProfile && groupName.trim() !== '') {
                 const newChat = await newGroupChat(
                   groupMembers,
                   groupName,
@@ -125,9 +126,14 @@ export default function NewGroupChatForm() {
                 );
                 clearDialog();
                 dashContext.setGroupChat((prev) => [...prev, newChat]);
+                const dialog = document.getElementById(
+                  'new-group-dialog',
+                ) as HTMLDialogElement;
+
+                dialog.close();
               }
             }}
-            commandfor='new-group-dialog'
+            // commandfor='new-group-dialog'
             className='hover:bg-black/10 disabled:cursor-not-allowed dark:hover:bg-white/90 transition-color duration-100 hover:cursor-pointer p-1 rounded-lg dark:bg-white dark:text-black bg-gray-100 border-gray-300 border'
           >
             Create Group
