@@ -53,6 +53,7 @@ export default function Contacts() {
                     dashboard.setCurrentChat(chat);
                     dashboard.setIsChatOpen(true);
                     dashboard.setMessages(chat.messages);
+                    dashboard.setMessage('');
                   }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >
@@ -81,6 +82,7 @@ export default function Contacts() {
                     dashboard.setCurrentChat(groupChat);
                     dashboard.setIsChatOpen(true);
                     dashboard.setMessages(groupChat.messages);
+                    dashboard.setMessage('');
                   }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >

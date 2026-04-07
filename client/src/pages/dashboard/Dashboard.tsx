@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [message, setMessage] = useState<string>('');
 
   const socket = io(URL.BASE_URL);
 
@@ -70,6 +71,8 @@ export default function Dashboard() {
           setGroupChat,
           groupError,
           groupLoading,
+          message,
+          setMessage,
         }}
       >
         <main

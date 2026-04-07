@@ -41,6 +41,9 @@ type DashboardContextType = {
 
   groupLoading: boolean;
   groupError: string | null;
+
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);
