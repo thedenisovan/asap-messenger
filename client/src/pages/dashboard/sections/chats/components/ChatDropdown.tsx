@@ -35,6 +35,17 @@ export default function ChatDropdown() {
         <button
           className='flex gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
           onClick={() => {
+            if ('admin' in dashContext.currentChat!) {
+              const isAdmin = dashContext.currentChat.admin.find(
+                (admin) => admin.profileId === dashContext.userProfile!.id,
+              );
+
+              if (!isAdmin) {
+                alert(`Only admin have rights to clear group chat history.`);
+                return;
+              }
+            }
+
             // Clear chat
             const confirm = window.confirm(
               `Do you want to delete all messages from this chat?`,
@@ -43,7 +54,9 @@ export default function ChatDropdown() {
             if (confirm) {
               dashContext?.setMessages([]);
               dashContext.socket.emit('clear_chat', {
-                roomName: dashContext?.currentChat?.id,
+                roomName: isGroupChatBoolean
+                  ? 'group-' + dashContext?.currentChat?.id
+                  : 'direct-' + dashContext?.currentChat?.id,
               });
               clearChat(dashContext!.currentChat!.id, isGroupChatBoolean);
             }

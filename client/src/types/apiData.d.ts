@@ -44,4 +44,4 @@ export interface GroupChat {
   chatName: string;
 }
 
-type Chat = DirectChat | GroupChat;
+type Chat = GroupChat | DirectChat;
