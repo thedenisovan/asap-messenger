@@ -1,6 +1,9 @@
 import URL from '../../constants/constants';
 
-export default async function clearChat(chatId: number | string) {
+export default async function clearChat(
+  chatId: number | string,
+  isGroupChat: boolean,
+) {
   const token = localStorage.getItem('token');
 
   if (!token) return `No token found`;
@@ -12,7 +15,10 @@ export default async function clearChat(chatId: number | string) {
         authorization: 'Bearer ' + token,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ chatId }),
+      body: JSON.stringify({
+        chatId: !isGroupChat ? chatId : null,
+        groupChatId: isGroupChat ? chatId : null,
+      }),
     });
 
     if (!response.ok)

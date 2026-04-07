@@ -13,6 +13,7 @@ export default function Contacts() {
 
   useEffect(() => {
     if (dashboard?.currentChat && dashboard.socket) {
+      // if group chat prefix with group- else with direct-
       const chatType =
         'chatters' in dashboard.currentChat ? 'group-' : 'direct-';
       dashboard.socket.emit('joinRoom', chatType + dashboard.currentChat.id);

@@ -43,6 +43,7 @@ export default function ChatFooter() {
               message,
               isGroupChat,
             );
+            // if group chat prefix with group- else with direct-
             dashContext.socket.emit('send_message', {
               roomName: isGroupChat
                 ? 'group-' + dashContext.currentChat?.id

@@ -2,20 +2,19 @@ import { Request, Response } from 'express';
 import { prisma } from '../../db/prisma.js';
 
 export default async function clearChat(req: Request, res: Response) {
-  const { chatId } = req.body;
+  const { chatId, groupChatId } = req.body;
 
-  if (!chatId) return res.status(404).json({ msg: 'No chat id provided' });
+  if (!chatId && !groupChatId)
+    return res.status(404).json({ msg: 'No chat id provided' });
 
-  const intChatId = Number(chatId);
-
-  if (isNaN(intChatId))
+  if (isNaN(Number(chatId)) && isNaN(Number(groupChatId)))
     return res
       .status(404)
-      .json({ msg: 'Chat id is invalid format, expected integer' });
+      .json({ msg: 'Both group chat id and chat id is of NaN format' });
 
   try {
     await prisma.message.deleteMany({
-      where: { chatId: intChatId },
+      where: { chatId, groupChatId },
     });
 
     return res.status(200).json({ msg: 'Chat cleared' });

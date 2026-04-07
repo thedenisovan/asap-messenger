@@ -19,6 +19,7 @@ export default function ChatHeader({
   // If this is direct chat avatar url will be in api data obj
   const isDirectChat = apiData && 'avatarUrl' in apiData;
   const isGroupChat = apiData && 'chatters' in apiData;
+  const isGroupChatBoolean = isGroupChat ? true : false;
 
   if (!dashContext?.socket) return null;
 
@@ -80,7 +81,7 @@ export default function ChatHeader({
                 dashContext.socket.emit('clear_chat', {
                   roomName: dashContext?.currentChat?.id,
                 });
-                clearChat(dashContext!.currentChat!.id);
+                clearChat(dashContext!.currentChat!.id, isGroupChatBoolean);
               }
             }}
           >
