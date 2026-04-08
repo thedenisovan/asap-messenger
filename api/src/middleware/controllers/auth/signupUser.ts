@@ -22,6 +22,16 @@ export default async function signupUser(req: Request, res: Response) {
       },
     });
 
+    // Add new user to global Odin project group
+    await prisma.groupChat.update({
+      where: { id: 1 },
+      data: {
+        chatters: {
+          connect: { id: profile.id },
+        },
+      },
+    });
+
     return res.status(200).json({ message: 'profile created' });
   } catch (error) {
     return res.status(404).json({ errorMessage: error });
