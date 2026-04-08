@@ -18,7 +18,9 @@ export default async function getContactList(req: Request, res: Response) {
     const contactsProfiles = await prisma.profile.findMany({
       where: {
         id: {
-          in: contacts?.contacts.map((user) => user.profileId),
+          in: contacts?.contacts.map(
+            (user: { profileId: number; id: number }) => user.profileId,
+          ),
         },
       },
     });

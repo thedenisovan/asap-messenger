@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
-    "build": "tsc && npx prisma generate",
+    "build": "npx tsc && npx prisma generate",
     "start": "node dist/src/server.js"
   },
   "keywords": [],
@@ -23,7 +23,7 @@
     "@types/supertest": "^6.0.3",
     "dotenv": "^17.3.1",
     "jest": "^30.2.0",
-    "prisma": "^7.6.0",
+    "prisma": "^7.7.0",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.6",
     "tsx": "^4.21.0",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@prisma/adapter-neon": "^7.4.1",
     "@prisma/adapter-pg": "^7.4.1",
-    "@prisma/client": "^7.6.0",
+    "@prisma/client": "^7.7.0",
     "@prisma/extension-accelerate": "^3.0.1",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
