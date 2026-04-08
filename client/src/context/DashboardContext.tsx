@@ -47,6 +47,9 @@ type DashboardContextType = {
 
   message: string;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
+
+  directContactId: number | null;
+  setDirectContactId: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const DashboardContext = createContext<DashboardContextType | null>(null);

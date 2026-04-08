@@ -80,9 +80,17 @@ export default function ChatDropdown() {
           <button
             // Remove user from given group and close chat window
             onClick={() => {
+              const confirmation = confirm(
+                'Are you sure you want to leave this group?',
+              );
+
+              if (!confirmation) return;
+
               leaveGroup(
                 dashContext.userProfile!.id,
                 dashContext.currentChat!.id,
+                null,
+                null,
               );
               dashContext.setIsChatOpen(false);
 
@@ -100,7 +108,32 @@ export default function ChatDropdown() {
         </li>
       ) : (
         <li className='hover:bg-red-100 dark:hover:bg-red-900/20 rounded-t-lg transition-colors duration-75'>
-          <button className='flex text-red-500 dark:text-red-400 gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'>
+          <button
+            onClick={() => {
+              const confirmation = confirm(
+                'Are you sure you want to leave this chat?',
+              );
+
+              if (!confirmation) return;
+
+              leaveGroup(
+                dashContext.userProfile!.id,
+                null,
+                dashContext.currentChat!.id,
+                dashContext.directContactId,
+              );
+              dashContext.setIsChatOpen(false);
+
+              // Update contact state
+              if (dashContext.contactsProfile)
+                dashContext.setContactsProfile(
+                  dashContext.contactsProfile.filter(
+                    (contacts) => contacts.id !== dashContext.directContactId,
+                  ),
+                );
+            }}
+            className='flex text-red-500 dark:text-red-400 gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
+          >
             Remove Contact
           </button>
         </li>

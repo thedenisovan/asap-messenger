@@ -54,6 +54,7 @@ export default function Contacts() {
                     dashboard.setIsChatOpen(true);
                     dashboard.setMessages(chat.messages);
                     dashboard.setMessage('');
+                    dashboard.setDirectContactId(contact.id);
                   }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >

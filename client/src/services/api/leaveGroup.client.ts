@@ -2,7 +2,9 @@ import URL from '../../constants/constants';
 
 export default async function leaveGroup(
   profileId: number,
-  groupChatId: number,
+  groupChatId: number | null,
+  chatId: number | null,
+  directContactId: number | null,
 ) {
   const token = localStorage.getItem('token');
 
@@ -15,7 +17,7 @@ export default async function leaveGroup(
         'Content-Type': 'application/json',
         authorization: 'Bearer ' + token,
       },
-      body: JSON.stringify({ profileId, groupChatId }),
+      body: JSON.stringify({ profileId, groupChatId, chatId, directContactId }),
     });
 
     if (!response.ok) throw new Error(`Error: ${await response.text()}`);

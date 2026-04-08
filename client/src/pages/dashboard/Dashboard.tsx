@@ -43,6 +43,7 @@ export default function Dashboard() {
   const [currentChat, setCurrentChat] = useState<Chat | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState<string>('');
+  const [directContactId, setDirectContactId] = useState<number | null>(null);
 
   const socket = io(URL.BASE_URL);
 
@@ -79,6 +80,8 @@ export default function Dashboard() {
           setMessage,
           isChatDropdownHidden,
           setIsChatDropdownHidden,
+          directContactId,
+          setDirectContactId,
         }}
       >
         <main
