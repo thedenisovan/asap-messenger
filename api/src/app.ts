@@ -13,7 +13,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:4173',
+    origin: 'https://asap-messenger.pages.dev/',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
