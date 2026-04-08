@@ -13,7 +13,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://asap-messenger.pages.dev/',
+    origin: 'https://asap-messenger.pages.dev',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   },
 });
