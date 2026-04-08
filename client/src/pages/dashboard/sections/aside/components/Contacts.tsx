@@ -84,7 +84,6 @@ export default function Contacts() {
                     dashboard.setIsChatOpen(true);
                     dashboard.setMessages(groupChat.messages);
                     dashboard.setMessage('');
-                    console.log(groupChat);
                   }}
                   className='p-2 gap-2 items-center flex cursor-pointer hover:bg-neutral-100 w-full hover:dark:bg-neutral-600 transition-colors'
                 >
