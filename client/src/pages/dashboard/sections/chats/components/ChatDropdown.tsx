@@ -4,6 +4,7 @@ import clearChat from '../../../../../services/api/clearChat.client';
 import LightIcon from '../../../../../components/common/LightIcon';
 import DarkIcon from '../../../../../components/common/DarkIcon';
 import leaveGroup from '../../../../../services/api/leaveGroup.client';
+import isUserAdmin from '../../../../../utils/isUserAdmin';
 
 export default function ChatDropdown() {
   const dashContext = useContext(DashboardContext);
@@ -37,15 +38,14 @@ export default function ChatDropdown() {
           className='flex gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
           onClick={() => {
             // Only admin can clear group chat history
-            if ('admin' in dashContext.currentChat!) {
-              const isAdmin = dashContext.currentChat.admin.find(
-                (admin) => admin.profileId === dashContext.userProfile!.id,
-              );
+            const isAdmin = isUserAdmin(
+              dashContext.currentChat,
+              dashContext.userProfile!.id,
+            );
 
-              if (!isAdmin) {
-                alert(`Only admin have rights to clear group chat history.`);
-                return;
-              }
+            if (!isAdmin) {
+              alert(`Only admin have rights to clear group chat history.`);
+              return;
             }
 
             // Clear chat confirm
