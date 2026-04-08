@@ -1,5 +1,5 @@
 const URL = {
-  BASE_URL: 'http://localhost:8080/',
+  BASE_URL: 'https://asap-messenger-production.up.railway.app/',
 };
 
 export default URL;
