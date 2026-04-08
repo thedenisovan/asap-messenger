@@ -12,7 +12,7 @@ export default async function getGroupChat(req: Request, res: Response) {
       where: {
         chatters: { some: { id: +profileId } },
       },
-      include: { chatters: true, admin: true },
+      include: { chatters: { include: { profile: true } }, admin: true },
     });
 
     return res.status(200).json(groupChats);

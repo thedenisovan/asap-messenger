@@ -54,7 +54,10 @@ export default function NewContactForm() {
       </header>
       <p className='px-6 pt-6 pb-3 text-sm text-gray-700 dark:text-gray-300'>
         Enter the unique email of person you want to find and add to your
-        contact's.
+        contact's.{' '}
+        <span className='text-xs text-red-600 dark:text-red-300'>
+          (Both users need to add each other)
+        </span>
       </p>
       <p className='px-6 pb-3 text-red-400 list-disc'>{dialogError}</p>
       <form
@@ -101,7 +104,9 @@ export default function NewContactForm() {
                 setDialogError('Cant find user with given email.');
               } else {
                 // close module and update contacts state
-                dashboard?.setContactsProfile((val) => val ? [...val, result] : [result]);
+                dashboard?.setContactsProfile((val) =>
+                  val ? [...val, result] : [result],
+                );
                 clearDialog();
                 dialog?.close();
               }

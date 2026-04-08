@@ -15,7 +15,11 @@ export default async function getSingleGroupChat(req: Request, res: Response) {
   try {
     const chat = await prisma.groupChat.findUnique({
       where: { id: intChatId },
-      include: { chatters: true, messages: true, admin: true },
+      include: {
+        chatters: { include: { profile: true } },
+        messages: true,
+        admin: true,
+      },
     });
 
     return res.status(200).json(chat);

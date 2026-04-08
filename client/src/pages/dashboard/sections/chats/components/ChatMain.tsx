@@ -2,6 +2,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import DashboardContext from '../../../../../context/DashboardContext';
 import type { Message } from '../../../../../types/apiData';
+import GroupInfo from './GroupInfo';
 
 export default function ChatMain() {
   const dashContext = useContext(DashboardContext);
@@ -31,44 +32,50 @@ export default function ChatMain() {
   }, [dashContext]);
 
   return (
-    <main className='flex-1'>
+    <main className='flex-1 relative'>
       {dashContext?.messages?.length ? (
-        <ul className='flex flex-col max-h-[calc(100vh-152px)] h-full overflow-x-hidden w-full p-4 space-y-2'>
-          {dashContext.messages.map((message) => (
-            <li
-              key={message.id}
-              className={`flex ${
-                message.userId === dashContext.userProfile!.id
-                  ? 'justify-end '
-                  : 'justify-start'
-              }`}
-            >
-              <div
-                className={`max-w-xs wrap-break-word px-4 py-2 rounded-lg ${
+        <>
+          <ul className='flex flex-col max-h-[calc(100vh-152px)] h-full overflow-x-hidden w-full p-4 space-y-2'>
+            {dashContext.messages.map((message) => (
+              <li
+                key={message.id}
+                className={`flex ${
                   message.userId === dashContext.userProfile!.id
-                    ? 'bg-blue-500 text-white rounded-tr-none'
-                    : 'bg-gray-200 text-black rounded-tl-none'
+                    ? 'justify-end '
+                    : 'justify-start'
                 }`}
               >
-                <p>{message.message}</p>
-                <span
-                  className={`flex justify-end text-[10px] ${
+                <div
+                  className={`max-w-xs wrap-break-word px-4 py-2 rounded-lg ${
                     message.userId === dashContext.userProfile!.id
-                      ? 'text-neutral-200'
-                      : 'text-neutral-700'
+                      ? 'bg-blue-500 text-white rounded-tr-none'
+                      : 'bg-gray-200 text-black rounded-tl-none'
                   }`}
                 >
-                  {displayMessageTime(message.dateCreated)}
-                </span>
-              </div>
-            </li>
-          ))}
-          <div ref={chatEndRef} />
-        </ul>
+                  <p>{message.message}</p>
+                  <span
+                    className={`flex justify-end text-[10px] ${
+                      message.userId === dashContext.userProfile!.id
+                        ? 'text-neutral-200'
+                        : 'text-neutral-700'
+                    }`}
+                  >
+                    {displayMessageTime(message.dateCreated)}
+                  </span>
+                </div>
+              </li>
+            ))}
+            <div ref={chatEndRef} />
+          </ul>
+        </>
       ) : (
         <p className='absolute top-[50%] text-center left-[50%] -translate-[50%] dark:text-neutral-300'>
           No messages in current chat
         </p>
+      )}
+      {/* Add group info module only if current chat is group chat */}
+      {dashContext?.currentChat && 'chatters' in dashContext.currentChat && (
+        <GroupInfo groupChat={dashContext!.currentChat} />
       )}
     </main>
   );

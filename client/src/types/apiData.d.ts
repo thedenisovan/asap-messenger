@@ -24,11 +24,10 @@ interface Message {
 }
 
 export interface GroupChat {
+  id: number;
+  chatName: string;
+  chatters: { id: number; profileId: number; profile: ProfileData }[];
   admin: {
-    id: number;
-    profileId: number;
-  }[];
-  chatters: {
     id: number;
     profileId: number;
   }[];
@@ -40,8 +39,6 @@ export interface GroupChat {
     chatId: number;
     groupChatId: number | null;
   }[];
-  id: number;
-  chatName: string;
 }
 
 type Chat = GroupChat | DirectChat;
