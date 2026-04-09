@@ -44,15 +44,17 @@ export default function ChatDropdown() {
         <button
           className='flex gap-1 w-full items-center py-2.5 pl-4 pr-9 cursor-pointer'
           onClick={() => {
-            // Only admin can clear group chat history
-            const isAdmin = isUserAdmin(
-              dashContext.currentChat,
-              dashContext.userProfile!.id,
-            );
+            if (dashContext.currentChat && 'admin' in dashContext.currentChat) {
+              // Only admin can clear group chat history
+              const isAdmin = isUserAdmin(
+                dashContext.currentChat,
+                dashContext.userProfile!.id,
+              );
 
-            if (!isAdmin) {
-              alert(`Only admin have rights to clear group chat history.`);
-              return;
+              if (!isAdmin) {
+                alert(`Only admin have rights to clear group chat history.`);
+                return;
+              }
             }
 
             // Clear chat confirm
