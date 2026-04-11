@@ -6,7 +6,7 @@ A full-stack messaging web application built to demonstrate modern frontend and 
 The app is fully responsive, follows WCAG accessibility guidelines, and supports real-time communication across devices.
 
 ### Preview
-You can wisit my website by this folowing this [link](https://asap-messenger.pages.dev/). 
+You can wisit my website by clicking [this link](https://asap-messenger.pages.dev/). 
 
 ### Features
 - Responsive design (mobile-first)
